@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /
+# Preview only. For the real domain run: py tools\seo.py site --launch
