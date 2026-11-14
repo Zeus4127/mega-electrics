@@ -1,0 +1,10 @@
+# Mega Electrics
+
+> Licensed high-voltage and industrial electrical contractor in Queensland, New South Wales and Victoria since 1991. 24/7 breakdowns: 1300 090 797. Quotes: info@megaelectrics.com.au.
+
+## Pages
+- [Home](https://zeus4127.github.io/mega-electrics/): services, projects, branches, quote form, Q&A
+- [Queensland](https://zeus4127.github.io/mega-electrics/qld.html): Brisbane (Murarrie) and Gold Coast (Yatala)
+- [New South Wales](https://zeus4127.github.io/mega-electrics/nsw.html): Sydney (Wetherill Park)
+- [Victoria](https://zeus4127.github.io/mega-electrics/vic.html): Melbourne (Fairfield)
+- [Privacy](https://zeus4127.github.io/mega-electrics/privacy.html)
