@@ -1,0 +1,441 @@
+<!doctype html><html lang="en-AU"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Mega Electrics website preview: feedback and choices for the next version.">
+<link rel="icon" href="brand/logo-mark.png">
+<style>@font-face{font-family:"Sora";src:url(fonts/sora.woff2) format("woff2");font-weight:100 800;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
+.fbtop{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px;
+background:#18284c;color:#fff;font:600 14px/1.2 Inter,system-ui,sans-serif}.fbtop a{color:#fff;text-decoration:none;
+border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:8px 12px;min-height:40px;display:inline-flex;align-items:center}
+.fbtop b{color:#fa842d}#send{background:#18284c;color:#fff}</style>
+<title>Mega Website Handover</title>
+<style>
+/* Layout: one calm column of numbered question cards on Mega navy/orange; sticky progress bar; answers box at the end. */
+:root {
+  --bg: #f3f5f9; --card: #ffffff; --ink: #2d2929; --muted: #5d6475; --line: #dde2ec;
+  --navy: #18284c; --blue: #2e4476; --orange: #fa842d; --on-orange: #1a1206; --soft: #fff1e6; --ok: #1d7a3c;
+  --f-display: "Sora", "Segoe UI", system-ui, sans-serif; --f-body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1630; --card: #16223f; --ink: #e8ecf5; --muted: #a9b3c9; --line: #2a3a62;
+  --navy: #0a1226; --blue: #9db4ea; --soft: #3a2614; --ok: #5fd08a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0d1630; --card: #16223f; --ink: #e8ecf5; --muted: #a9b3c9; --line: #2a3a62;
+  --navy: #0a1226; --blue: #9db4ea; --soft: #3a2614; --ok: #5fd08a; color-scheme: dark }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--f-body) }
+.band { background: #18284c; color: #fff; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 32px }
+.wrap { max-width: 50rem; margin: 0 auto }
+.page { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 64px }
+.eyebrow { font: 600 12px/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: #fa842d }
+h1 { font: 700 clamp(28px, 6vw, 42px)/1.1 var(--f-display); margin: 10px 0 12px; text-wrap: balance }
+.band p { color: #dfe5f3; max-width: 40rem; margin: 0 0 10px }
+.how { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 10px; margin-top: 20px }
+.how div { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 12px 14px; font-size: 14px; color: #dfe5f3 }
+.how b { color: #fff; display: block; margin-bottom: 2px }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--card); border-bottom: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--card) }
+.bar .wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap }
+.meter { flex: 1 1 10rem; height: 8px; background: var(--line); border-radius: 99px; overflow: hidden }
+.meter i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .3s }
+.count { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums }
+.btn { font: 600 15px var(--f-body); border: 0; border-radius: 999px; padding: 12px 20px; min-height: 44px; cursor: pointer; background: var(--orange); color: var(--on-orange) }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line) }
+.btn:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, label.opt:focus-within { outline: 3px solid var(--orange); outline-offset: 2px }
+.who { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 12px; margin: 8px 0 28px }
+section.grp { margin-top: 36px }
+section.grp > h2 { font: 700 24px/1.2 var(--f-display); color: var(--ink); margin: 0 0 4px; display: flex; gap: 10px; align-items: baseline }
+section.grp > h2 span { font: 600 13px var(--f-body); color: var(--orange); letter-spacing: .08em }
+section.grp > p { color: var(--muted); margin: 0 0 14px }
+.q { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px; display: grid; gap: 10px }
+.q.done { border-color: color-mix(in srgb, var(--ok) 55%, var(--line)) }
+.qh { display: flex; gap: 10px; align-items: baseline }
+.qid { font: 600 12px var(--f-body); color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; flex: none; font-variant-numeric: tabular-nums }
+.qt { font-weight: 600; min-width: 0 }
+.qd { font-size: 14px; color: var(--muted); margin: -4px 0 0 }
+.opts { display: flex; flex-wrap: wrap; gap: 8px }
+label.opt { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; min-height: 44px; cursor: pointer; font-size: 15px; background: var(--card) }
+label.opt input { accent-color: var(--orange); width: 18px; height: 18px; margin: 0 }
+label.opt:has(input:checked) { border-color: var(--orange); background: var(--soft) }
+input[type=text], textarea { width: 100%; font: 15px var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-height: 44px }
+textarea { min-height: 76px; resize: vertical }
+.field label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 4px }
+.tablewrap { overflow-x: auto }
+.ptable { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px }
+.ptable th { text-align: left; font-size: 12px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; padding: 6px }
+.ptable td { padding: 6px; border-top: 1px solid var(--line); vertical-align: top }
+.ptable td:first-child { font-weight: 600; width: 26% }
+.out { background: var(--card); border: 2px solid var(--orange); border-radius: 16px; padding: 18px; margin-top: 40px; display: grid; gap: 12px }
+.out h2 { font: 700 24px var(--f-display); margin: 0 }
+.out textarea { min-height: 220px; font: 13px/1.5 ui-monospace, Consolas, monospace }
+.msg { font-size: 14px; color: var(--ok); min-height: 1.4em }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
+.note { font-size: 14px; color: var(--muted) }
+.opts.rich { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)) }
+.opts.rich label.opt { border-radius: 12px; align-items: flex-start; padding: 12px 14px }
+.opts.rich label.opt input { margin-top: 3px; flex: none }
+.ot { display: grid; gap: 2px; min-width: 0 } .ot b { font-weight: 600 } .od { font-size: 13.5px; color: var(--muted); line-height: 1.4 }
+.swatch { display: flex; margin-bottom: 6px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); width: 100%; height: 22px }
+.swatch i { flex: 1 }
+.ordergrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 8px }
+.ordrow { display: flex; align-items: center; gap: 10px } .ordrow input { width: 3.4rem; flex: none; text-align: center } .ordrow label { font-size: 15px }
+@media (prefers-reduced-motion: reduce) { .meter i { transition: none } }
+</style></head><body><div class="fbtop"><span><b>Mega preview</b> &middot; Feedback</span><a href="index.html">&larr; Back to the website</a></div>
+
+<header class="band"><div class="wrap">
+  <div class="eyebrow">Mega Electrics · website and app handover</div>
+  <h1>What we need from you, and what you'd change</h1>
+  <p>The new Mega website and app are built as a working preview. To finish them we need some photos, footage and facts that only Mega has, and a few decisions. Answer what you can; skip anything you're not sure about.</p>
+  <div class="how">
+    <div><b>1. Tick and type</b>Each question has a number like P2 or D4, and each choice says what it does for you. Answers save in this browser as you go.</div>
+    <div><b>2. Copy your answers</b>At the bottom, press "Send to Ryan" and pick WhatsApp, text or email.</div>
+    <div><b>3. Send big files</b>Photos and video: a OneDrive, Google Drive or Dropbox link, or a USB drive. Original files, not WhatsApp copies.</div>
+  </div>
+</div></header>
+
+<div class="bar"><div class="wrap">
+  <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+  <span class="count" id="count" aria-live="polite">0 answered</span>
+  <a class="btn ghost" href="#answers">Go to my answers</a>
+</div></div>
+
+<main class="page"><div class="wrap">
+  <div class="who">
+    <div class="field"><label for="who_name">Your name</label><input type="text" id="who_name" autocomplete="name" placeholder="e.g. Kevin Hull"></div>
+    <div class="field"><label for="who_role">Your role</label><input type="text" id="who_role" placeholder="e.g. Managing Director"></div>
+  </div>
+  <div id="groups"></div>
+
+  <section class="out" id="answers" aria-labelledby="outH">
+    <h2 id="outH">Your answers</h2>
+    <p class="note">Press <b>Send to Ryan</b>: it opens WhatsApp (or your phone's share menu) with all your answers filled in. Pick Ryan and send. Or copy the answers and paste them into a message.</p>
+    <div class="row">
+      <button class="btn" type="button" id="send">Send to Ryan</button><button class="btn ghost" type="button" id="copy">Copy my answers</button>
+      <button class="btn ghost" type="button" id="clear">Start again</button>
+      <span class="msg" id="msg" role="status"></span>
+    </div>
+    <div class="row" id="confirmClear" hidden>
+      <span class="note">Clear every answer on this device?</span>
+      <button class="btn ghost" type="button" id="clearYes">Yes, clear</button>
+      <button class="btn ghost" type="button" id="clearNo">Keep them</button>
+    </div>
+    <label class="note" for="outText">Answers to send</label>
+    <textarea id="outText" readonly></textarea>
+  </section>
+</div></main>
+
+<script>
+(function () {
+  var KEY = "mega-handover-v2";
+  var CLIENTS = ["CPB Contractors", "Redpath", "Queensland Rail", "Patrick Terminals", "Brisbane City Council", "Origin APLNG",
+    "Hanson", "Thiess John Holland JV", "Ampcontrol", "Transcity JV", "Urban Utilities", "Golden Circle", "Metcash"];
+  var SUPPLY = ["We can send it", "We'll need a shoot", "Not available", "Skip"];
+  var KEEP = ["Keep", "Change it", "Remove it"];
+  function O(v, d, sw) { return { v: v, d: d, sw: sw }; }
+  var G = [
+    { id: "P", t: "Photos and video", d: "Real Mega photos and video only: Australian sites, full PPE, Mega logo visible, client OK to show their site. Send originals (camera or drone files), not copies from WhatsApp or Facebook.", q: [
+      { id: "P1", t: "Original logo files", d: "SVG, AI, EPS or a high-resolution PDF. The site uses a cleaned-up copy for now.", type: "radio", o: SUPPLY, note: true },
+      { id: "P2", t: "Drone footage, original files", d: "Straight off the drone, 4K if possible: substation builds, cable laying, the fleet at Murarrie. The current drone clip is a WhatsApp copy, so it's softer than it should be.", type: "radio", o: SUPPLY, note: true },
+      { id: "P3", t: "Outside each branch, showing the signage", d: "Murarrie, Yatala, Wetherill Park, Fairfield. Also needed for the Google Business Profile.", type: "radio", o: SUPPLY, note: true },
+      { id: "P4", t: "Crews at work in PPE", d: "Toolbox talk, apprentices with a supervisor, a crew on a live site.", type: "radio", o: SUPPLY, note: true },
+      { id: "P5", t: "Kevin and the 1991 story", d: "A portrait of Kevin at the depot, an early photo from around 1991, and a few lines on how Mega started.", type: "radio", o: SUPPLY, note: true },
+      { id: "P6", t: "The fleet", d: "Trucks, vans and the 10 t cable trailers lined up, ideally from a drone.", type: "radio", o: SUPPLY, note: true },
+      { id: "P7", t: "HV jointing and testing close-ups", d: "A jointer mid-termination, the VLF / Ductor sets in use, arc-rated PPE.", type: "radio", o: SUPPLY, note: true },
+      { id: "P8", t: "Switchboard workshop", d: "A board being built (a phone time-lapse is perfect) and a finished board with the Mega plate.", type: "radio", o: SUPPLY, note: true },
+      { id: "P9", t: "Photos of the flagship projects", d: "Airport Link, Legacy Way, APLNG, bitumen facility, M2, Redpath TBMs, Metro Tunnel. Archive photos are fine.", type: "radio", o: SUPPLY, note: true },
+      { id: "P10", t: "60 to 90 second 'who we are' video", d: "Kevin and a few crew talking about the work, cut with site footage.", type: "radio", o: SUPPLY, note: true },
+      { id: "P11", t: "Night breakdown shot", d: "A Mega van with lights on at a call-out, electrician walking in with a toolbag.", type: "radio", o: SUPPLY, note: true },
+      { id: "P12", t: "Anything else you'd like added", d: "Extra photos or videos not listed above: describe them. We'll fit them into the gallery, the services or a new page.", type: "textarea" },
+      { id: "P13", t: "Photos to take off the site", d: "Any photo you don't want shown (wrong site, old gear, client didn't agree). Describe it or name the section.", type: "textarea" },
+      { id: "P14", t: "Link to the files", d: "Paste the OneDrive / Google Drive / Dropbox link here, or write 'USB to Ryan'.", type: "text" }
+    ]},
+    { id: "L", t: "Look and layout", d: "Pick what you'd like to see. Every option here can be done; each one says what it changes. Tip: on the preview website, press Try a look (bottom left) to see L1, L2, L3 and L6 live on the real pages.", q: [
+      { id: "L1", t: "Colour scheme", type: "radio", o: [
+        O("Navy and orange (now)", "Mega's old-site colours with white sections. Strong, familiar, matches the vans and shirts.", ["#18284c", "#fa842d", "#ffffff"]),
+        O("Light and clean", "Mostly white with navy text and orange buttons. Open and corporate; photos stand out.", ["#ffffff", "#f2f4f9", "#18284c", "#fa842d"]),
+        O("Dark tech", "Deep navy almost everywhere with glowing orange. Modern and premium, like a tech company.", ["#0b1430", "#18284c", "#fa842d"]),
+        O("Photo-led", "Big full-width photos with very little colour on top. The work does the talking.", ["#2d2929", "#8a96ad", "#fa842d"])
+      ], note: true },
+      { id: "L2", t: "Backgrounds behind the sections", d: "Tick any you like.", type: "check", o: [
+        O("Plain colour bands", "Simple, fast, nothing distracting."),
+        O("Fine engineering grid (now, on dark bands)", "A faint blueprint grid: technical feel."),
+        O("Faded job photos", "A soft real photo behind some sections: more atmosphere."),
+        O("Orange swoosh arcs", "The old site's orange swoosh, drawn as glowing arcs.")
+      ] },
+      { id: "L3", t: "Top of the home page", type: "radio", o: [
+        O("Drone video (now)", "A silent looping drone flyover of a Mega site build. Most impressive on first look."),
+        O("Photo slideshow", "Five or six of the best job photos fading through. Lighter on phone data."),
+        O("One big photo", "A single strong photo. Simplest and fastest."),
+        O("Video plus live numbers", "The drone video with the key numbers (years, kV, branches) along the bottom.")
+      ], note: true },
+      { id: "L4", t: "Order of the home page sections", d: "Write 1 for what should come first, 2 next, and so on. Leave blank to keep the current order. Write 0 to remove a section.", type: "order", rows: ["Clients strip", "Numbers strip (35+ years, 132 kV...)", "About Mega", "Safety and accreditations", "Services cards", "Our work gallery", "Flagship project stories", "Drone scroll story", "Projects search", "Project map", "Branches", "How can we help? cards", "Quote form", "Mega at a glance", "Q&A", "Trade partners", "Careers"] },
+      { id: "L5", t: "How many photos in the gallery", type: "radio", o: [
+        O("Keep about 60 (now)", "Shows the full range of work."),
+        O("Best 20 only", "Tighter and faster; only the strongest shots."),
+        O("Add more", "Send them and we'll add them, sorted by type of work.")
+      ] },
+      { id: "L6", t: "Amount of text", type: "radio", o: [
+        O("As it is", "Short paragraphs with key facts."),
+        O("Bigger text", "Easier to read, especially on phones."),
+        O("Less text, more photos", "Fewer words; the photos and numbers carry it.")
+      ] },
+      { id: "L7", t: "Extra pages you'd like", d: "Tick any. Each becomes its own page linked from the menu.", type: "check", o: [
+        O("About us / our story", "Kevin's story, the team and the history since 1991."),
+        O("A page for each service", "HV, tunnelling, industrial, switchboards and more, each with photos, kV ranges and projects. Good for Google."),
+        O("A page for each flagship project", "Full case studies that tier-1 clients and tender reviewers can read."),
+        O("News and updates", "Short posts about new jobs, milestones and awards."),
+        O("Safety page", "Safety approach, figures and accreditations in one place."),
+        O("Careers page with open jobs", "A list of current roles with an apply button."),
+        O("Supplier and subcontractor portal", "A page for trade partners to register and upload documents.")
+      ] }
+    ]},
+    { id: "F", t: "Facts to confirm", d: "These show on the site with a yellow highlight until you confirm them. Leave blank if unknown.", q: [
+      { id: "F1", t: "QLD electrical contractor licence number", type: "text" },
+      { id: "F2", t: "NSW electrical contractor licence number", type: "text" },
+      { id: "F3", t: "VIC electrical contractor licence number", type: "text" },
+      { id: "F4", t: "ABN", type: "text" },
+      { id: "F5", t: "Public liability insurance cover", d: "e.g. $20 million.", type: "text" },
+      { id: "F6", t: "Sydney (Wetherill Park) office hours", d: "The other branches show Mon to Fri 7:00am to 4:00pm.", type: "text" },
+      { id: "F7", t: "Is 1300 090 797 answered 24/7 for every branch?", type: "radio", o: ["Yes", "No, details below"], note: true },
+      { id: "F8", t: "Safety figures to show", d: "LTIFR and TRIFR, the period they cover, and the date they were last updated.", type: "radio", o: [O("Show them (below)", "Builds trust with tier-1 clients; needs updating each quarter."), O("Don't show safety figures", "The safety section keeps the words and accreditations only.")], note: true },
+      { id: "F9", t: "Accreditations Mega holds", d: "Tick only the ones that are current. Ticked ones get a badge; the rest come off.", type: "check", o: ["ISO 45001 safety", "ISO 9001 quality", "ISO 14001 environment", "Federal Safety Commissioner WHS", "NECA / Master Electricians", "None of these"] },
+      { id: "F10", t: "Prices on the website", type: "radio", o: [O("Quote only, no prices", "Normal for HV and industrial work; every job is priced after a look at the site."), O("Show starting rates (below)", "e.g. call-out from $X. Filters out small jobs that aren't a fit.")], note: true },
+      { id: "F11", t: "Staff and fleet numbers", d: "Rough is fine: staff, electricians, apprentices, vans/utes, trucks, cable trailers, HV test sets.", type: "textarea" },
+      { id: "F12", t: "Towns and regions you cover", d: "Beyond Brisbane, Gold Coast, Sydney and Melbourne.", type: "textarea" },
+      { id: "F13", t: "Clients we can name on the site", d: "Tick the ones that are OK to show. Note if you have their logos.", type: "check", o: CLIENTS, note: true },
+      { id: "F14", t: "Flagship project figures", d: "Each project shows a timeframe and a result line. Fill in what you know.", type: "projects" }
+    ]},
+    { id: "C", t: "Contacts and who sees what", d: "Who gets which enquiries, who is on call, and which clients get flagged as 'must look at'.", q: [
+      { id: "C1", t: "24/7 on-call crew in the app's Report a fault screen", type: "radio", o: [O("Show only the 1300 line", "One number for everything; whoever answers passes it on."), O("List on-call people (below)", "The app shows each on-call person with Call and Text buttons. Their numbers are visible to anyone with the app.")], note: true, ph: "Name | phone | area (QLD, NSW, VIC), one per line." },
+      { id: "C2", t: "Email address for each type of enquiry", d: "Leave blank to use info@megaelectrics.com.au.", type: "fields", f: ["Quotes, QLD", "Quotes, NSW", "Quotes, VIC", "Electrical faults", "Accounts / invoices", "Careers", "Trade partners / suppliers", "Website or app problems (Ryan)"] },
+      { id: "C3", t: "Tier 1 and key clients to flag 'must look at'", d: "One per line: Company | email domain | Tier 1 or Key. Example: CPB Contractors | cpbcon.com.au | Tier 1. Their enquiries jump to the top, never go to spam, and a manager is alerted if nobody opens one in 15 minutes.", type: "textarea" },
+      { id: "C4", t: "Which job system does Mega use?", d: "So enquiries go straight into it instead of being typed in again.", type: "radio", o: ["simPRO", "AroFlo", "ServiceM8", "Ascora", "Other (below)", "None"], note: true },
+      { id: "C5", t: "Who needs a login to the back end?", d: "One per line: Name | role | branch. Roles: viewer (read only), estimator (handles enquiries), manager (also clients and roster), admin (everything).", type: "textarea" },
+      { id: "C6", t: "Staff names on the website", d: "Anyone who should be named (current), and anyone who has left and must never appear. The nightly check watches for these.", type: "fields", f: ["Current staff to name", "People who have left"] },
+      { id: "C7", t: "Employee portal link that's current", d: "e.g. Employment Hero, or another address.", type: "text" }
+    ]},
+    { id: "A", t: "Accounts and access", d: "Things only Mega can set up. Each one unlocks a part of the build.", q: [
+      { id: "A1", t: "LinkedIn company page link", d: "Adds a LinkedIn button and links the page to the website for Google.", type: "text" },
+      { id: "A2", t: "Facebook / Instagram / YouTube links", type: "text" },
+      { id: "A3", t: "Who manages the megaelectrics.com.au domain?", d: "Needed to move the new site onto the real address.", type: "text" },
+      { id: "A4", t: "Business Google account (Google Business Profile)", d: "Puts Mega's branches on Google Maps with photos, hours and reviews.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] },
+      { id: "A5", t: "Cloudflare account (hosting and the back end)", d: "Runs the enquiry inbox and staff logins. Free to start.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] },
+      { id: "A6", t: "Postmark account (reliable email from the website)", d: "Makes sure enquiry emails arrive and tells us when one bounces. About US$15 a month.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] },
+      { id: "A7", t: "Google Play developer account (to list the app)", d: "One-off US$25. Lets anyone install the app from the Play Store.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] }
+    ]},
+    { id: "Q", t: "Keeping it working", d: "How problems are found and fixed. A check already runs every night and every morning.", q: [
+      { id: "Q1", t: "A 'Report a problem' button", type: "radio", o: [
+        O("On every page, anyone can use it", "A small button on the site and app. Visitors or staff describe the problem; it goes to Ryan with the page it was on."),
+        O("In the app only", "Staff and clients with the app can report problems."),
+        O("No button", "Problems are found by the automatic checks and by email.")
+      ] },
+      { id: "Q2", t: "Automatic checks", type: "radio", o: [
+        O("Every night and morning (set up now)", "1 am deep check, 6:30 am live check. Ryan gets a phone alert only if something is broken."),
+        O("Also every hour in work time", "Problems spotted within the hour on weekdays."),
+        O("Weekly only", "Fewer alerts; problems may sit longer.")
+      ] },
+      { id: "Q3", t: "Automatic fixing", type: "radio", o: [
+        O("Prepare the fix, Ryan approves with one tap (recommended)", "Nothing changes on the live site without a person saying yes. Safest."),
+        O("Fix small things automatically", "Hides a broken link or a missing photo straight away and reports it; bigger fixes still wait for a yes."),
+        O("Never change anything automatically", "The checks report only; every fix is done by hand.")
+      ] },
+      { id: "Q4", t: "When updates go live", type: "radio", o: [
+        O("Saturday mornings (recommended)", "Changes go up when the site is quiet; urgent fixes any time."),
+        O("Weeknights after 7 pm", "Faster turnaround, still outside work hours."),
+        O("As soon as they're ready", "Quickest, with a small risk during work hours.")
+      ] }
+    ]},
+    { id: "D", t: "Decisions", d: "Pick one for each. Add a note if it needs explaining.", q: [
+      { id: "D1", t: "Overall look of the new site", type: "radio", o: [O("Love it", "Keep going with this design."), O("Small changes", "Keep the design; fix the things listed in this form."), O("Big changes", "Rethink the look; say what you don't like in the note.")], note: true },
+      { id: "D2", t: "The little cartoon workers (now taken out)", type: "radio", o: [O("Keep them out", "Fully professional, photos and video only."), O("Bring some back", "One or two subtle ones (e.g. on the footer) for personality."), O("Bring them all back", "The playful version with crews on the photos.")] },
+      { id: "D3", t: "Sections on the home page", d: "Keep, change or remove each one. (Use L4 to change their order.)", type: "matrix", rows: ["Drone video at the top", "Clients strip", "Numbers strip", "Safety and accreditations", "Services cards", "Our work gallery", "Flagship project stories", "Drone scroll story", "Projects search", "Project map", "Branches", "How can we help? cards", "Quote form", "Mega at a glance", "Q&A", "Trade partners", "Careers"], o: KEEP, note: true },
+      { id: "D4", t: "When should the new site replace megaelectrics.com.au?", type: "radio", o: [O("As soon as possible", "Swap over now; keep improving it live."), O("After the new photos are in", "Wait for P1 to P11, then launch."), O("Not yet", "Keep it as a preview for now.")], note: true },
+      { id: "D5", t: "Switch on the real back end", d: "Enquiry inbox, staff logins, routing, activity log. It's built and tested; it needs the accounts in A5 and A6.", type: "radio", o: [O("Yes, switch it on", "About A$40 to 90 a month to run. Every enquiry is saved, tracked and never lost."), O("Later", "Keep enquiries by email for now."), O("No", "Email only.")], note: true },
+      { id: "D6", t: "Visitor analytics", type: "radio", o: [O("Cookie-free counts only", "Which pages, searches and buttons people use. No cookie banner needed."), O("Also heat maps and recordings", "See where people click and scroll. Needs a cookie notice and a privacy update."), O("None", "No visitor information at all.")] },
+      { id: "D7", t: "The app", type: "radio", o: [O("List it on Google Play", "Easy install for clients and staff; needs A7."), O("Keep it as a download from the site", "Free; people install it from the website."), O("Also make an iPhone version", "iPhone users add the site to their home screen now, or we build an App Store version later.")], note: true },
+      { id: "D8", t: "Quote form", type: "radio", o: [O("Keep it as it is", "One short form."), O("Add a drawings / photo upload", "Clients attach plans or photos of the site."), O("Make it a few short steps", "Easier on phones; asks one thing at a time.")], note: true }
+    ]},
+    { id: "X", t: "Anything else to change", d: "Write it the way you'd say it. Say which page and what's wrong or missing.", q: [
+      { id: "X1", t: "Home page", type: "textarea" },
+      { id: "X2", t: "QLD, NSW and VIC pages", type: "textarea" },
+      { id: "X3", t: "Capability statement", type: "textarea" },
+      { id: "X4", t: "The app", type: "textarea" },
+      { id: "X5", t: "Anything else", type: "textarea" }
+    ]}
+  ];
+  var PROJECTS = ["Airport Link", "Legacy Way", "APLNG gas fields", "Bulk bitumen storage facility", "M2 Tunnel",
+    "Tunnelling equipment program (Redpath)", "Metro Tunnel (Melbourne)", "Tunnelling high-voltage works (Ampcontrol)"];
+
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function el(tag, attrs, html) { var n = document.createElement(tag); for (var k in (attrs || {})) n.setAttribute(k, attrs[k]); if (html != null) n.innerHTML = html; return n; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, ""); }
+
+  function render() {
+    var root = document.getElementById("groups");
+    G.forEach(function (g) {
+      var sec = el("section", { "class": "grp", id: "grp_" + g.id, "aria-labelledby": "h_" + g.id });
+      sec.appendChild(el("h2", { id: "h_" + g.id }, "<span>" + g.id + "</span>" + esc(g.t)));
+      sec.appendChild(el("p", null, esc(g.d)));
+      g.q.forEach(function (q) {
+        var box = el("div", { "class": "q", id: "q_" + q.id });
+        box.appendChild(el("div", { "class": "qh" }, '<span class="qid">' + q.id + '</span><span class="qt" id="qt_' + q.id + '">' + esc(q.t) + "</span>"));
+        if (q.d) box.appendChild(el("p", { "class": "qd" }, esc(q.d)));
+        if (q.type === "radio" || q.type === "check") {
+          var wrap = el("div", { "class": "opts", role: q.type === "radio" ? "radiogroup" : "group", "aria-labelledby": "qt_" + q.id });
+          var rich = q.o.some(function (o) { return typeof o === "object"; });
+          if (rich) wrap.className = "opts rich";
+          q.o.forEach(function (o, i) {
+            var v = typeof o === "object" ? o.v : o, id = q.id + "_" + i, inp = el("input", { type: q.type === "radio" ? "radio" : "checkbox", name: q.id, id: id, value: v });
+            var lab = el("label", { "class": "opt", "for": id }); lab.appendChild(inp);
+            var txt = el("span", { "class": "ot" }, "<b>" + esc(v) + "</b>" + (o.d ? '<span class="od">' + esc(o.d) + "</span>" : ""));
+            if (o.sw) txt.insertAdjacentHTML("afterbegin", '<span class="swatch" aria-hidden="true">' + o.sw.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join("") + "</span>");
+            lab.appendChild(txt); wrap.appendChild(lab);
+          });
+          box.appendChild(wrap);
+        } else if (q.type === "text") {
+          box.appendChild(el("input", { type: "text", id: q.id + "_v", "aria-labelledby": "qt_" + q.id }));
+        } else if (q.type === "textarea") {
+          box.appendChild(el("textarea", { id: q.id + "_v", "aria-labelledby": "qt_" + q.id }));
+        } else if (q.type === "fields") {
+          q.f.forEach(function (f) {
+            var fd = el("div", { "class": "field" }), id = q.id + "_" + slug(f);
+            fd.appendChild(el("label", { "for": id }, esc(f)));
+            fd.appendChild(el(q.f.length > 2 ? "input" : "textarea", q.f.length > 2 ? { type: "text", id: id, placeholder: "info@megaelectrics.com.au" } : { id: id }));
+            box.appendChild(fd);
+          });
+        } else if (q.type === "matrix") {
+          var tw = el("div", { "class": "tablewrap" }), t = el("table", { "class": "ptable" });
+          t.innerHTML = "<thead><tr><th>Section</th>" + q.o.map(function (o) { return "<th>" + esc(o) + "</th>"; }).join("") + "</tr></thead>";
+          var tb = el("tbody");
+          q.rows.forEach(function (r) {
+            var tr = el("tr"), nm = q.id + "_" + slug(r);
+            tr.appendChild(el("td", null, esc(r)));
+            q.o.forEach(function (o, i) {
+              var td = el("td"), id = nm + "_" + i;
+              td.innerHTML = '<label class="opt" for="' + id + '"><input type="radio" name="' + nm + '" id="' + id + '" value="' + esc(o) + '" aria-label="' + esc(r + ": " + o) + '"></label>';
+              tr.appendChild(td);
+            });
+            tb.appendChild(tr);
+          });
+          t.appendChild(tb); tw.appendChild(t); box.appendChild(tw);
+        } else if (q.type === "order") {
+          var ow = el("div", { "class": "ordergrid" });
+          q.rows.forEach(function (r) {
+            var id = q.id + "_" + slug(r), fd = el("div", { "class": "ordrow" });
+            fd.innerHTML = '<input type="text" inputmode="numeric" maxlength="2" id="' + id + '" aria-label="Position for ' + esc(r) + '"><label for="' + id + '">' + esc(r) + "</label>";
+            ow.appendChild(fd);
+          });
+          box.appendChild(ow);
+        } else if (q.type === "projects") {
+          var pw = el("div", { "class": "tablewrap" }), pt = el("table", { "class": "ptable" });
+          pt.innerHTML = "<thead><tr><th>Project</th><th>Timeframe (years, months)</th><th>Result (km of cable, substations, TBMs, energised date...)</th></tr></thead>";
+          var pb = el("tbody");
+          PROJECTS.forEach(function (p) {
+            var s = slug(p), tr = el("tr");
+            tr.innerHTML = "<td>" + esc(p) + '</td><td><input type="text" id="F14_' + s + '_time" aria-label="' + esc(p) + ' timeframe"></td><td><input type="text" id="F14_' + s + '_result" aria-label="' + esc(p) + ' result"></td>';
+            pb.appendChild(tr);
+          });
+          pt.appendChild(pb); pw.appendChild(pt); box.appendChild(pw);
+        }
+        if (q.note) box.appendChild(el("textarea", { id: q.id + "_note", "aria-label": q.id + " notes", placeholder: q.ph || "Notes (optional)", rows: "2" }));
+        sec.appendChild(box);
+      });
+      root.appendChild(sec);
+    });
+  }
+
+  function restore() {
+    document.querySelectorAll("input, textarea").forEach(function (n) {
+      if (!n.id || n.id === "outText" || !(n.id in state)) return;
+      if (n.type === "radio" || n.type === "checkbox") n.checked = !!state[n.id]; else n.value = state[n.id];
+    });
+  }
+
+  function val(id) { var n = document.getElementById(id); return n ? n.value.trim() : ""; }
+  function picked(name) { return Array.prototype.map.call(document.querySelectorAll('input[name="' + name + '"]:checked'), function (n) { return n.value; }); }
+
+  function answers() {
+    var lines = [], n = 0, total = 0;
+    G.forEach(function (g) {
+      var block = [];
+      g.q.forEach(function (q) {
+        total++;
+        var parts = [];
+        if (q.type === "radio" || q.type === "check") { var p = picked(q.id); if (p.length) parts.push(p.join(", ")); }
+        else if (q.type === "text" || q.type === "textarea") { var v = val(q.id + "_v"); if (v) parts.push(v.replace(/\n/g, " / ")); }
+        else if (q.type === "fields") q.f.forEach(function (f) { var v = val(q.id + "_" + slug(f)); if (v) parts.push(f + ": " + v.replace(/\n/g, " / ")); });
+        else if (q.type === "matrix") q.rows.forEach(function (r) { var p = picked(q.id + "_" + slug(r)); if (p.length) parts.push(r + " = " + p[0]); });
+        else if (q.type === "order") { var ord = q.rows.map(function (r) { return [val(q.id + "_" + slug(r)), r]; }).filter(function (x) { return x[0] !== ""; });
+          ord.sort(function (a, b) { return Number(a[0]) - Number(b[0]); }); if (ord.length) parts.push(ord.map(function (x) { return x[0] === "0" ? "REMOVE " + x[1] : x[0] + ". " + x[1]; }).join(" | ")); }
+        else if (q.type === "projects") PROJECTS.forEach(function (p) { var s = slug(p), a = val("F14_" + s + "_time"), b = val("F14_" + s + "_result"); if (a || b) parts.push(p + " = " + (a || "?") + " | " + (b || "?")); });
+        var note = q.note ? val(q.id + "_note") : "";
+        if (note) parts.push("Note: " + note.replace(/\n/g, " / "));
+        var has = parts.length > 0;
+        document.getElementById("q_" + q.id).classList.toggle("done", has);
+        if (has) { n++; block.push("[" + q.id + "] " + q.t + ": " + parts.join(" ; ")); }
+      });
+      if (block.length) lines.push("", "== " + g.id + ". " + g.t + " ==", block.join("\n"));
+    });
+    var head = ["MEGA WEBSITE HANDOVER ANSWERS (form v2, 14 Nov 2026)",
+      "From: " + (val("who_name") || "(name)") + (val("who_role") ? ", " + val("who_role") : ""),
+      "Date: " + new Date().toLocaleDateString("en-AU"), n + " of " + total + " questions answered"];
+    document.getElementById("meter").style.width = Math.round(100 * n / total) + "%";
+    document.getElementById("count").textContent = n + " of " + total + " answered";
+    return head.concat(lines).join("\n");
+  }
+
+  function refresh() { document.getElementById("outText").value = answers(); }
+
+  render(); restore(); refresh();
+  document.addEventListener("input", function (e) {
+    var n = e.target; if (!n.id || n.id === "outText") return;
+    if (n.type === "radio") document.querySelectorAll('input[name="' + n.name + '"]').forEach(function (r) { state[r.id] = r.checked; });
+    else if (n.type === "checkbox") state[n.id] = n.checked; else state[n.id] = n.value;
+    save(); refresh();
+  });
+  document.addEventListener("change", function (e) { if (e.target.type === "radio" || e.target.type === "checkbox") { document.querySelectorAll('input[name="' + e.target.name + '"]').forEach(function (r) { state[r.id] = r.checked; }); save(); refresh(); } });
+  var msg = document.getElementById("msg");
+  document.getElementById("copy").addEventListener("click", function () {
+    var t = document.getElementById("outText"); refresh();
+    function fallback() { t.focus(); t.select(); msg.textContent = "Selected. Press Ctrl+C (or Copy) to copy."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(function () { msg.textContent = "Copied. Paste it into an email to Ryan."; }, fallback);
+    else fallback();
+  });
+
+  document.getElementById("send").addEventListener("click", function () {
+    var t = document.getElementById("outText"); refresh();
+    var text = t.value, title = "Mega website feedback";
+    function mail() {
+      var body = text.length > 1800 ? text.slice(0, 1800) + "\n\n(Answers cut short here: they are also copied, paste the full list in.)" : text;
+      location.href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(body);
+    }
+    function copyThenMail() {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () {
+        msg.textContent = "Copied. Your email app is opening: send it to Ryan (paste if anything is missing)."; mail(); }, mail);
+      else mail();
+    }
+    function whatsapp() {
+      // the app and most laptops have no share menu: open WhatsApp with the answers filled in (pick Ryan as the contact)
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(function () {});
+      msg.textContent = "Opening WhatsApp with your answers. Pick Ryan and press send.";
+      var u = "https://wa.me/?text=" + encodeURIComponent(text.length > 6000 ? text.slice(0, 6000) + "\n(more answers copied: paste them in)" : text);
+      if (window.App && App.open) App.open(u); else location.href = u;
+    }
+    if (navigator.share) navigator.share({ title: title, text: text }).then(function () { msg.textContent = "Sent. Thank you."; },
+      function (e) { if (!e || e.name !== "AbortError") whatsapp(); });
+    else whatsapp();
+  });
+  document.getElementById("clear").addEventListener("click", function () { document.getElementById("confirmClear").hidden = false; });
+  document.getElementById("clearNo").addEventListener("click", function () { document.getElementById("confirmClear").hidden = true; });
+  document.getElementById("clearYes").addEventListener("click", function () {
+    state = {}; save();
+    document.querySelectorAll("input, textarea").forEach(function (n) { if (n.id === "outText") return; if (n.type === "radio" || n.type === "checkbox") n.checked = false; else n.value = ""; });
+    document.getElementById("confirmClear").hidden = true; refresh(); msg.textContent = "Cleared.";
+  });
+})();
+</script>
+</body></html>
