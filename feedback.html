@@ -169,7 +169,7 @@ textarea { min-height: 76px; resize: vertical }
         O("One big photo", "A single strong photo. Simplest and fastest."),
         O("Video plus live numbers", "The drone video with the key numbers (years, kV, branches) along the bottom.")
       ], note: true },
-      { id: "L4", t: "Order of the home page sections", d: "Write 1 for what should come first, 2 next, and so on. Leave blank to keep the current order. Write 0 to remove a section.", type: "order", rows: ["Clients strip", "Numbers strip (35+ years, 132 kV...)", "About Mega", "Safety and accreditations", "Services cards", "Our work gallery", "Flagship project stories", "Drone scroll story", "Projects search", "Project map", "Branches", "How can we help? cards", "Quote form", "Mega at a glance", "Q&A", "Trade partners", "Careers"] },
+      { id: "L4", t: "Order of the home page sections", d: "Write 1 for what should come first, 2 next, and so on. Leave blank to keep the current order. Write 0 to remove a section.", type: "order", rows: ["Clients strip", "Numbers strip (35+ years, 132 kV...)", "About Mega", "Safety and accreditations", "Services cards", "Our work gallery", "Flagship project stories", "Projects search", "Project map", "Branches", "How can we help? cards", "Quote form", "Mega at a glance", "Q&A", "Trade partners", "Careers"] },
       { id: "L5", t: "How many photos in the gallery", type: "radio", o: [
         O("Keep about 60 (now)", "Shows the full range of work."),
         O("Best 20 only", "Tighter and faster; only the strongest shots."),
@@ -221,8 +221,51 @@ textarea { min-height: 76px; resize: vertical }
       { id: "A3", t: "Who manages the megaelectrics.com.au domain?", d: "Needed to move the new site onto the real address.", type: "text" },
       { id: "A4", t: "Business Google account (Google Business Profile)", d: "Puts Mega's branches on Google Maps with photos, hours and reviews.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] },
       { id: "A5", t: "Cloudflare account (hosting and the back end)", d: "Runs the enquiry inbox and staff logins. Free to start.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] },
-      { id: "A6", t: "Postmark account (reliable email from the website)", d: "Makes sure enquiry emails arrive and tells us when one bounces. About US$15 a month.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] },
+      { id: "A6", t: "Email sending account (the one chosen in B1)", d: "Amazon Web Services for SES (Sydney), or Postmark. Makes sure enquiry emails arrive.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] },
       { id: "A7", t: "Google Play developer account (to list the app)", d: "One-off US$25. Lets anyone install the app from the Play Store.", type: "radio", o: ["Done", "Will do", "Need help", "Not needed"] }
+    ]},
+    { id: "B", t: "Back-end choices", d: "Each option is already built and switched off until you pick it. Prices are in AUD, ex GST, approximate. Full details in the back-end handover document.", q: [
+      { id: "B1", t: "Email service for website enquiries", type: "radio", o: [
+        O("Amazon SES, Sydney (recommended)", "About A$1.50 a month. The only option that keeps email data in Australia."),
+        O("Postmark", "About A$22 a month. Simplest to run, built-in bounce handling. Data stored in the USA."),
+        O("Resend", "Free for small volumes, A$29 a month on Pro. Data stored in the USA.")
+      ] },
+      { id: "B2", t: "How staff sign in to the back end", type: "radio", o: [
+        O("Microsoft 365 work account (recommended)", "No new passwords. Free for up to 50 staff."),
+        O("Google account", "If Mega uses Google Workspace."),
+        O("One-time email code", "A code is emailed each time; no company login needed.")
+      ] },
+      { id: "B3", t: "Alerts in a Microsoft Teams channel", type: "radio", o: [
+        O("Yes (recommended)", "Tier 1 and urgent enquiries pop up in a Teams channel with an 'Open' button. Normally included with Microsoft 365."),
+        O("No", "Email only.")
+      ], note: true },
+      { id: "B4", t: "Text messages to the 24/7 on-call electrician", type: "radio", o: [
+        O("ClickSend (recommended)", "About 7c a text, no monthly fee, Australian company."),
+        O("Twilio", "About 7.5c a text plus about A$12 a month for a number."),
+        O("No texts", "Urgent faults go by email and Teams only.")
+      ] },
+      { id: "B5", t: "AI enquiry summaries (optional)", d: "Adds a one-line summary, urgency and a draft reply for staff. Never replies to customers itself. Names, phones and emails are not sent.", type: "radio", o: [
+        O("Off for now", "Enquiries are sorted by the built-in rules only."),
+        O("On: Claude Opus 5.5 (recommended if on)", "About 2c an enquiry; a few dollars a month."),
+        O("On: Claude Haiku 5.5", "About 0.05c an enquiry; faster and cheaper, simpler summaries.")
+      ] },
+      { id: "B6", t: "Job management system (won jobs are sent across automatically)", type: "radio", o: [
+        O("simPRO", "Best fit for larger industrial and HV contractors."),
+        O("AroFlo", "Good fit for mid-size electrical and maintenance work."),
+        O("ServiceM8", "Suited to smaller service work."),
+        O("Fergus or Ascora", "Small to mid-size trades."),
+        O("Something else", "Name it in the note."),
+        O("None yet", "Skip this for now.")
+      ], note: true },
+      { id: "B7", t: "Separate CRM (sales pipeline software)", type: "radio", o: [
+        O("Not now (recommended)", "The job system already holds clients and quotes."),
+        O("HubSpot", "Free for up to 2 users; paid plans for more."),
+        O("Microsoft Dynamics 365", "About A$97 per user a month; fits a Microsoft 365 business.")
+      ] },
+      { id: "B8", t: "Where the enquiry data is stored", type: "radio", o: [
+        O("Cloudflare, Oceania region (recommended)", "Lowest cost; placed near Australia but not guaranteed to stay here."),
+        O("Must be guaranteed in Australia", "Uses Amazon Web Services Sydney; needs extra build work.")
+      ] }
     ]},
     { id: "Q", t: "Keeping it working", d: "How problems are found and fixed. A check already runs every night and every morning.", q: [
       { id: "Q1", t: "A 'Report a problem' button", type: "radio", o: [
@@ -249,7 +292,7 @@ textarea { min-height: 76px; resize: vertical }
     { id: "D", t: "Decisions", d: "Pick one for each. Add a note if it needs explaining.", q: [
       { id: "D1", t: "Overall look of the new site", type: "radio", o: [O("Love it", "Keep going with this design."), O("Small changes", "Keep the design; fix the things listed in this form."), O("Big changes", "Rethink the look; say what you don't like in the note.")], note: true },
       { id: "D2", t: "The little cartoon workers (now taken out)", type: "radio", o: [O("Keep them out", "Fully professional, photos and video only."), O("Bring some back", "One or two subtle ones (e.g. on the footer) for personality."), O("Bring them all back", "The playful version with crews on the photos.")] },
-      { id: "D3", t: "Sections on the home page", d: "Keep, change or remove each one. (Use L4 to change their order.)", type: "matrix", rows: ["Drone video at the top", "Clients strip", "Numbers strip", "Safety and accreditations", "Services cards", "Our work gallery", "Flagship project stories", "Drone scroll story", "Projects search", "Project map", "Branches", "How can we help? cards", "Quote form", "Mega at a glance", "Q&A", "Trade partners", "Careers"], o: KEEP, note: true },
+      { id: "D3", t: "Sections on the home page", d: "Keep, change or remove each one. (Use L4 to change their order.)", type: "matrix", rows: ["Drone video at the top", "Clients strip", "Numbers strip", "Safety and accreditations", "Services cards", "Our work gallery", "Flagship project stories", "Projects search", "Project map", "Branches", "How can we help? cards", "Quote form", "Mega at a glance", "Q&A", "Trade partners", "Careers"], o: KEEP, note: true },
       { id: "D4", t: "When should the new site replace megaelectrics.com.au?", type: "radio", o: [O("As soon as possible", "Swap over now; keep improving it live."), O("After the new photos are in", "Wait for P1 to P11, then launch."), O("Not yet", "Keep it as a preview for now.")], note: true },
       { id: "D5", t: "Switch on the real back end", d: "Enquiry inbox, staff logins, routing, activity log. It's built and tested; it needs the accounts in A5 and A6.", type: "radio", o: [O("Yes, switch it on", "About A$40 to 90 a month to run. Every enquiry is saved, tracked and never lost."), O("Later", "Keep enquiries by email for now."), O("No", "Email only.")], note: true },
       { id: "D6", t: "Visitor analytics", type: "radio", o: [O("Cookie-free counts only", "Which pages, searches and buttons people use. No cookie banner needed."), O("Also heat maps and recordings", "See where people click and scroll. Needs a cookie notice and a privacy update."), O("None", "No visitor information at all.")] },
@@ -380,7 +423,7 @@ textarea { min-height: 76px; resize: vertical }
       });
       if (block.length) lines.push("", "== " + g.id + ". " + g.t + " ==", block.join("\n"));
     });
-    var head = ["MEGA WEBSITE HANDOVER ANSWERS (form v2, 14 Nov 2026)",
+    var head = ["MEGA WEBSITE HANDOVER ANSWERS (form v3, 16 Nov 2026)",
       "From: " + (val("who_name") || "(name)") + (val("who_role") ? ", " + val("who_role") : ""),
       "Date: " + new Date().toLocaleDateString("en-AU"), n + " of " + total + " questions answered"];
     document.getElementById("meter").style.width = Math.round(100 * n / total) + "%";
