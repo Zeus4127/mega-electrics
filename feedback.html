@@ -5,7 +5,7 @@
 <style>@font-face{font-family:"Sora";src:url(fonts/sora.woff2) format("woff2");font-weight:100 800;font-display:swap}
 @font-face{font-family:"Inter";src:url(fonts/inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
 .fbtop{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px;
-background:#18284c;color:#fff;font:600 14px/1.2 Inter,system-ui,sans-serif}.fbtop a{color:#fff;text-decoration:none;
+background:#18284c;color:#fff;font:600 16px/1.2 Inter,system-ui,sans-serif}.fbtop a{color:#fff;text-decoration:none;
 border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:8px 12px;min-height:40px;display:inline-flex;align-items:center}
 .fbtop b{color:#fa842d}#send{background:#18284c;color:#fff}</style>
 <title>Mega Website Handover</title>
@@ -23,15 +23,15 @@ border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:8px 12px;min-h
   --bg: #0d1630; --card: #16223f; --ink: #e8ecf5; --muted: #a9b3c9; --line: #2a3a62;
   --navy: #0a1226; --blue: #9db4ea; --soft: #3a2614; --ok: #5fd08a; color-scheme: dark }
 * { box-sizing: border-box }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--f-body) }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 18px/1.55 var(--f-body) }
 .band { background: #18284c; color: #fff; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 32px }
 .wrap { max-width: 50rem; margin: 0 auto }
 .page { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 64px }
-.eyebrow { font: 600 12px/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: #fa842d }
+.eyebrow { font: 600 14px/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: #fa842d }
 h1 { font: 700 clamp(28px, 6vw, 42px)/1.1 var(--f-display); margin: 10px 0 12px; text-wrap: balance }
 .band p { color: #dfe5f3; max-width: 40rem; margin: 0 0 10px }
 .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 10px; margin-top: 20px }
-.how div { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 12px 14px; font-size: 14px; color: #dfe5f3 }
+.how div { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 12px; padding: 12px 14px; font-size: 16px; color: #dfe5f3 }
 .how b { color: #fff; display: block; margin-bottom: 2px }
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--card); border-bottom: 1px solid var(--line);
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px }
@@ -39,58 +39,58 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .bar .wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap }
 .meter { flex: 1 1 10rem; height: 8px; background: var(--line); border-radius: 99px; overflow: hidden }
 .meter i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .3s }
-.count { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums }
-.btn { font: 600 15px var(--f-body); border: 0; border-radius: 999px; padding: 12px 20px; min-height: 44px; cursor: pointer; background: var(--orange); color: var(--on-orange) }
+.count { font-size: 16px; color: var(--muted); font-variant-numeric: tabular-nums }
+.btn { font: 600 17px var(--f-body); border: 0; border-radius: 999px; padding: 12px 20px; min-height: 44px; cursor: pointer; background: var(--orange); color: var(--on-orange) }
 .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line) }
 .btn:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, label.opt:focus-within { outline: 3px solid var(--orange); outline-offset: 2px }
 .who { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 12px; margin: 8px 0 28px }
 section.grp { margin-top: 36px }
-section.grp > h2 { font: 700 24px/1.2 var(--f-display); color: var(--ink); margin: 0 0 4px; display: flex; gap: 10px; align-items: baseline }
-section.grp > h2 span { font: 600 13px var(--f-body); color: var(--orange); letter-spacing: .08em }
+section.grp > h2 { font: 700 26px/1.2 var(--f-display); color: var(--ink); margin: 0 0 4px; display: flex; gap: 10px; align-items: baseline }
+section.grp > h2 span { font: 600 15px var(--f-body); color: var(--orange); letter-spacing: .08em }
 section.grp > p { color: var(--muted); margin: 0 0 14px }
 .q { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px; display: grid; gap: 10px }
 .q.done { border-color: color-mix(in srgb, var(--ok) 55%, var(--line)) }
 .qh { display: flex; gap: 10px; align-items: baseline }
-.qid { font: 600 12px var(--f-body); color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; flex: none; font-variant-numeric: tabular-nums }
+.qid { font: 600 14px var(--f-body); color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; flex: none; font-variant-numeric: tabular-nums }
 .qt { font-weight: 600; min-width: 0 }
-.qd { font-size: 14px; color: var(--muted); margin: -4px 0 0 }
+.qd { font-size: 16px; color: var(--muted); margin: -4px 0 0 }
 .opts { display: flex; flex-wrap: wrap; gap: 8px }
-label.opt { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; min-height: 44px; cursor: pointer; font-size: 15px; background: var(--card) }
+label.opt { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; min-height: 44px; cursor: pointer; font-size: 17px; background: var(--card) }
 label.opt input { accent-color: var(--orange); width: 18px; height: 18px; margin: 0 }
 label.opt:has(input:checked) { border-color: var(--orange); background: var(--soft) }
-input[type=text], textarea { width: 100%; font: 15px var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-height: 44px }
+input[type=text], textarea { width: 100%; font: 17px var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-height: 44px }
 textarea { min-height: 76px; resize: vertical }
-.field label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 4px }
+.field label { display: block; font-size: 16px; color: var(--muted); margin-bottom: 4px }
 .tablewrap { overflow-x: auto }
-.ptable { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px }
-.ptable th { text-align: left; font-size: 12px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; padding: 6px }
+.ptable { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 16px }
+.ptable th { text-align: left; font-size: 14px; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; padding: 6px }
 .ptable td { padding: 6px; border-top: 1px solid var(--line); vertical-align: top }
 .ptable td:first-child { font-weight: 600; width: 26% }
 .out { background: var(--card); border: 2px solid var(--orange); border-radius: 16px; padding: 18px; margin-top: 40px; display: grid; gap: 12px }
-.out h2 { font: 700 24px var(--f-display); margin: 0 }
-.out textarea { min-height: 220px; font: 13px/1.5 ui-monospace, Consolas, monospace }
-.msg { font-size: 14px; color: var(--ok); min-height: 1.4em }
+.out h2 { font: 700 26px var(--f-display); margin: 0 }
+.out textarea { min-height: 220px; font: 15px/1.5 ui-monospace, Consolas, monospace }
+.msg { font-size: 16px; color: var(--ok); min-height: 1.4em }
 .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
-.note { font-size: 14px; color: var(--muted) }
+.note { font-size: 16px; color: var(--muted) }
 .opts.rich { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)) }
 .opts.rich label.opt { border-radius: 12px; align-items: flex-start; padding: 12px 14px }
 .opts.rich label.opt input { margin-top: 3px; flex: none }
-.ot { display: grid; gap: 2px; min-width: 0 } .ot b { font-weight: 600 } .od { font-size: 13.5px; color: var(--muted); line-height: 1.4 }
+.ot { display: grid; gap: 2px; min-width: 0 } .ot b { font-weight: 600 } .od { font-size: 15.5px; color: var(--muted); line-height: 1.4 }
 .swatch { display: flex; margin-bottom: 6px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); width: 100%; height: 22px }
 .swatch i { flex: 1 }
 .ordergrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 8px }
-.ordrow { display: flex; align-items: center; gap: 10px } .ordrow input { width: 3.4rem; flex: none; text-align: center } .ordrow label { font-size: 15px }
+.ordrow { display: flex; align-items: center; gap: 10px } .ordrow input { width: 3.4rem; flex: none; text-align: center } .ordrow label { font-size: 17px }
 @media (prefers-reduced-motion: reduce) { .meter i { transition: none } }
-</style></head><body><div class="fbtop"><span><b>Mega Electrics</b> &middot; Feedback</span><a href="index.html">&larr; Back to the website</a></div>
+</style><!--type-scale-v1--></head><body><div class="fbtop"><span><b>Mega Electrics</b> &middot; Feedback</span><a href="index.html">&larr; Back to the website</a></div>
 
 <header class="band"><div class="wrap">
   <div class="eyebrow">Mega Electrics · website and app handover</div>
-  <h1>What we need from you, and what you'd change</h1>
-  <p>The new Mega website and app are built as a working preview. To finish them we need some photos, footage and facts that only Mega has, and a few decisions. Answer what you can; skip anything you're not sure about.</p>
+  <h1>What would you change?</h1>
+  <p>The new Mega website, app and staff back end are built as a working preview. This form is for your opinion only: what to keep, change or remove, and which options you want. About 10 minutes. Skip anything you're not sure about. The things only Mega can supply (photos, facts, accounts) are on a separate <a href="needs.html" style="color:inherit">checklist</a>.</p>
   <div class="how">
     <div><b>1. Tick and type</b>Each question has a number like P2 or D4, and each choice says what it does for you. Answers save in this browser as you go.</div>
     <div><b>2. Copy your answers</b>At the bottom, press "Send to Ryan" and pick WhatsApp, text or email.</div>
-    <div><b>3. Send big files</b>Photos and video: a OneDrive, Google Drive or Dropbox link, or a USB drive. Original files, not WhatsApp copies.</div>
+    <div><b>3. Things to send</b>Photos, facts and accounts are on the <a href="needs.html">checklist</a>, which you can download and share around the office.</div>
   </div>
 </div></header>
 
@@ -307,6 +307,13 @@ textarea { min-height: 76px; resize: vertical }
       { id: "X5", t: "Anything else", type: "textarea" }
     ]}
   ];
+  // 17 Nov 2026, v2.52: this form is opinions and choices only. Everything Mega has to SUPPLY (photos, facts, contacts,
+  // accounts) moved to the checklist page (needs.html). The questions stay defined above so old answers still map.
+  var MOVED = " P1 P2 P3 P4 P5 P6 P7 P8 P9 P10 P11 P14 F1 F2 F3 F4 F5 F6 F7 F9 F11 F12 F13 F14 C1 C2 C3 C5 C7 A1 A2 A3 A4 A5 A6 A7 ";
+  var RETITLE = { P: ["Photos on the site", "Which photos to add or take off. Sending photos is on the checklist."], F: ["What to show", "Choices about what appears on the site."],
+    C: ["People and systems", "Who is named on the site, and the job system Mega uses."] };
+  G.forEach(function (g) { g.q = g.q.filter(function (q) { return MOVED.indexOf(" " + q.id + " ") < 0; }); if (RETITLE[g.id]) { g.t = RETITLE[g.id][0]; g.d = RETITLE[g.id][1]; } });
+  G = G.filter(function (g) { return g.q.length; });
   var PROJECTS = ["Airport Link", "Legacy Way", "APLNG gas fields", "Bulk bitumen storage facility", "M2 Tunnel",
     "Tunnelling equipment program (Redpath)", "Metro Tunnel (Melbourne)", "Tunnelling high-voltage works (Ampcontrol)"];
 

@@ -7,25 +7,25 @@
 @font-face{font-family:"Sora";src:url(fonts/sora.woff2) format("woff2");font-weight:100 800;font-display:swap}
 @font-face{font-family:"Inter";src:url(fonts/inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
 :root{--navy:#18284c;--navy2:#2e4476;--orange:#fa842d;--ink:#2d2929;--muted:#5d6475;--line:#dde2ec;--bg:#f3f5f9;--card:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 Inter,system-ui,sans-serif}
 .wrap{max-width:44rem;margin:0 auto;padding:0 16px}
 .hero{background:radial-gradient(120% 90% at 80% 0%,#2e4476 0%,var(--navy) 65%);color:#fff;padding:22px 0 28px;border-bottom:4px solid var(--orange)}
-.brand{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand img{height:34px}.brand a{color:#fff;font-size:14px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand img{height:34px}.brand a{color:#fff;font-size:16px}
 .hero h1{font:700 clamp(26px,6vw,36px)/1.15 Sora,sans-serif;margin:18px 0 8px}.hero p{color:#dfe5f3;margin:0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0}
-h2{font:700 20px/1.2 Sora,sans-serif;color:var(--navy);margin:0 0 10px}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:999px;border:0;background:var(--orange);color:#1a1206;font:700 16px/1 Inter,sans-serif;text-decoration:none;cursor:pointer}
+h2{font:700 21.5px/1.2 Sora,sans-serif;color:var(--navy);margin:0 0 10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:999px;border:0;background:var(--orange);color:#1a1206;font:700 18px/1 Inter,sans-serif;text-decoration:none;cursor:pointer}
 .btn.line{background:transparent;color:var(--navy2);border:2px solid var(--navy2)}.btn[disabled]{opacity:.6}.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.hc{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.hc:last-child{border:0}.hc div{flex:1;min-width:0}.hc b{display:block}.hc span.d{color:var(--muted);font-size:14px}
-.st{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:13px;font-weight:700}
+.hc{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.hc:last-child{border:0}.hc div{flex:1;min-width:0}.hc b{display:block}.hc span.d{color:var(--muted);font-size:16px}
+.st{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:15px;font-weight:700}
 .run .st{border-color:var(--orange);border-top-color:transparent;animation:sp .7s linear infinite}.ok .st{background:#2fa35b;border-color:#2fa35b;color:#fff}
 .fix .st{background:var(--orange);border-color:var(--orange);color:#1a1206}.bad .st{background:#d9483b;border-color:#d9483b;color:#fff}
 @keyframes sp{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.run .st{animation:none}}
 #sum{font-weight:600;margin:12px 0 0}textarea{width:100%;min-height:90px;font:inherit;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-#rep{min-height:150px;font:13px/1.5 ui-monospace,Consolas,monospace;margin-top:10px}label b{display:block;margin-bottom:6px}
-.muted{color:var(--muted);font-size:14px}:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
-footer{color:var(--muted);font-size:13px;padding:8px 0 40px;text-align:center}
-</style></head><body>
+#rep{min-height:150px;font:15px/1.5 ui-monospace,Consolas,monospace;margin-top:10px}label b{display:block;margin-bottom:6px}
+.muted{color:var(--muted);font-size:16px}:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+footer{color:var(--muted);font-size:15px;padding:8px 0 40px;text-align:center}
+</style><!--type-scale-v1--></head><body>
 <header class="hero"><div class="wrap"><div class="brand"><img src="brand/logo-mark.png" alt="Mega Electrics"><a href="index.html">&larr; Back to the website</a></div>
 <h1>Something not working?</h1><p>Press the button. It checks the website on this device and fixes the common problems by itself.</p></div></header>
 <main class="wrap">
@@ -40,7 +40,7 @@ footer{color:var(--muted);font-size:13px;padding:8px 0 40px;text-align:center}
 </main><footer>Mega Electrics &middot; Help and fix</footer>
 <script>
 (function () {
-  var FILES = ["index.html", "qld.html", "nsw.html", "vic.html", "data/items.js", "capability.html"], KEEP = ["mega-handover-v2", "mega-console-review"], res = [], ver = "";
+  var FILES = ["index.html", "qld.html", "nsw.html", "vic.html", "data/items.js", "capability.html"], KEEP = ["mega-handover-v2", "mega-console-review", "mega-needs-v1"], res = [], ver = "";
   var $ = function (i) { return document.getElementById(i); }, inApp = !!window.App || location.protocol === "file:";
   function get(u) { return fetch(u + (u.indexOf("?") < 0 ? "?" : "&") + "check=" + Date.now(), { cache: "no-store" }); }
   var STEPS = [

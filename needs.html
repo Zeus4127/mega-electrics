@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><title>What We Need From Mega | Mega Electrics</title>
+<meta name="description" content="The full checklist of what Mega Electrics needs to supply to finish and launch the new website, app and staff back end.">
+<link rel="icon" href="brand/logo-mark.png">
+<style>
+@font-face{font-family:"Sora";src:url(fonts/sora.woff2) format("woff2");font-weight:100 800;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--navy:#18284c;--navy2:#2e4476;--orange:#fa842d;--ink:#2d2929;--muted:#5d6475;--line:#dde2ec;--bg:#f3f5f9;--card:#fff;--ok:#2fa35b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 Inter,system-ui,sans-serif}
+.wrap{max-width:68rem;margin:0 auto;padding:0 16px}
+.hero{background:radial-gradient(120% 90% at 80% 0%,#2e4476 0%,var(--navy) 65%);color:#fff;padding:22px 0 26px;border-bottom:4px solid var(--orange)}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand img{height:34px}.brand a{color:#fff;font-size:16px}
+.hero h1{font:700 clamp(26px,5vw,38px)/1.15 Sora,sans-serif;margin:18px 0 8px}.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p{color:#dfe5f3;margin:0;max-width:44rem}
+.bar{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);box-shadow:0 8px 20px -18px rgba(24,40,76,.6)}
+.bar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-block:10px}
+.prog{flex:1 1 220px;min-width:0}.prog b{display:block;font:700 18px/1.2 Sora,sans-serif;color:var(--navy)}
+.track{height:8px;border-radius:99px;background:#e6eaf2;margin-top:6px;overflow:hidden}.track i{display:block;height:100%;width:0;background:var(--orange);border-radius:99px;transition:width .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:999px;border:0;background:var(--orange);color:#1a1206;font:700 17px/1 Inter,sans-serif;text-decoration:none;cursor:pointer}
+.btn.line{background:transparent;color:var(--navy2);border:2px solid var(--navy2)}
+.note{background:#fff7ec;border:1px solid #f6d9b8;border-radius:14px;padding:12px 16px;margin:18px 0;font-size:17px}
+.grp{background:var(--card);border:1px solid var(--line);border-radius:18px;margin:18px 0;overflow:hidden}
+.grp h2{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0;padding:14px 18px;background:var(--navy);color:#fff;font:700 22px/1.2 Sora,sans-serif}
+.grp h2 small{font:600 16px/1.2 Inter,sans-serif;color:#cfd8ee;white-space:nowrap}
+.grp > p{margin:0;padding:10px 18px;color:var(--muted);font-size:16.5px;border-bottom:1px solid var(--line)}
+.it{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;padding:14px 18px;border-bottom:1px solid var(--line);cursor:pointer}
+.it:last-child{border-bottom:0}.it input{width:26px;height:26px;margin:2px 0 0;accent-color:var(--ok)}
+.it b{color:var(--navy);font-weight:700;font-size:18.5px}.it .id{font:700 15px/1 Inter,sans-serif;color:var(--muted);letter-spacing:.04em;margin-right:8px}
+.it .why{display:block;color:var(--ink);font-size:17px;margin-top:2px}
+.it .meta{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:8px}
+.tag{display:inline-block;padding:3px 9px;border-radius:99px;font:600 15px/1.4 Inter,sans-serif;background:#eef1f7;color:var(--navy2)}
+.tag.how{background:#fff1e3;color:#8a4708}
+.it.done b{text-decoration:line-through;color:var(--muted)}.it.done .why{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:17px}td,th{text-align:left;padding:10px 18px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:14.5px;letter-spacing:.06em;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+.out{width:100%;min-height:120px;margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px;font:13px/1.45 ui-monospace,Consolas,monospace;display:none}
+.toast{position:fixed;left:16px;right:16px;bottom:22px;width:fit-content;max-width:calc(100% - 32px);margin:0 auto;text-align:center;transform:translateY(120px);background:var(--navy);color:#fff;padding:10px 18px;border-radius:14px;font-weight:600;font-size:16px;transition:transform .2s;z-index:9}
+.toast.show{transform:none}
+footer{color:var(--muted);font-size:15px;padding:8px 0 40px;text-align:center}
+@media(max-width:560px){.bar .btn{flex:1 1 46%;padding:10px 8px;font-size:15.5px}.grp h2{font-size:19px;padding:12px 14px}.it{padding:12px 14px}td,th{padding:9px 14px}}
+@media print{.bar,.toast,.hero a,.out{display:none!important}body{background:#fff}.hero{background:#fff;color:#000;border-bottom:2px solid #000;padding:0 0 8px}.hero p{color:#000}
+ .hero h1 em{color:#000}.grp{break-inside:auto;border-color:#999}.grp h2{background:#fff;color:#000;border-bottom:1px solid #999}.grp h2 small{color:#000}.it{break-inside:avoid}}
+@media(max-width:560px){body{font-size:17px}.it b{font-size:17.5px}.it .why{font-size:16px}}
+</style></head><body>
+<header class="hero"><div class="wrap">
+<div class="brand"><img src="brand/logo-mark.png" alt="Mega Electrics"><a href="start.html">&larr; Back to the tour</a></div>
+<h1>What we need from Mega <em>to finish the job.</em></h1>
+<p>Everything on this page is something only Mega can give. Tick items off as they are sent. Download the list to share the jobs around the office.</p>
+</div></header>
+<div class="bar"><div class="wrap">
+<div class="prog"><b id="pt">0 of 0 done</b><div class="track"><i id="pb"></i></div></div>
+<button class="btn" id="csv" type="button">Download for Excel</button>
+<button class="btn line" id="prt" type="button">Print or save as PDF</button>
+<button class="btn line" id="cpy" type="button">Copy progress for Ryan</button>
+</div></div>
+<main class="wrap">
+<div class="note"><b>Why this matters:</b> the preview is built only from what is on Mega's current website, so some parts are thinner than they should be. Photos are small copies, Careers is short, some company facts are blank, and project stories are missing dates and numbers. Nothing has been guessed. Each item below fills one of those gaps.</div>
+<div class="note"><b>How to send things:</b> photos, video and documents go by WhatsApp, email or a shared folder link to Ryan. Never send passwords: where an account is needed, Mega creates it in Mega's own name and adds access. Ticks on this page are saved on this device only.</div>
+<div id="list"></div>
+<section class="grp"><h2>What it costs to run<small>paid by Mega, to the provider</small></h2>
+<table><tr><th>Item</th><th>Cost</th></tr>
+<tr><td>Website hosting</td><td>free at this size</td></tr>
+<tr><td>Back end hosting (Cloudflare)</td><td>about A$7 a month</td></tr>
+<tr><td>Staff sign-in, up to 50 people</td><td>free</td></tr>
+<tr><td>Sending emails (Amazon, Sydney)</td><td>about A$1.50 a month</td></tr>
+<tr><td>Teams alerts</td><td>free with Microsoft 365</td></tr>
+<tr><td>AI summary of each enquiry (optional)</td><td>about 2 cents an enquiry</td></tr>
+<tr><td>Text messages to on-call staff (optional)</td><td>about 7 cents a text</td></tr>
+<tr><td>Google Play developer account</td><td>about A$36, once</td></tr>
+<tr><td>Apple developer account, only for an iPhone app</td><td>A$149 a year</td></tr>
+</table>
+<p>Typical total: about A$10 to A$15 a month for the parts already built. Estimates in Australian dollars, before GST. Providers can change their prices.</p></section>
+<textarea class="out" id="out" readonly aria-label="Progress to copy"></textarea>
+</main>
+<footer>Mega Electrics preview &middot; questions: reply on WhatsApp</footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(function () {
+  // [id, item, why it is needed, who at Mega usually has it, how to send it]
+  var G = [
+    ["Decisions and sign-off", "Management", "Nothing goes on megaelectrics.com.au until these are answered.", [
+      ["A1", "Review the website and app, and send the feedback form", "About 20 minutes. It tells us what to keep, change or remove.", "Managing Director or management team", "feedback.html, Send to Ryan"],
+      ["A2", "Review the staff back end preview", "Pick which screens Mega wants. Only Enquiries, Website stats and Settings are built; the rest are designs.", "Management and operations", "Staff sign-in, Review and feedback screen"],
+      ["A3", "Permission to name each client and show photos of their sites", "The site names CPB, Redpath, Queensland Rail, Patrick, Brisbane City Council, Origin APLNG, Hanson, Urban Utilities and others.", "Managing Director", "Yes or no for each client"],
+      ["A4", "Permission to show the leadership team", "Mega's current website names the leadership team. Tell us who to show, with titles.", "Managing Director", "List of names and titles"],
+      ["A5", "Permission for a small \"Website and app by\" credit in the footer", "Optional. One line at the bottom of the page.", "Managing Director", "Yes or no"],
+      ["A6", "Final go-ahead to replace the current website", "The current megaelectrics.com.au stays exactly as it is until Mega says go.", "Managing Director", "Written OK"]
+    ]],
+    ["Company facts", "Office and safety", "These show as blanks today. Buyers and procurement teams check them first.", [
+      ["B1", "Electrical contractor licence numbers for QLD, NSW and VIC", "Shown in the footer, the capability statement and the engineers section.", "Office or compliance", "Text"],
+      ["B2", "ABN", "Shown with the licence numbers.", "Accounts", "Text"],
+      ["B3", "Insurance: public liability amount and workers' compensation", "Buyers ask for these before a tender.", "Accounts", "Certificates of currency (PDF)"],
+      ["B4", "Accreditations Mega holds", "ISO 45001, ISO 9001, ISO 14001, Federal Safety Commissioner. We only show the ones Mega has.", "Safety or compliance", "Certificates (PDF)"],
+      ["B5", "Safety figures: LTIFR and TRIFR, 12-month rolling, with the date", "Shown in the Safety section. Left out if Mega prefers.", "Safety", "Text"],
+      ["B6", "Prequalification bodies and categories", "For the engineers and procurement section.", "Office or estimating", "Text"],
+      ["B7", "Client references we may offer", "Names and roles of people happy to be contacted.", "Managing Director", "Text"],
+      ["B8", "Confirm office hours for each branch", "From the current site: QLD 7am to 4pm, NSW 8:30am to 5pm, VIC 7am to 4pm, weekdays.", "Each state manager", "Yes, or the correct hours"],
+      ["B9", "Plant and test equipment list with ratings", "Cable trailers, winder, HV test sets and other major gear.", "Operations", "List or spreadsheet"],
+      ["B10", "Details for the main project stories", "Years, how long each job ran, and the numbers: km of cable, substations, joints, tunnel boring machines powered. For Airport Link, Legacy Way, APLNG, Port of Brisbane bitumen facility and Metro Tunnel.", "Project managers", "Text, one line per project"],
+      ["B11", "Year for each project in the project list", "30 projects are listed. Years help buyers judge recent experience.", "Operations", "List"],
+      ["B12", "Apprentice and trade starting rates", "Only if Mega wants them shown on the Careers page.", "HR", "Text, or leave out"],
+      ["B13", "Any other sectors and jobs Mega has worked on", "The Services page lists 14 sectors taken from Mega's current website. Tell us about any others, for example sugar mills, racing tracks, hospitals, data centres or crypto sites, with one job for each.", "Managing Director and project managers", "List: sector, client, what was done"],
+      ["B14", "Check the sector and service lists are right", "Every line on the Services page came from Mega's current website. Mark anything out of date or missing.", "Operations manager", "Notes in the feedback form"],
+      ["B15", "Staff and fleet numbers", "How many electricians, apprentices and engineers, and how many vehicles, cable trailers and HV test sets. Shown as headline numbers.", "General Manager or HR", "Text"],
+      ["B16", "Towns and regions each branch covers", "Used on the state pages and for Google local search.", "Each state manager", "List"]
+    ]],
+    ["Contacts and routing", "Operations and office", "So every enquiry and fault reaches the right person the first time.", [
+      ["C1", "Email address for each kind of enquiry", "Quotes for QLD, NSW and VIC, electrical faults, accounts, careers and trade partners. Today they all go to info@megaelectrics.com.", "Operations manager", "List of addresses"],
+      ["C2", "24/7 on-call roster", "Names and mobile numbers for each state, shown in Report a fault.", "Operations manager", "List"],
+      ["C3", "Confirm 1300 090 797 is answered 24/7 for every branch", "It is the one number used across the whole site and app.", "Operations manager", "Yes or no"],
+      ["C4", "Important client list", "Clients whose enquiries must always be seen first in the back end.", "Managing Director", "List"],
+      ["C5", "Staff list with roles for the back end", "Who is an Administrator, manager, estimator, supervisor and so on.", "General Manager or HR", "List or spreadsheet"],
+      ["C6", "Which employee portal link is current", "The current site links to Employment Hero and to an older Mega portal.", "HR", "Text"],
+      ["C7", "LinkedIn and other social pages", "Linked from the footer and used by Google.", "Office", "Links"]
+    ]],
+    ["Photos and video", "Whoever holds the files", "Original files look far sharper than the small copies from the old website.", [
+      ["D1", "Original job photos", "Full-size files from the camera or phone, recent jobs first. Not copies sent through WhatsApp.", "Project managers and supervisors", "Shared folder link"],
+      ["D2", "Photos of crews at work in full PPE", "People make the site. Everyone shown must be in correct PPE.", "Supervisors", "Shared folder link"],
+      ["D3", "Outside of each branch with Mega signage", "Murarrie, Yatala, Wetherill Park and Fairfield.", "Each state manager", "Photos"],
+      ["D4", "Portraits of the leadership team", "Only if A4 is a yes.", "Office", "Photos"],
+      ["D5", "Original drone and site video files", "The full-quality files, not compressed copies.", "Whoever flew the drone", "Shared folder link"],
+      ["D6", "The Mega logo as a vector file", "SVG, AI or EPS. The preview uses a copy cut from the old site.", "Office or the old web designer", "File"],
+      ["D7", "Existing capability statement and client logos", "If Mega has a current PDF, and logos Mega is allowed to use.", "Office or estimating", "Files"],
+      ["D8", "Founder and early-days photos", "Kevin Hull and Mega around 1991, for the About section.", "Managing Director", "Photos"],
+      ["D9", "The fleet and plant lined up", "Vehicles, cable trailers and the winder at a depot. A drone shot is ideal.", "Operations", "Photos or drone video"],
+      ["D10", "Close-ups of the skilled work", "HV jointing and testing, and boards being built in the switchboard workshop.", "Supervisors", "Photos"],
+      ["D11", "Photos of the main projects", "Airport Link, Legacy Way, APLNG, the bitumen facility, Metro Tunnel and any other job Mega is proud of.", "Project managers", "Shared folder link"],
+      ["D12", "A short 'who we are' video", "Optional. 60 to 90 seconds of Kevin and a few of the crew talking about the work.", "Managing Director", "Video file, or ask us to plan a shoot"]
+    ]],
+    ["Accounts and access", "IT provider and management", "Mega owns every account. Mega's card, Mega's name, Mega's control.", [
+      ["E1", "Cloudflare account in Mega's name", "Runs the staff back end. About A$7 a month.", "IT provider", "Create it, then add Ryan as a member"],
+      ["E2", "Two email records added to Mega's email domain", "So emails from the website do not land in spam.", "IT provider", "We supply the exact records"],
+      ["E3", "Microsoft 365 admin approval", "Lets staff sign in with the work account they already use.", "IT provider or Microsoft 365 admin", "One approval click"],
+      ["E4", "Who controls the megaelectrics.com.au domain and current hosting", "Needed for the switch-over on launch day.", "Office or the old web designer", "Contact name"],
+      ["E5", "Google Play developer account in Mega's name", "To publish the Android app. About A$36, once.", "IT provider or management", "Create it, then add Ryan as a user"],
+      ["E6", "Choice of email sending service", "Options are in the feedback form, section B. The default is Amazon in Sydney.", "IT provider", "Answer in the feedback form"],
+      ["E7", "Teams channel for alerts", "Optional. New enquiries and faults can post into a Teams channel.", "IT provider", "Channel name"],
+      ["E8", "Apple developer account", "Only if Mega wants an iPhone app. A$149 a year.", "Management", "Yes or no"],
+      ["E9", "Business Google account", "For the Google Business Profile, so Mega shows correctly in Google Maps and local search.", "Office or IT provider", "Add Ryan as a manager"]
+    ]]
+  ];
+  var KEY = "mega-needs-v1", S = {};
+  try { S = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { S = {}; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function all() { var a = []; G.forEach(function (g) { g[3].forEach(function (i) { a.push([g[0]].concat(i)); }); }); return a; }
+  function toast(t) { var el = document.getElementById("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function () { el.classList.remove("show"); }, 2400); }
+  function draw() {
+    document.getElementById("list").innerHTML = G.map(function (g) {
+      var n = g[3].filter(function (i) { return S[i[0]]; }).length;
+      return '<section class="grp"><h2>' + esc(g[0]) + "<small>" + n + " of " + g[3].length + " done</small></h2><p>" + esc(g[1]) + ". " + esc(g[2]) + "</p>" +
+        g[3].map(function (i) {
+          return '<label class="it' + (S[i[0]] ? " done" : "") + '"><input type="checkbox" data-id="' + i[0] + '"' + (S[i[0]] ? " checked" : "") + "><span><b><span class=\"id\">" + i[0] + "</span>" + esc(i[1]) +
+            '</b><span class="why">' + esc(i[2]) + '</span><span class="meta"><span class="tag">Who: ' + esc(i[3]) + '</span><span class="tag how">Send: ' + esc(i[4]) + "</span></span></span></label>";
+        }).join("") + "</section>";
+    }).join("");
+    var a = all(), d = a.filter(function (i) { return S[i[1]]; }).length;
+    document.getElementById("pt").textContent = d + " of " + a.length + " done";
+    document.getElementById("pb").style.width = (a.length ? Math.round(100 * d / a.length) : 0) + "%";
+  }
+  document.getElementById("list").addEventListener("change", function (e) {
+    var id = e.target.getAttribute && e.target.getAttribute("data-id"); if (!id) return;
+    if (e.target.checked) S[id] = 1; else delete S[id];
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (er) {}
+    draw();
+  });
+  function q(s) { return '"' + String(s).replace(/"/g, '""') + '"'; }
+  document.getElementById("csv").onclick = function () {
+    var rows = [["Ref", "Group", "What we need", "Why", "Who at Mega", "How to send", "Assigned to", "Due date", "Done"]].concat(all().map(function (i) {
+      return [i[1], i[0], i[2], i[3], i[4], i[5], "", "", S[i[1]] ? "Yes" : ""]; }));
+    var csv = "﻿" + rows.map(function (r) { return r.map(q).join(","); }).join("\r\n");
+    try {
+      var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      a.download = "Mega-Electrics-what-we-need.csv"; document.body.appendChild(a); a.click(); a.remove();
+      toast("Downloaded. Open it in Excel.");
+    } catch (er) { toast("Download is not available here. Use Print instead."); }
+  };
+  document.getElementById("prt").onclick = function () { window.print(); };
+  document.getElementById("cpy").onclick = function () {
+    var a = all(), text = "Mega: what we need, progress\n" + a.map(function (i) { return "[N-" + i[1] + "] " + (S[i[1]] ? "DONE" : "open") + ": " + i[2]; }).join("\n");
+    var o = document.getElementById("out"); o.style.display = "block"; o.value = text;
+    var done = function () { toast("Copied. Paste it into a message to Ryan."); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { o.focus(); o.select(); toast("Select all and copy"); });
+    else { o.focus(); o.select(); toast("Select all and copy"); }
+  };
+  draw();
+})();
+</script>
+</body></html>
