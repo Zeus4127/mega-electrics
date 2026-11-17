@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><title>Mega Staff Demo</title>
+<style>
+:root{--navy:#18284c;--blue:#2e4476;--orange:#fa842d;--ink:#2d2929;--muted:#5d6475;--line:#dde2ec;--bg:#f2f4f9;--card:#fff;--soft:#fff1e6}
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 Inter,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:var(--navy);color:#fff;padding:14px 16px}header .in,main{max-width:1200px;margin:0 auto}
+header b{font:700 18px "Segoe UI",system-ui,sans-serif;letter-spacing:.03em}header small{color:#c9d4ea;margin-left:10px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}nav button{min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.4);background:none;color:#fff;font:600 14px inherit;cursor:pointer}
+nav button.on{background:var(--orange);border-color:var(--orange);color:#1a1206}main{padding:20px 16px 60px}
+.row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}.list{flex:1 1 340px;min-width:0;display:grid;gap:8px}.detail{flex:999 1 480px;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.item{cursor:pointer;text-align:left;width:100%;font:inherit;color:inherit}
+.item.sel{border:2px solid var(--orange)}.item.must{background:#fff7f0}.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--orange);color:#1a1206;margin-right:6px}
+.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:#e6edf8;color:var(--blue)}.meta{font-size:13px;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}.btns button,.btn{min-height:40px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;font:500 14px inherit;cursor:pointer}
+.btns button.on{background:var(--navy);color:#fff;border-color:var(--navy)}.btn.main{background:var(--orange);border-color:var(--orange);color:#1a1206;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:8px}td{padding:8px;border-top:1px solid var(--line);vertical-align:top}
+.wide{overflow-x:auto}input,textarea,select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%}textarea{min-height:64px}
+.err{color:#b42318}.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}h2{margin:0 0 10px;color:var(--navy)}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+</style></head><body><div style="background:#fa842d;color:#1a1206;font:600 14px/1.4 Inter,system-ui,sans-serif;padding:10px 16px;text-align:center">Demo with made-up sample data. Click anything: nothing is saved or sent, and reloading starts again. <a href="start.html" style="color:#1a1206">Back to the tour</a></div>
+<header><div class="in"><b>MEGA ELECTRICS</b><small id="me">Signing in…</small>
+<nav id="tabs" aria-label="Back end sections"></nav></div></header>
+<main id="main"><p>Loading…</p></main>
+<script>
+(function () {
+  var TABS = [["inbox", "Enquiries"], ["held", "Held as spam"], ["log", "Activity log"], ["routes", "Where emails go"], ["clients", "Important clients"],
+    ["roster", "24/7 on-call"], ["staff", "Staff and roles"], ["stats", "What people look at"], ["options", "Options"]];
+  var S = { tab: "inbox", sel: null, me: null, filter: "all" };
+  var main = document.getElementById("main");
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function when(ms) { return ms ? new Date(ms).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) : ""; }
+var DEMO={"enq": [{"id": 1, "ref": "ME-24181", "name": "Priya Natarajan", "company": "Riverside Tunnel Alliance (sample)", "email": "priya@riverside-tunnel.example.com", "phone": "0491 570 156", "kind": "quote", "state": "QLD", "status": "new", "priority": "must", "tier": "Tier 1", "client": "Riverside Tunnel Alliance (sample)", "page": "/qld.html#contact", "site": "Portal 2 laydown area, Brisbane", "ago": 0.4, "message": "We need temporary 22 kV supply and a 1.5 MVA kiosk for the TBM launch site from March. Can you price supply, install and 12 months of maintenance?", "ai_summary": "Temporary 22 kV supply and 1.5 MVA kiosk for a tunnel boring machine launch site, from March, with 12 months of maintenance.", "ai_urgency": "today", "ai_type": "High voltage / tunnelling", "ai_reply": "Hi Priya, thanks for getting in touch. Our tunnelling team will call you today to book a site visit for the Portal 2 laydown area."}, {"id": 2, "ref": "ME-24180", "name": "Tom Becker", "company": "Becker Cold Stores (sample)", "email": "tom@beckercold.example.com", "phone": "0491 570 157", "kind": "fault", "state": "QLD", "status": "assigned", "priority": "urgent", "assignee": "oncall.qld@example.com", "page": "/index.html#fault", "ago": 1.2, "message": "Main switchboard tripping every hour, freezer room temps rising. Need someone today.", "ai_summary": "Repeated main switchboard trips at a cold store, stock at risk.", "ai_urgency": "now", "ai_type": "Breakdown / switchboard"}, {"id": 3, "ref": "ME-24179", "name": "Hannah Lowe", "company": "Western Sydney Logistics Park (sample)", "email": "hannah@wslp.example.com", "phone": "0491 570 158", "kind": "quote", "state": "NSW", "status": "quoted", "priority": "normal", "assignee": "estimating.nsw@example.com", "page": "/nsw.html#contact", "ago": 26, "message": "Quote for LV reticulation and lighting to three new warehouse pads, roughly 18,000 m2 total."}, {"id": 4, "ref": "ME-24178", "name": "Marco Ricci", "company": "", "email": "marco.ricci@example.com", "phone": "0491 570 159", "kind": "general", "state": "VIC", "status": "new", "priority": "normal", "page": "/vic.html#contact", "ago": 30, "message": "Do you do EV charger installs for a small business car park (6 bays)?"}, {"id": 5, "ref": "ME-24177", "name": "Sarah Okafor", "company": "Harbourside Port Services (sample)", "email": "sarah@harbourside.example.com", "phone": "0491 570 110", "kind": "quote", "state": "QLD", "status": "won", "priority": "must", "tier": "Tier 1", "client": "Harbourside Port Services (sample)", "assignee": "pm.qld@example.com", "page": "/index.html#contact", "ago": 72, "message": "Crane drive upgrade on two ship-to-shore cranes during the April shutdown."}, {"id": 6, "ref": "ME-24176", "name": "Liam Chen", "company": "Chen Fitouts (sample)", "email": "liam@chenfitouts.example.com", "phone": "0491 570 313", "kind": "careers", "state": "NSW", "status": "closed", "priority": "normal", "page": "/index.html#careers", "ago": 96, "message": "Third-year apprentice looking to move into HV work. CV attached."}, {"id": 7, "ref": "ME-24175", "name": "Grace Tan", "company": "Northgate Council (sample)", "email": "grace.tan@northgate.example.com", "phone": "0491 570 737", "kind": "quote", "state": "VIC", "status": "lost", "priority": "normal", "page": "/vic.html#contact", "ago": 150, "message": "Streetlight upgrade to LED along 2.4 km of arterial road."}], "held": [{"id": 8, "ref": "ME-24174", "name": "SEO Expert", "company": "", "email": "rank1@example.com", "phone": "", "kind": "general", "state": "", "status": "held", "priority": "normal", "page": "/index.html#contact", "ago": 5, "message": "We can get your website to page 1 of Google guaranteed!!! Reply for prices."}], "log": [[0.4, "website", "enquiry received", "Tier 1 client matched: Riverside Tunnel Alliance (sample)", "ME-24181"], [0.39, "system", "AI summary added", "urgency: today", "ME-24181"], [0.38, "system", "Teams alert sent", "Tier 1 / must look at", "ME-24181"], [1.2, "website", "fault report received", "", "ME-24180"], [1.1, "system", "on-call SMS sent", "QLD on-call (sample)", "ME-24180"], [1.0, "dispatch@example.com", "assigned", "oncall.qld@example.com", "ME-24180"], [5, "system", "held as spam", "link-heavy, no phone", "ME-24174"], [24, "estimating.nsw@example.com", "status changed", "assigned -> quoted", "ME-24179"], [48, "pm.qld@example.com", "status changed", "quoted -> won", "ME-24177"], [48.1, "system", "sent to job system", "job created", "ME-24177"]], "tables": {"routes": [{"key": "quote", "emails": "quotes@example.com"}, {"key": "fault", "emails": "dispatch@example.com, oncall.qld@example.com"}, {"key": "careers", "emails": "careers@example.com"}, {"key": "accounts", "emails": "accounts@example.com"}, {"key": "general", "emails": "info@example.com"}], "clients": [{"id": 1, "name": "Riverside Tunnel Alliance (sample)", "domain": "riverside-tunnel.example.com", "tier": "1"}, {"id": 2, "name": "Harbourside Port Services (sample)", "domain": "harbourside.example.com", "tier": "1"}, {"id": 3, "name": "Western Sydney Logistics Park (sample)", "domain": "wslp.example.com", "tier": "2"}], "roster": [{"id": 1, "name": "QLD on-call (sample)", "phone": "0491 571 266", "area": "QLD", "order": "1", "active": "1"}, {"id": 2, "name": "QLD backup (sample)", "phone": "0491 571 491", "area": "QLD", "order": "2", "active": "1"}, {"id": 3, "name": "NSW on-call (sample)", "phone": "0491 571 804", "area": "NSW", "order": "1", "active": "1"}, {"id": 4, "name": "VIC on-call (sample)", "phone": "0491 572 549", "area": "VIC", "order": "1", "active": "1"}], "staff": [{"email": "manager@example.com", "name": "Operations Manager (sample)", "role": "admin", "state": ""}, {"email": "estimating.nsw@example.com", "name": "NSW Estimator (sample)", "role": "estimator", "state": "NSW"}, {"email": "pm.qld@example.com", "name": "QLD Project Manager (sample)", "role": "manager", "state": "QLD"}, {"email": "reception@example.com", "name": "Reception (sample)", "role": "viewer", "state": ""}]}, "stats": [["/index.html", "page view", 412], ["/qld.html", "page view", 188], ["/index.html#contact", "quote form opened", 64], ["/nsw.html", "page view", 97], ["tel:1300090797", "call button tapped", 41], ["/capability.html", "page view", 33], ["/vic.html", "page view", 29], ["/install.html", "app download", 12]], "options": [["Email delivery (Postmark, Amazon SES Sydney or Resend)", true, ""], ["Staff sign-in with Microsoft 365 (Cloudflare Access)", true, ""], ["Teams alerts for must-look-at and urgent enquiries", true, ""], ["AI summary and draft reply (Claude)", true, ""], ["SMS to the 24/7 on-call (ClickSend)", false, "ClickSend account and key"], ["Send won jobs to the job system (simPRO, Ascora, ServiceM8...)", false, "job system webhook address"]]};(function(){var now=Date.now(),H=3600000,ev={};
+DEMO.enq.concat(DEMO.held).forEach(function(e){e.created_at=now-e.ago*H;ev[e.id]=[{at:e.created_at,who:"website",action:"received",detail:e.kind}];
+ if(e.assignee)ev[e.id].push({at:e.created_at+600000,who:"manager@example.com",action:"assigned",detail:e.assignee})});
+DEMO.ev=ev;DEMO.logrows=DEMO.log.map(function(l){return{at:now-l[0]*H,who:l[1],action:l[2],detail:l[3],ref:l[4]}});})();
+async function api(path, body) {
+  await new Promise(function (r) { setTimeout(r, 120); });
+  var q = path.split("?"), p = q[0], all = DEMO.enq.concat(DEMO.held), who = "manager@example.com";
+  function find(id) { return all.filter(function (e) { return e.id === id; })[0]; }
+  if (p === "me") return { email: who, name: "Demo manager", role: "admin", state: "" };
+  if (p === "enquiries") return (q[1] === "held=1" ? DEMO.held : DEMO.enq).slice().sort(function (a, b) { return b.created_at - a.created_at; });
+  var m = p.match(/^enquiries\/(\d+)$/);
+  if (m) {
+    var e = find(Number(m[1])); if (!e) throw new Error("Not found");
+    if (body) {
+      var a = null;
+      if (body.status) { a = ["status changed", e.status + " -> " + body.status]; e.status = body.status; }
+      if ("assignee" in body) { e.assignee = body.assignee; a = ["assigned", body.assignee || "nobody"]; if (e.status === "new" && body.assignee) e.status = "assigned"; }
+      if (body.note) a = ["note", body.note];
+      if (body.notSpam) { DEMO.held = DEMO.held.filter(function (x) { return x !== e; }); e.status = "new"; DEMO.enq.push(e); a = ["marked not spam", "sent to the team"]; }
+      if (a) { DEMO.ev[e.id].push({ at: Date.now(), who: who, action: a[0], detail: a[1] }); DEMO.logrows.unshift({ at: Date.now(), who: who, action: a[0], detail: a[1], ref: e.ref }); }
+      return { ok: true };
+    }
+    return { enquiry: e, events: DEMO.ev[e.id].slice().reverse() };
+  }
+  if (p === "log") return DEMO.logrows.slice().sort(function (a, b) { return b.at - a.at; });
+  if (p === "stats") return DEMO.stats.map(function (s) { return { path: s[0], event: s[1], n: s[2] }; });
+  if (p === "options") return DEMO.options.map(function (o) { return { label: o[0], on: o[1], needs: o[2] }; });
+  var t = DEMO.tables[p];
+  if (t) {
+    if (body) {
+      var pk = p === "routes" ? "key" : p === "staff" ? "email" : "id";
+      if (body["delete"]) DEMO.tables[p] = t.filter(function (r) { return r[pk] !== body[pk]; });
+      else {
+        var row = t.filter(function (r) { return body[pk] && r[pk] === body[pk]; })[0];
+        if (row) Object.assign(row, body); else { if (pk === "id") body.id = t.reduce(function (n, r) { return Math.max(n, r.id); }, 0) + 1; t.push(body); }
+      }
+      DEMO.logrows.unshift({ at: Date.now(), who: who, action: "changed " + p, detail: "", ref: "" });
+      return { ok: true };
+    }
+    return t;
+  }
+  throw new Error("Not in the demo");
+}
+  function tabs() {
+    document.getElementById("tabs").innerHTML = TABS.map(function (t) { return '<button type="button" data-t="' + t[0] + '" class="' + (S.tab === t[0] ? "on" : "") + '">' + t[1] + "</button>"; }).join("");
+  }
+  document.getElementById("tabs").addEventListener("click", function (e) { var t = e.target.dataset.t; if (t) { S.tab = t; S.sel = null; show(); } });
+
+  async function inbox(held) {
+    var rows = await api("enquiries" + (held ? "?held=1" : ""));
+    var f = S.filter, open = function (r) { return r.status === "new" || r.status === "assigned"; };
+    var shown = rows.filter(function (r) { return held || f === "all" ? true : f === "must" ? r.priority === "must" && open(r) : r.status === f; });
+    var filt = held ? "" : '<div class="filters btns">' + [["must", "Must look at"], ["all", "All"], ["new", "New"], ["assigned", "Assigned"], ["quoted", "Quoted"], ["won", "Won"], ["lost", "Lost"]]
+      .map(function (x) { return '<button type="button" data-f="' + x[0] + '" class="' + (f === x[0] ? "on" : "") + '">' + x[1] + "</button>"; }).join("") + "</div>";
+    main.innerHTML = filt + '<div class="row"><div class="list">' + (shown.map(function (r) {
+      return '<button type="button" class="card item ' + (r.priority === "must" ? "must " : "") + (S.sel === r.id ? "sel" : "") + '" data-id="' + r.id + '">' +
+        (r.priority === "must" ? '<span class="tag">MUST LOOK AT</span>' : r.priority === "urgent" ? '<span class="tag">URGENT</span>' : "") +
+        "<b>" + esc(r.company || r.name) + '</b> <span class="badge">' + esc(r.status) + '</span><div class="meta">' + esc(r.ref) + " · " + esc(r.kind) + " · " +
+        esc(r.state || "-") + " · " + when(r.created_at) + " · " + (r.assignee ? "Checked by " + esc(r.assignee) : "Not assigned") + (r.delivery === "bounced" ? " · email bounced" : "") + "</div></button>";
+    }).join("") || '<p class="card">Nothing here.</p>') + '</div><div class="detail" id="det"></div></div>';
+    if (S.sel) detail(S.sel, held);
+  }
+  async function detail(id, held) {
+    var d = await api("enquiries/" + id), e = d.enquiry, det = document.getElementById("det");
+    var st = ["new", "assigned", "quoted", "won", "lost", "closed"];
+    det.innerHTML = '<div class="card"><div class="meta">' + esc(e.ref) + " · " + when(e.created_at) + "</div><h2>" + esc(e.name) + "</h2><p>" + esc(e.company || "") + "</p>" +
+      (e.client ? '<p><span class="tag">' + esc(e.tier) + "</span>" + esc(e.client) + " (matched by email domain)</p>" : "") +
+      "<p><b>Phone:</b> " + esc(e.phone || "-") + " · <b>Email:</b> " + esc(e.email || "-") + "<br><b>Type:</b> " + esc(e.kind) + " · <b>Branch:</b> " + esc(e.state || "-") +
+      " · <b>Sent from:</b> " + esc(e.page || "-") + (e.site ? "<br><b>Site:</b> " + esc(e.site) : "") + "</p><p style=\"white-space:pre-wrap\">" + esc(e.message) + "</p>" +
+      (e.ai_summary ? '<div style="border-left:3px solid #fa842d;padding:8px 12px;margin:10px 0;background:#fff7ec;border-radius:8px"><b>AI summary</b> (check before acting): ' + esc(e.ai_summary) + "<br><b>Urgency:</b> " + esc(e.ai_urgency || "-") + " · <b>Work:</b> " + esc(e.ai_type || "-") + (e.ai_reply ? '<br><b>Draft reply:</b> <span style="white-space:pre-wrap">' + esc(e.ai_reply) + "</span>" : "") + "</div>" : "") +
+      (held ? '<p><button type="button" class="btn main" id="notspam">Not spam, send it to the team</button></p>' : "") +
+      '<p><b>Status</b></p><div class="btns">' + st.map(function (s) { return '<button type="button" data-s="' + s + '" class="' + (e.status === s ? "on" : "") + '">' + s + "</button>"; }).join("") + "</div>" +
+      '<p><label for="asg"><b>Assign to</b> (staff email)</label><input id="asg" value="' + esc(e.assignee || "") + '"></p><p><button type="button" class="btn" id="asgSave">Save assignee</button></p>' +
+      '<p><label for="note"><b>Add a note</b></label><textarea id="note"></textarea></p><p><button type="button" class="btn main" id="noteSave">Save note</button> <span class="err" id="err"></span></p>' +
+      "<p><b>History</b></p><table>" + d.events.map(function (x) { return "<tr><td class=\"meta\">" + when(x.at) + "</td><td>" + esc(x.who) + "</td><td>" + esc(x.action) + (x.detail ? ": " + esc(x.detail) : "") + "</td></tr>"; }).join("") + "</table></div>";
+    function act(body) { api("enquiries/" + id, body).then(function () { show(); }, function (er) { document.getElementById("err").textContent = er.message; }); }
+    det.querySelectorAll("[data-s]").forEach(function (b) { b.onclick = function () { act({ status: b.dataset.s }); }; });
+    document.getElementById("asgSave").onclick = function () { act({ assignee: document.getElementById("asg").value.trim() }); };
+    document.getElementById("noteSave").onclick = function () { var n = document.getElementById("note").value.trim(); if (n) act({ note: n }); };
+    var ns = document.getElementById("notspam"); if (ns) ns.onclick = function () { act({ notSpam: true }); };
+  }
+  async function log() {
+    var rows = await api("log");
+    main.innerHTML = '<h2>Activity log</h2><p class="meta">Every action, newest first. Entries can never be edited or deleted.</p><div class="card wide"><table><tr><th>When</th><th>Who</th><th>What</th><th>Enquiry</th></tr>' +
+      rows.map(function (r) { return "<tr><td>" + when(r.at) + "</td><td>" + esc(r.who) + "</td><td>" + esc(r.action) + (r.detail ? ": " + esc(r.detail) : "") + "</td><td>" + esc(r.ref || "") + "</td></tr>"; }).join("") + "</table></div>";
+  }
+  var EDIT = {
+    routes: { title: "Where emails go", note: "Each type of enquiry and who gets it. Separate several emails with commas. 'general' is the backup for anything that fails.", cols: ["key", "emails"], pk: "key" },
+    clients: { title: "Important clients", note: "Matched by the sender's email domain (e.g. cpbcon.com.au) or company name. Tier 1 = must look at, never held as spam, escalated after 15 minutes.", cols: ["name", "domain", "tier"], pk: "id" },
+    roster: { title: "24/7 on-call", note: "Lowest order is called first. Area: QLD, NSW, VIC or blank for all. Active 1 = on, 0 = off.", cols: ["name", "phone", "area", "order", "active"], pk: "id" },
+    staff: { title: "Staff and roles", note: "Who can sign in. Roles: viewer (read only), estimator (change enquiries), manager (also clients and roster), admin (everything). State limits them to one branch.", cols: ["email", "name", "role", "state"], pk: "email" }
+  };
+  async function edit(name) {
+    var c = EDIT[name], rows = await api(name);
+    main.innerHTML = "<h2>" + c.title + '</h2><p class="meta">' + c.note + '</p><div class="card wide"><table><tr>' + c.cols.map(function (x) { return "<th>" + x + "</th>"; }).join("") + "<th></th></tr>" +
+      rows.map(function (r) { return "<tr>" + c.cols.map(function (x) { return '<td><input data-k="' + x + '" value="' + esc(r[x]) + '" aria-label="' + x + '"></td>'; }).join("") +
+        '<td class="btns"><button type="button" data-save="' + esc(r[c.pk]) + '">Save</button><button type="button" data-del="' + esc(r[c.pk]) + '">Remove</button></td></tr>'; }).join("") +
+      "<tr>" + c.cols.map(function (x) { return '<td><input data-k="' + x + '" aria-label="new ' + x + '" placeholder="' + x + '"></td>'; }).join("") + '<td><button type="button" class="btn main" data-save="">Add</button></td></tr></table><p class="err" id="err"></p></div>';
+    main.querySelectorAll("[data-save]").forEach(function (b) {
+      b.onclick = function () {
+        var body = {}; b.closest("tr").querySelectorAll("input").forEach(function (i) { body[i.dataset.k] = i.value.trim(); });
+        if (b.dataset.save && c.pk === "id") body.id = Number(b.dataset.save);
+        api(name, body).then(show, function (er) { document.getElementById("err").textContent = er.message; });
+      };
+    });
+    main.querySelectorAll("[data-del]").forEach(function (b) {
+      b.onclick = function () { var body = { "delete": true }; body[c.pk] = c.pk === "id" ? Number(b.dataset.del) : b.dataset.del; api(name, body).then(show, function (er) { document.getElementById("err").textContent = er.message; }); };
+    });
+  }
+  async function stats() {
+    var rows = await api("stats?days=7"), max = Math.max.apply(null, rows.map(function (r) { return r.n; }).concat([1]));
+    main.innerHTML = '<h2>What people look at (last 7 days)</h2><p class="meta">Counted without cookies or personal details.</p><div class="card"><table>' +
+      rows.map(function (r) { return "<tr><td>" + esc(r.path) + '</td><td class="meta">' + esc(r.event) + '</td><td style="width:45%"><div style="height:10px;border-radius:6px;background:var(--blue);width:' + Math.round(100 * r.n / max) + '%"></div></td><td>' + r.n + "</td></tr>"; }).join("") + "</table></div>";
+  }
+  async function options() {
+    var rows = await api("options");
+    main.innerHTML = '<h2>Options</h2><p class="meta">What is switched on. Each option is turned on by an administrator adding its setting; nothing here changes by itself.</p><div class="card"><table>' +
+      rows.map(function (r) { return "<tr><td>" + esc(r.label) + "</td><td><b style=\"color:" + (r.on ? "#1d7a3c" : "#8a6d00") + "\">" + (r.on ? "On" : "Off") + '</b></td><td class="meta">' + (r.on ? "" : "Needs: " + esc(r.needs)) + "</td></tr>"; }).join("") + "</table></div>";
+  }
+  async function show() {
+    tabs();
+    try {
+      if (S.tab === "inbox") await inbox(false); else if (S.tab === "held") await inbox(true); else if (S.tab === "log") await log();
+      else if (S.tab === "stats") await stats(); else if (S.tab === "options") await options(); else await edit(S.tab);
+    } catch (er) { main.innerHTML = '<p class="card err">' + esc(er.message) + "</p>"; }
+  }
+  main.addEventListener("click", function (e) {
+    var it = e.target.closest(".item"); if (it) { S.sel = Number(it.dataset.id); show(); return; }
+    var f = e.target.dataset.f; if (f) { S.filter = f; show(); }
+  });
+  api("me").then(function (m) { S.me = m; document.getElementById("me").textContent = (m.name || m.email) + " · " + m.role + (m.state ? " · " + m.state : ""); S.filter = "must"; show(); },
+    function (er) { document.getElementById("me").textContent = ""; main.innerHTML = '<p class="card err">' + esc(er.message) + "</p>"; });
+})();
+</script></body></html>
