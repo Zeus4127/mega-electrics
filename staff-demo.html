@@ -1,166 +1,603 @@
 <!doctype html>
 <html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex, nofollow"><title>Mega Staff Demo</title>
+<meta name="robots" content="noindex, nofollow"><title>Mega Operations Console</title>
+<link rel="icon" href="brand/logo-mark.png">
 <style>
-:root{--navy:#18284c;--blue:#2e4476;--orange:#fa842d;--ink:#2d2929;--muted:#5d6475;--line:#dde2ec;--bg:#f2f4f9;--card:#fff;--soft:#fff1e6}
-*{box-sizing:border-box}body{margin:0;font:15px/1.5 Inter,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg)}
-header{background:var(--navy);color:#fff;padding:14px 16px}header .in,main{max-width:1200px;margin:0 auto}
-header b{font:700 18px "Segoe UI",system-ui,sans-serif;letter-spacing:.03em}header small{color:#c9d4ea;margin-left:10px}
-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}nav button{min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.4);background:none;color:#fff;font:600 14px inherit;cursor:pointer}
-nav button.on{background:var(--orange);border-color:var(--orange);color:#1a1206}main{padding:20px 16px 60px}
-.row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}.list{flex:1 1 340px;min-width:0;display:grid;gap:8px}.detail{flex:999 1 480px;min-width:0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.item{cursor:pointer;text-align:left;width:100%;font:inherit;color:inherit}
-.item.sel{border:2px solid var(--orange)}.item.must{background:#fff7f0}.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--orange);color:#1a1206;margin-right:6px}
-.badge{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:#e6edf8;color:var(--blue)}.meta{font-size:13px;color:var(--muted)}
-.btns{display:flex;flex-wrap:wrap;gap:8px}.btns button,.btn{min-height:40px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;font:500 14px inherit;cursor:pointer}
-.btns button.on{background:var(--navy);color:#fff;border-color:var(--navy)}.btn.main{background:var(--orange);border-color:var(--orange);color:#1a1206;font-weight:600}
-table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:8px}td{padding:8px;border-top:1px solid var(--line);vertical-align:top}
-.wide{overflow-x:auto}input,textarea,select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%}textarea{min-height:64px}
-.err{color:#b42318}.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}h2{margin:0 0 10px;color:var(--navy)}
+@font-face{font-family:"Sora";src:url(fonts/sora.woff2) format("woff2");font-weight:100 800;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--navy:#18284c;--navy2:#2e4476;--deep:#101c38;--orange:#fa842d;--bg:#f3f5f9;--card:#fff;--ink:#1f2433;--muted:#5d6475;--line:#dde2ec;--soft:#eef1f6;
+--ok:#1d7a3c;--okbg:#e4f4ea;--warn:#8a5a00;--warnbg:#fff1d6;--bad:#b42318;--badbg:#fde7e4;--info:#2e4476;--infobg:#e6edf8;--shadow:0 10px 30px -18px rgba(24,40,76,.45)}
+html[data-theme=dark]{--bg:#0c1429;--card:#15213e;--ink:#eef2fa;--muted:#a9b4cc;--line:#26365c;--soft:#1c2a4d;--okbg:#143524;--ok:#7fd6a0;--warnbg:#3d2f0c;--warn:#f3c56b;
+--badbg:#451a16;--bad:#ff9d92;--infobg:#22335c;--info:#b9cbf2;--shadow:none}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;font:14.5px/1.5 Inter,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select,textarea{font:inherit;color:inherit}a{color:inherit}
+.demo{background:var(--orange);color:#1a1206;font-weight:600;font-size:13px;padding:7px 14px;text-align:center}
+.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:calc(100vh - 34px)}
+aside{background:linear-gradient(180deg,var(--navy) 0%,var(--deep) 100%);color:#fff;padding:16px 12px 20px;position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:thin}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 14px;font:800 15px/1 Sora,sans-serif;letter-spacing:.08em}.brand img{height:30px}
+.brand small{display:block;font:500 10.5px/1 Inter,sans-serif;letter-spacing:.14em;color:#9fb0d6;margin-top:5px}
+.grp{font:600 10.5px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8597c2;margin:16px 10px 6px}
+.nv{display:flex;align-items:center;gap:10px;width:100%;min-height:38px;padding:7px 10px;border:0;border-radius:10px;background:none;color:#dbe3f5;text-align:left;cursor:pointer;font-weight:500}
+.nv:hover{background:rgba(255,255,255,.07)}.nv.on{background:var(--orange);color:#1a1206;font-weight:700}
+.nv svg{flex:none;width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nv .ct{margin-left:auto;font-size:11.5px;font-weight:700;background:rgba(255,255,255,.16);border-radius:999px;padding:1px 8px}.nv.on .ct{background:rgba(0,0,0,.16)}
+.nv i{width:7px;height:7px;border-radius:50%;flex:none;border:1.5px solid #8597c2}.nv i.b{background:#56d08a;border-color:#56d08a}
+.legend{margin:18px 10px 0;padding-top:12px;border-top:1px solid rgba(255,255,255,.12);font-size:11.5px;color:#9fb0d6;line-height:1.7}
+.legend i{display:inline-block;width:7px;height:7px;border-radius:50%;border:1.5px solid #8597c2;margin-right:6px}.legend i.b{background:#56d08a;border-color:#56d08a}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--card);border-bottom:1px solid var(--line)}
+.top .menu{display:none}.ib{min-width:40px;min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;display:inline-grid;place-items:center;position:relative}
+.ib svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ib b{position:absolute;top:-5px;right:-5px;background:var(--orange);color:#1a1206;font-size:10.5px;border-radius:999px;padding:0 5px}
+.search{flex:1;max-width:460px;position:relative}.search input{width:100%;min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--soft);padding:8px 12px}
+.top select{min-height:40px;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:6px 10px;font-weight:600}
+.who{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.25}.who span{color:var(--muted);display:block;font-size:11.5px}
+.av{width:36px;height:36px;border-radius:50%;background:var(--navy2);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+main{padding:22px 20px 70px;max-width:1500px}
+.vh{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 14px;margin:0 0 16px}.vh h1{font:700 26px/1.15 Sora,sans-serif;margin:0;color:var(--navy)}
+html[data-theme=dark] .vh h1,html[data-theme=dark] h2,html[data-theme=dark] .kpi b{color:#fff}
+.vh p{margin:0;color:var(--muted);flex:1 1 300px}.stage{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.stage.b{background:var(--okbg);color:var(--ok);border-color:transparent}
+.g{display:grid;gap:14px}.g6{grid-template-columns:repeat(6,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g21{grid-template-columns:2fr 1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);min-width:0}
+.card h2{font:700 15px/1.2 Sora,sans-serif;margin:0 0 12px;color:var(--navy);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.card h2 small{font:500 12px Inter,sans-serif;color:var(--muted)}
+.kpi{padding:14px 16px;cursor:pointer;text-align:left;border:1px solid var(--line)}.kpi small{display:block;font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.kpi b{display:block;font:700 28px/1.15 Sora,sans-serif;color:var(--navy);margin:4px 0 2px}.kpi span{font-size:12.5px;color:var(--muted)}
+.kpi.hot{border-color:var(--orange);background:linear-gradient(180deg,rgba(250,132,45,.1),transparent 70%),var(--card)}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap;background:var(--soft);color:var(--muted)}
+.pill.ok{background:var(--okbg);color:var(--ok)}.pill.warn{background:var(--warnbg);color:var(--warn)}.pill.bad{background:var(--badbg);color:var(--bad)}.pill.info{background:var(--infobg);color:var(--info)}
+.pill.or{background:var(--orange);color:#1a1206}
+.tw{overflow-x:auto;margin:0 -16px -8px;padding:0 16px 8px}table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:8px 10px;white-space:nowrap;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}tr:last-child td{border-bottom:0}
+tr.cl{cursor:pointer}tr.cl:hover td{background:var(--soft)}td b{font-weight:600}td small,.sm{color:var(--muted);font-size:12.5px}
+.pb{height:8px;border-radius:6px;background:var(--soft);min-width:70px;overflow:hidden}.pb i{display:block;height:100%;border-radius:6px;background:var(--navy2)}
+html[data-theme=dark] .pb i{background:#6f8fd8}.pb i.or{background:var(--orange)}.pb i.bad{background:#d9483b}
+.bt{min-height:36px;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:600;font-size:13px}
+.bt:hover{border-color:var(--navy2)}.bt.pr{background:var(--orange);border-color:var(--orange);color:#1a1206}.bt.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.list{display:grid;gap:8px}.li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;text-align:left;width:100%}
+.li:hover{border-color:var(--navy2)}.li.sel{border:2px solid var(--orange)}.li .dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;background:var(--navy2)}
+.li .dot.bad{background:#d9483b}.li .dot.warn{background:#e0a020}.li .dot.ok{background:#2fa35b}.li div{min-width:0;flex:1}.li b{display:block}
+.feed{list-style:none;margin:0;padding:0}.feed li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}.feed li:last-child{border:0}
+.feed time{color:var(--muted);flex:none;width:58px;font-size:12px}
+svg.ch{display:block;width:100%;height:auto;overflow:visible}svg.ch text{font:500 12px Inter,sans-serif;fill:var(--ink)}svg.ch .mu{fill:var(--muted);font-size:11px}
+svg.ch .trk{fill:var(--soft)}svg.ch .bar{fill:var(--navy2)}html[data-theme=dark] svg.ch .bar{fill:#6f8fd8}svg.ch .top1{fill:var(--orange)}svg.ch .ax{stroke:var(--line)}
+.kan{display:grid;grid-template-columns:repeat(5,minmax(230px,1fr));gap:12px;overflow-x:auto;padding-bottom:8px}
+.col{background:var(--soft);border-radius:14px;padding:10px;min-height:200px}.col h3{font:700 12px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;margin:4px 4px 10px;display:flex;justify-content:space-between;color:var(--muted)}
+.tk{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;font-size:13px}.tk b{display:block;margin-bottom:2px}.tk .r{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:8px}
+.tk .mv{display:flex;gap:4px}.tk .mv button{min-width:32px;min-height:30px;border:1px solid var(--line);border-radius:8px;background:var(--card);cursor:pointer}
+.sch{display:grid;grid-template-columns:150px repeat(7,minmax(92px,1fr));gap:4px;min-width:820px}.sch > div{padding:6px 8px;border-radius:8px;font-size:12px;min-height:44px}
+.sch .hd{font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:11px;min-height:0}.sch .cr{background:var(--soft);font-weight:600}.sch .cr small{display:block;font-weight:400}
+.sch .jb{background:var(--infobg);color:var(--info);border-left:4px solid var(--navy2);cursor:pointer;font-weight:600}.sch .off{background:repeating-linear-gradient(135deg,var(--soft),var(--soft) 6px,transparent 6px,transparent 12px);color:var(--muted)}
+.sch .ng{background:var(--warnbg);color:var(--warn);border-left:4px solid #e0a020;font-weight:600;cursor:pointer}
+.steps{display:flex;gap:4px;margin:8px 0}.steps i{flex:1;height:6px;border-radius:4px;background:var(--soft)}.steps i.d{background:var(--orange)}
+.drawer{position:fixed;inset:0 0 0 auto;width:min(560px,100%);background:var(--card);border-left:1px solid var(--line);box-shadow:-30px 0 60px -30px rgba(0,0,0,.5);z-index:60;overflow-y:auto;padding:18px 20px 40px;transform:translateX(105%);transition:transform .22s}
+.drawer.open{transform:none}.scrim{position:fixed;inset:0;background:rgba(10,16,34,.45);z-index:55;display:none}.scrim.open{display:block}
+.drawer h2{font:700 20px/1.2 Sora,sans-serif;color:var(--navy);margin:6px 0 4px}.drawer h3{font:700 12px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;font-size:13.5px}.kv dt{color:var(--muted)}.kv dd{margin:0}
+.toast{position:fixed;left:16px;right:16px;bottom:22px;width:fit-content;max-width:calc(100% - 32px);margin:0 auto;text-align:center;transform:translateY(120px);background:var(--navy);color:#fff;padding:10px 18px;border-radius:14px;font-weight:600;font-size:13.5px;line-height:1.35;z-index:90;transition:transform .2s;box-shadow:0 12px 30px -12px rgba(0,0,0,.6)}
+.toast.show{transform:none}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px}.split{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}.split > .list{flex:1 1 320px}.split > .card{flex:2 1 420px}
+textarea{width:100%;min-height:64px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card)}
 :focus-visible{outline:3px solid var(--orange);outline-offset:2px}
-</style></head><body><div style="background:#fa842d;color:#1a1206;font:600 14px/1.4 Inter,system-ui,sans-serif;padding:10px 16px;text-align:center">Demo with made-up sample data. Click anything: nothing is saved or sent, and reloading starts again. <a href="start.html" style="color:#1a1206">Back to the tour</a></div>
-<header><div class="in"><b>MEGA ELECTRICS</b><small id="me">Signing in…</small>
-<nav id="tabs" aria-label="Back end sections"></nav></div></header>
-<main id="main"><p>Loading…</p></main>
+.gate{position:fixed;inset:0;z-index:100;background:radial-gradient(120% 90% at 80% 0%,#2e4476 0%,#18284c 60%,#101c38 100%);display:grid;place-items:center;padding:16px;overflow-y:auto}
+.gate.hide{display:none}.gbox{background:var(--card);color:var(--ink);border-radius:20px;padding:26px;width:min(520px,100%);box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+.gbox img{height:34px}.gbox h1{font:700 22px/1.2 Sora,sans-serif;color:var(--navy);margin:14px 0 6px}.gbox p{margin:0 0 14px;color:var(--muted)}
+.gsteps{display:flex;gap:6px;margin:14px 0 0}.gsteps i{flex:1;height:5px;border-radius:4px;background:var(--soft)}.gsteps i.d{background:var(--orange)}
+.gbig{display:block;width:100%;min-height:48px;border-radius:12px;border:0;background:var(--orange);color:#1a1206;font-weight:700;font-size:15px;cursor:pointer}
+.gcode{font:700 44px/1 Sora,sans-serif;color:var(--navy);text-align:center;margin:8px 0 16px;letter-spacing:.08em}
+.grole{display:block;width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:10px 12px;margin:0 0 8px;cursor:pointer}
+.grole:hover{border-color:var(--orange)}.grole b{display:block}.grole span{font-size:12.5px;color:var(--muted)}
+.gskip{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;margin-top:10px;font-size:13px}
+.gfine{font-size:12px;color:var(--muted);margin:14px 0 0;border-top:1px solid var(--line);padding-top:12px}
+.rv select,.rv input[type=text]{min-height:38px;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:6px 10px;width:100%}
+.rv td:nth-child(2){min-width:170px}.rv td:nth-child(3){min-width:220px}
+#rvout{min-height:180px;font:12.5px/1.5 ui-monospace,Consolas,monospace}
+.ck{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}.ck:last-child{border:0}
+.ck input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:#fa842d}.ck b{display:block}
+.ex{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.ex label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.ex input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:#fa842d}.ex b{display:block}
+.hc{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.hc:last-child{border:0}.hc div{flex:1;min-width:0}.hc b{display:block}
+.hc .st{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:12px;font-weight:700}
+.hc.run .st{border-color:var(--orange);border-top-color:transparent;animation:sp .7s linear infinite}.hc.ok .st{background:#2fa35b;border-color:#2fa35b;color:#fff}
+.hc.fix .st{background:var(--orange);border-color:var(--orange);color:#1a1206}.hc.man .st{background:#d9483b;border-color:#d9483b;color:#fff}
+@keyframes sp{to{transform:rotate(360deg)}}
+.mx td,.mx th{text-align:center}.mx td:first-child,.mx th:first-child{text-align:left}
+@media(max-width:1200px){.ex{grid-template-columns:1fr 1fr}}@media(max-width:860px){.ex{grid-template-columns:1fr}.top{flex-wrap:wrap}.top .search{order:9;flex:1 1 100%;max-width:none}.top #role{flex:1;min-width:0;max-width:none}.top select#region{max-width:none}}
+@media(max-width:1200px){.g6{grid-template-columns:repeat(3,minmax(0,1fr))}.g3,.g21{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){.app{grid-template-columns:minmax(0,1fr)}.search{min-width:0}td:first-child{min-width:170px}.demo{font-size:12px}aside{position:fixed;inset:0 auto 0 0;width:270px;z-index:70;transform:translateX(-105%);transition:transform .22s}
+aside.open{transform:none}.top .menu{display:inline-grid}.who div{display:none}.top{padding:8px 12px}main{padding:16px 12px 70px}
+.g6{grid-template-columns:1fr 1fr}.g3,.g2,.g21{grid-template-columns:1fr}.vh h1{font-size:22px}.kpi b{font-size:23px}.kv{grid-template-columns:110px 1fr}.top select{max-width:92px}}
+@media(max-width:520px){.top .search{flex:1 1 52%}.top #role{order:10;flex:1 1 40%}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div class="demo">Design preview of the Mega staff back end. Every company, person, number and dollar amount here is made up. Nothing is saved or sent. <a href="start.html">Back to the tour</a></div>
+<div class="app">
+<aside id="side" aria-label="Sections"><div class="brand"><img src="brand/logo-mark.png" alt=""><div>ELECTRICS<small>OPERATIONS CONSOLE</small></div></div><nav id="nav"></nav>
+<div class="legend"><i class="b"></i>Built and tested, ready to switch on<br><i></i>Design preview, built after sign-off</div></aside>
+<div><header class="top"><button class="ib menu" id="menu" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<label class="search"><input id="q" type="search" placeholder="Search jobs, clients, people, enquiries" aria-label="Search"></label>
+<select id="region" aria-label="Region"><option value="all">All regions</option><option value="QLD">QLD</option><option value="NSW">NSW</option><option value="VIC">VIC</option><option value="INT">Overseas</option></select>
+<button class="ib" id="bell" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7M10 20a2 2 0 0 0 4 0"/></svg><b id="bellN"></b></button>
+<button class="ib" id="theme" aria-label="Light or dark"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg></button>
+<select id="role" aria-label="View as role"></select></header>
+<main id="view"></main></div></div>
+<div class="gate" id="gate"></div><div class="scrim" id="scrim"></div><section class="drawer" id="drawer" aria-label="Details"></section><div class="toast" id="toast" role="status"></div>
 <script>
 (function () {
-  var TABS = [["inbox", "Enquiries"], ["held", "Held as spam"], ["log", "Activity log"], ["routes", "Where emails go"], ["clients", "Important clients"],
-    ["roster", "24/7 on-call"], ["staff", "Staff and roles"], ["stats", "What people look at"], ["options", "Options"]];
-  var S = { tab: "inbox", sel: null, me: null, filter: "all" };
-  var main = document.getElementById("main");
+  var $ = function (s) { return document.querySelector(s); }, now = Date.now(), DAY = 864e5, HR = 36e5;
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function when(ms) { return ms ? new Date(ms).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) : ""; }
-var DEMO={"enq": [{"id": 1, "ref": "ME-24181", "name": "Priya Natarajan", "company": "Riverside Tunnel Alliance (sample)", "email": "priya@riverside-tunnel.example.com", "phone": "0491 570 156", "kind": "quote", "state": "QLD", "status": "new", "priority": "must", "tier": "Tier 1", "client": "Riverside Tunnel Alliance (sample)", "page": "/qld.html#contact", "site": "Portal 2 laydown area, Brisbane", "ago": 0.4, "message": "We need temporary 22 kV supply and a 1.5 MVA kiosk for the TBM launch site from March. Can you price supply, install and 12 months of maintenance?", "ai_summary": "Temporary 22 kV supply and 1.5 MVA kiosk for a tunnel boring machine launch site, from March, with 12 months of maintenance.", "ai_urgency": "today", "ai_type": "High voltage / tunnelling", "ai_reply": "Hi Priya, thanks for getting in touch. Our tunnelling team will call you today to book a site visit for the Portal 2 laydown area."}, {"id": 2, "ref": "ME-24180", "name": "Tom Becker", "company": "Becker Cold Stores (sample)", "email": "tom@beckercold.example.com", "phone": "0491 570 157", "kind": "fault", "state": "QLD", "status": "assigned", "priority": "urgent", "assignee": "oncall.qld@example.com", "page": "/index.html#fault", "ago": 1.2, "message": "Main switchboard tripping every hour, freezer room temps rising. Need someone today.", "ai_summary": "Repeated main switchboard trips at a cold store, stock at risk.", "ai_urgency": "now", "ai_type": "Breakdown / switchboard"}, {"id": 3, "ref": "ME-24179", "name": "Hannah Lowe", "company": "Western Sydney Logistics Park (sample)", "email": "hannah@wslp.example.com", "phone": "0491 570 158", "kind": "quote", "state": "NSW", "status": "quoted", "priority": "normal", "assignee": "estimating.nsw@example.com", "page": "/nsw.html#contact", "ago": 26, "message": "Quote for LV reticulation and lighting to three new warehouse pads, roughly 18,000 m2 total."}, {"id": 4, "ref": "ME-24178", "name": "Marco Ricci", "company": "", "email": "marco.ricci@example.com", "phone": "0491 570 159", "kind": "general", "state": "VIC", "status": "new", "priority": "normal", "page": "/vic.html#contact", "ago": 30, "message": "Do you do EV charger installs for a small business car park (6 bays)?"}, {"id": 5, "ref": "ME-24177", "name": "Sarah Okafor", "company": "Harbourside Port Services (sample)", "email": "sarah@harbourside.example.com", "phone": "0491 570 110", "kind": "quote", "state": "QLD", "status": "won", "priority": "must", "tier": "Tier 1", "client": "Harbourside Port Services (sample)", "assignee": "pm.qld@example.com", "page": "/index.html#contact", "ago": 72, "message": "Crane drive upgrade on two ship-to-shore cranes during the April shutdown."}, {"id": 6, "ref": "ME-24176", "name": "Liam Chen", "company": "Chen Fitouts (sample)", "email": "liam@chenfitouts.example.com", "phone": "0491 570 313", "kind": "careers", "state": "NSW", "status": "closed", "priority": "normal", "page": "/index.html#careers", "ago": 96, "message": "Third-year apprentice looking to move into HV work. CV attached."}, {"id": 7, "ref": "ME-24175", "name": "Grace Tan", "company": "Northgate Council (sample)", "email": "grace.tan@northgate.example.com", "phone": "0491 570 737", "kind": "quote", "state": "VIC", "status": "lost", "priority": "normal", "page": "/vic.html#contact", "ago": 150, "message": "Streetlight upgrade to LED along 2.4 km of arterial road."}], "held": [{"id": 8, "ref": "ME-24174", "name": "SEO Expert", "company": "", "email": "rank1@example.com", "phone": "", "kind": "general", "state": "", "status": "held", "priority": "normal", "page": "/index.html#contact", "ago": 5, "message": "We can get your website to page 1 of Google guaranteed!!! Reply for prices."}], "log": [[0.4, "website", "enquiry received", "Tier 1 client matched: Riverside Tunnel Alliance (sample)", "ME-24181"], [0.39, "system", "AI summary added", "urgency: today", "ME-24181"], [0.38, "system", "Teams alert sent", "Tier 1 / must look at", "ME-24181"], [1.2, "website", "fault report received", "", "ME-24180"], [1.1, "system", "on-call SMS sent", "QLD on-call (sample)", "ME-24180"], [1.0, "dispatch@example.com", "assigned", "oncall.qld@example.com", "ME-24180"], [5, "system", "held as spam", "link-heavy, no phone", "ME-24174"], [24, "estimating.nsw@example.com", "status changed", "assigned -> quoted", "ME-24179"], [48, "pm.qld@example.com", "status changed", "quoted -> won", "ME-24177"], [48.1, "system", "sent to job system", "job created", "ME-24177"]], "tables": {"routes": [{"key": "quote", "emails": "quotes@example.com"}, {"key": "fault", "emails": "dispatch@example.com, oncall.qld@example.com"}, {"key": "careers", "emails": "careers@example.com"}, {"key": "accounts", "emails": "accounts@example.com"}, {"key": "general", "emails": "info@example.com"}], "clients": [{"id": 1, "name": "Riverside Tunnel Alliance (sample)", "domain": "riverside-tunnel.example.com", "tier": "1"}, {"id": 2, "name": "Harbourside Port Services (sample)", "domain": "harbourside.example.com", "tier": "1"}, {"id": 3, "name": "Western Sydney Logistics Park (sample)", "domain": "wslp.example.com", "tier": "2"}], "roster": [{"id": 1, "name": "QLD on-call (sample)", "phone": "0491 571 266", "area": "QLD", "order": "1", "active": "1"}, {"id": 2, "name": "QLD backup (sample)", "phone": "0491 571 491", "area": "QLD", "order": "2", "active": "1"}, {"id": 3, "name": "NSW on-call (sample)", "phone": "0491 571 804", "area": "NSW", "order": "1", "active": "1"}, {"id": 4, "name": "VIC on-call (sample)", "phone": "0491 572 549", "area": "VIC", "order": "1", "active": "1"}], "staff": [{"email": "manager@example.com", "name": "Operations Manager (sample)", "role": "admin", "state": ""}, {"email": "estimating.nsw@example.com", "name": "NSW Estimator (sample)", "role": "estimator", "state": "NSW"}, {"email": "pm.qld@example.com", "name": "QLD Project Manager (sample)", "role": "manager", "state": "QLD"}, {"email": "reception@example.com", "name": "Reception (sample)", "role": "viewer", "state": ""}]}, "stats": [["/index.html", "page view", 412], ["/qld.html", "page view", 188], ["/index.html#contact", "quote form opened", 64], ["/nsw.html", "page view", 97], ["tel:1300090797", "call button tapped", 41], ["/capability.html", "page view", 33], ["/vic.html", "page view", 29], ["/install.html", "app download", 12]], "options": [["Email delivery (Postmark, Amazon SES Sydney or Resend)", true, ""], ["Staff sign-in with Microsoft 365 (Cloudflare Access)", true, ""], ["Teams alerts for must-look-at and urgent enquiries", true, ""], ["AI summary and draft reply (Claude)", true, ""], ["SMS to the 24/7 on-call (ClickSend)", false, "ClickSend account and key"], ["Send won jobs to the job system (simPRO, Ascora, ServiceM8...)", false, "job system webhook address"]]};(function(){var now=Date.now(),H=3600000,ev={};
-DEMO.enq.concat(DEMO.held).forEach(function(e){e.created_at=now-e.ago*H;ev[e.id]=[{at:e.created_at,who:"website",action:"received",detail:e.kind}];
- if(e.assignee)ev[e.id].push({at:e.created_at+600000,who:"manager@example.com",action:"assigned",detail:e.assignee})});
-DEMO.ev=ev;DEMO.logrows=DEMO.log.map(function(l){return{at:now-l[0]*H,who:l[1],action:l[2],detail:l[3],ref:l[4]}});})();
-async function api(path, body) {
-  await new Promise(function (r) { setTimeout(r, 120); });
-  var q = path.split("?"), p = q[0], all = DEMO.enq.concat(DEMO.held), who = "manager@example.com";
-  function find(id) { return all.filter(function (e) { return e.id === id; })[0]; }
-  if (p === "me") return { email: who, name: "Demo manager", role: "admin", state: "" };
-  if (p === "enquiries") return (q[1] === "held=1" ? DEMO.held : DEMO.enq).slice().sort(function (a, b) { return b.created_at - a.created_at; });
-  var m = p.match(/^enquiries\/(\d+)$/);
-  if (m) {
-    var e = find(Number(m[1])); if (!e) throw new Error("Not found");
-    if (body) {
-      var a = null;
-      if (body.status) { a = ["status changed", e.status + " -> " + body.status]; e.status = body.status; }
-      if ("assignee" in body) { e.assignee = body.assignee; a = ["assigned", body.assignee || "nobody"]; if (e.status === "new" && body.assignee) e.status = "assigned"; }
-      if (body.note) a = ["note", body.note];
-      if (body.notSpam) { DEMO.held = DEMO.held.filter(function (x) { return x !== e; }); e.status = "new"; DEMO.enq.push(e); a = ["marked not spam", "sent to the team"]; }
-      if (a) { DEMO.ev[e.id].push({ at: Date.now(), who: who, action: a[0], detail: a[1] }); DEMO.logrows.unshift({ at: Date.now(), who: who, action: a[0], detail: a[1], ref: e.ref }); }
-      return { ok: true };
-    }
-    return { enquiry: e, events: DEMO.ev[e.id].slice().reverse() };
-  }
-  if (p === "log") return DEMO.logrows.slice().sort(function (a, b) { return b.at - a.at; });
-  if (p === "stats") return DEMO.stats.map(function (s) { return { path: s[0], event: s[1], n: s[2] }; });
-  if (p === "options") return DEMO.options.map(function (o) { return { label: o[0], on: o[1], needs: o[2] }; });
-  var t = DEMO.tables[p];
-  if (t) {
-    if (body) {
-      var pk = p === "routes" ? "key" : p === "staff" ? "email" : "id";
-      if (body["delete"]) DEMO.tables[p] = t.filter(function (r) { return r[pk] !== body[pk]; });
-      else {
-        var row = t.filter(function (r) { return body[pk] && r[pk] === body[pk]; })[0];
-        if (row) Object.assign(row, body); else { if (pk === "id") body.id = t.reduce(function (n, r) { return Math.max(n, r.id); }, 0) + 1; t.push(body); }
-      }
-      DEMO.logrows.unshift({ at: Date.now(), who: who, action: "changed " + p, detail: "", ref: "" });
-      return { ok: true };
-    }
-    return t;
-  }
-  throw new Error("Not in the demo");
-}
-  function tabs() {
-    document.getElementById("tabs").innerHTML = TABS.map(function (t) { return '<button type="button" data-t="' + t[0] + '" class="' + (S.tab === t[0] ? "on" : "") + '">' + t[1] + "</button>"; }).join("");
-  }
-  document.getElementById("tabs").addEventListener("click", function (e) { var t = e.target.dataset.t; if (t) { S.tab = t; S.sel = null; show(); } });
+  function money(n) { return n >= 1e6 ? "A$" + (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + "m" : "A$" + Math.round(n / 1e3) + "k"; }
+  function day(off) { return new Date(now + off * DAY).toLocaleDateString("en-AU", { day: "numeric", month: "short" }); }
+  function ago(h) { return h < 1 ? Math.round(h * 60) + " min ago" : h < 24 ? Math.round(h) + " h ago" : Math.round(h / 24) + " d ago"; }
+  function pill(t, tone) { return '<span class="pill ' + (tone || "") + '">' + esc(t) + "</span>"; }
+  function exp(d) { return d < 0 ? pill("Expired " + (-d) + " d", "bad") : d <= 30 ? pill(d + " d left", "warn") : pill(day(d), "ok"); }
+  function pb(p, tone) { return '<div class="pb" title="' + p + '%"><i class="' + (tone || "") + '" style="width:' + Math.min(100, p) + '%"></i></div>'; }
+  function sum(a, f) { return a.reduce(function (n, x) { return n + f(x); }, 0); }
 
-  async function inbox(held) {
-    var rows = await api("enquiries" + (held ? "?held=1" : ""));
-    var f = S.filter, open = function (r) { return r.status === "new" || r.status === "assigned"; };
-    var shown = rows.filter(function (r) { return held || f === "all" ? true : f === "must" ? r.priority === "must" && open(r) : r.status === f; });
-    var filt = held ? "" : '<div class="filters btns">' + [["must", "Must look at"], ["all", "All"], ["new", "New"], ["assigned", "Assigned"], ["quoted", "Quoted"], ["won", "Won"], ["lost", "Lost"]]
-      .map(function (x) { return '<button type="button" data-f="' + x[0] + '" class="' + (f === x[0] ? "on" : "") + '">' + x[1] + "</button>"; }).join("") + "</div>";
-    main.innerHTML = filt + '<div class="row"><div class="list">' + (shown.map(function (r) {
-      return '<button type="button" class="card item ' + (r.priority === "must" ? "must " : "") + (S.sel === r.id ? "sel" : "") + '" data-id="' + r.id + '">' +
-        (r.priority === "must" ? '<span class="tag">MUST LOOK AT</span>' : r.priority === "urgent" ? '<span class="tag">URGENT</span>' : "") +
-        "<b>" + esc(r.company || r.name) + '</b> <span class="badge">' + esc(r.status) + '</span><div class="meta">' + esc(r.ref) + " · " + esc(r.kind) + " · " +
-        esc(r.state || "-") + " · " + when(r.created_at) + " · " + (r.assignee ? "Checked by " + esc(r.assignee) : "Not assigned") + (r.delivery === "bounced" ? " · email bounced" : "") + "</div></button>";
-    }).join("") || '<p class="card">Nothing here.</p>') + '</div><div class="detail" id="det"></div></div>';
-    if (S.sel) detail(S.sel, held);
+  var SEC = { tun: "Tunnels", min: "Mining", wat: "Water", sew: "Sewer", fib: "Fibre", rail: "Rail", cou: "Council", con: "Concrete", rac: "Racing tracks", sug: "Sugar mills",
+    sol: "Solar farms", btc: "Crypto and data", hv: "High voltage", hos: "Hospitals", os: "Overseas", qua: "Quarries", fac: "Factories", pip: "Pipe plants" };
+  var HEALTH = { ok: ["On track", "ok"], risk: ["At risk", "warn"], late: ["Delayed", "bad"], mob: ["Mobilising", "info"], pc: ["Practical completion", ""] };
+  var JOBS = [
+    { id: "J-2611", n: "TBM launch site power, Portal 2", c: "Riverside Tunnel Alliance", s: "tun", st: "QLD", kv: "22 kV", pm: "A. Rahimi", v: 8.4e6, p: 62, b: 58, h: "ok", crew: 14, ms: "Energise kiosk 3", due: 9 },
+    { id: "J-2608", n: "Longwall 11 kV reticulation upgrade", c: "Kooramba Coal", s: "min", st: "QLD", kv: "11 kV", pm: "S. Whitlock", v: 5.1e6, p: 41, b: 49, h: "risk", crew: 9, ms: "Shutdown window 2", due: 5 },
+    { id: "J-2604", n: "Pump station 4 switchroom and VSDs", c: "Northgate Water", s: "wat", st: "QLD", kv: "415 V", pm: "J. Petrakis", v: 2.2e6, p: 78, b: 74, h: "ok", crew: 6, ms: "Factory test of MCC", due: 12 },
+    { id: "J-2599", n: "Sewage treatment plant aeration blowers", c: "Bayside Utilities", s: "sew", st: "VIC", kv: "LV", pm: "M. Okonkwo", v: 1.6e6, p: 88, b: 91, h: "risk", crew: 4, ms: "Commissioning", due: 3 },
+    { id: "J-2596", n: "Backbone fibre, 48 km trench and haul", c: "Outback Link Networks", s: "fib", st: "NSW", kv: "Fibre", pm: "T. Vuong", v: 3.3e6, p: 35, b: 31, h: "ok", crew: 11, ms: "Splice section C", due: 16 },
+    { id: "J-2593", n: "Traction substation fit-out, Stage 2", c: "Harbour Line Rail Alliance", s: "rail", st: "NSW", kv: "33 kV", pm: "A. Rahimi", v: 11.8e6, p: 54, b: 55, h: "ok", crew: 18, ms: "Rail possession 14", due: 7 },
+    { id: "J-2590", n: "LED streetlight changeover, 2,400 lights", c: "Northgate Council", s: "cou", st: "QLD", kv: "LV", pm: "D. Marsh", v: 1.9e6, p: 67, b: 60, h: "ok", crew: 6, ms: "Zone 5 handover", due: 20 },
+    { id: "J-2587", n: "Batch plant power and controls", c: "Granite Peak Concrete", s: "con", st: "VIC", kv: "415 V", pm: "M. Okonkwo", v: 0.9e6, p: 15, b: 12, h: "mob", crew: 3, ms: "Site establishment", due: 4 },
+    { id: "J-2584", n: "Track lighting towers and timing power", c: "Wattle Park Racing Club", s: "rac", st: "NSW", kv: "11 kV", pm: "T. Vuong", v: 2.7e6, p: 72, b: 70, h: "ok", crew: 7, ms: "Night lux test", due: 10 },
+    { id: "J-2581", n: "Crushing season shutdown, mill drives", c: "Coral Coast Sugar", s: "sug", st: "QLD", kv: "3.3 kV", pm: "S. Whitlock", v: 1.4e6, p: 93, b: 88, h: "pc", crew: 2, ms: "Defects walk", due: 2 },
+    { id: "J-2578", n: "120 MW solar farm, 33 kV collector", c: "Bluegum Renewables", s: "sol", st: "NSW", kv: "33 kV", pm: "J. Petrakis", v: 14.2e6, p: 47, b: 52, h: "risk", crew: 22, ms: "String testing block 6", due: 6 },
+    { id: "J-2575", n: "20 MW data hall, containerised miners", c: "Hashline Data", s: "btc", st: "QLD", kv: "22 kV", pm: "D. Marsh", v: 6.6e6, p: 29, b: 27, h: "ok", crew: 10, ms: "Transformer delivery", due: 14 },
+    { id: "J-2572", n: "132 kV feeder bay and cable joints", c: "Eastern Grid Services", s: "hv", st: "QLD", kv: "132 kV", pm: "A. Rahimi", v: 9.3e6, p: 58, b: 57, h: "ok", crew: 12, ms: "Sheath testing", due: 8 },
+    { id: "J-2569", n: "Essential power and generator changeover", c: "Eastfield Private Hospital", s: "hos", st: "VIC", kv: "11 kV", pm: "M. Okonkwo", v: 4.4e6, p: 64, b: 71, h: "late", crew: 8, ms: "Night changeover 3", due: -2 },
+    { id: "J-2566", n: "Mill and camp power, expat crew rotation", c: "Moro Ridge Gold, PNG", s: "os", st: "INT", kv: "11 kV", pm: "S. Whitlock", v: 7.9e6, p: 38, b: 36, h: "ok", crew: 16, ms: "Rotation 5 fly-in", due: 11 },
+    { id: "J-2563", n: "Primary crusher feed and conveyors", c: "Ironbark Quarries", s: "qua", st: "NSW", kv: "LV", pm: "T. Vuong", v: 1.2e6, p: 81, b: 79, h: "ok", crew: 4, ms: "Belt 3 commissioning", due: 13 },
+    { id: "J-2560", n: "Production line 4, switchboards and robots", c: "Meridian Food Works", s: "fac", st: "VIC", kv: "415 V", pm: "D. Marsh", v: 3.0e6, p: 52, b: 50, h: "ok", crew: 7, ms: "Board install", due: 9 },
+    { id: "J-2557", n: "Pipe mill furnace supply and controls", c: "Steelflow Pipe Works", s: "pip", st: "QLD", kv: "11 kV", pm: "J. Petrakis", v: 2.5e6, p: 22, b: 20, h: "mob", crew: 5, ms: "Cable pull 1", due: 15 }
+  ];
+  var STAGES = ["Lead", "Qualifying", "Pricing", "Submitted", "Won"];
+  var PIPE = [
+    { id: 1, n: "Cross-river tunnel, fit-out power", c: "Riverside Tunnel Alliance", s: "tun", st: "QLD", v: 18e6, pr: 45, g: 3, due: 12, o: "Estimating QLD" },
+    { id: 2, n: "Open-cut pit dewatering power", c: "Kooramba Coal", s: "min", st: "QLD", v: 3.8e6, pr: 60, g: 2, due: 6, o: "Estimating QLD" },
+    { id: 3, n: "Recycled water plant, electrical package", c: "Northgate Water", s: "wat", st: "QLD", v: 6.2e6, pr: 35, g: 2, due: 9, o: "Estimating QLD" },
+    { id: 4, n: "Rail stabling yard, HV and lighting", c: "Harbour Line Rail Alliance", s: "rail", st: "NSW", v: 9.5e6, pr: 50, g: 3, due: 18, o: "Estimating NSW" },
+    { id: 5, n: "Greyhound track lighting upgrade", c: "Sandy Creek Greyhound Club", s: "rac", st: "QLD", v: 1.1e6, pr: 70, g: 1, due: 21, o: "Estimating QLD" },
+    { id: 6, n: "Solar farm stage 2, 80 MW", c: "Bluegum Renewables", s: "sol", st: "NSW", v: 10.4e6, pr: 55, g: 1, due: 30, o: "Estimating NSW" },
+    { id: 7, n: "Second data hall, 40 MW", c: "Hashline Data", s: "btc", st: "QLD", v: 12.5e6, pr: 40, g: 0, due: 40, o: "Business development" },
+    { id: 8, n: "Hospital theatre wing, essential power", c: "Eastfield Private Hospital", s: "hos", st: "VIC", v: 2.9e6, pr: 65, g: 3, due: 4, o: "Estimating VIC" },
+    { id: 9, n: "Copper mine process plant, Zambia", c: "Luangwa Copper", s: "os", st: "INT", v: 16e6, pr: 20, g: 0, due: 55, o: "Business development" },
+    { id: 10, n: "Sugar mill cogeneration tie-in", c: "Coral Coast Sugar", s: "sug", st: "QLD", v: 4.6e6, pr: 75, g: 4, due: 0, o: "Estimating QLD" },
+    { id: 11, n: "Quarry substation replacement", c: "Ironbark Quarries", s: "qua", st: "NSW", v: 0.8e6, pr: 80, g: 4, due: 0, o: "Estimating NSW" },
+    { id: 12, n: "Sewer pump stations, 5-year maintenance", c: "Bayside Utilities", s: "sew", st: "VIC", v: 2.1e6, pr: 50, g: 1, due: 25, o: "Estimating VIC" },
+    { id: 13, n: "Pipe plant line 2 expansion", c: "Steelflow Pipe Works", s: "pip", st: "QLD", v: 3.4e6, pr: 30, g: 0, due: 48, o: "Business development" },
+    { id: 14, n: "Council depot solar and EV charging", c: "Northgate Council", s: "cou", st: "QLD", v: 0.7e6, pr: 55, g: 2, due: 14, o: "Estimating QLD" }
+  ];
+  var ENQ = [
+    { id: 1, ref: "ME-24181", name: "Priya Natarajan", c: "Riverside Tunnel Alliance", email: "priya@riverside-tunnel.example.com", ph: "0491 570 156", kind: "Quote", st: "QLD", status: "New", must: 1, h: 0.4, s: "tun",
+      msg: "We need temporary 22 kV supply and a 1.5 MVA kiosk for the TBM launch site from March. Can you price supply, install and 12 months of maintenance?",
+      ai: "Temporary 22 kV supply and 1.5 MVA kiosk for a tunnel boring machine launch site from March, with 12 months of maintenance. Existing Tier 1 client.", urg: "Today" },
+    { id: 2, ref: "ME-24180", name: "Tom Becker", c: "Becker Cold Stores", email: "tom@beckercold.example.com", ph: "0491 570 157", kind: "Fault", st: "QLD", status: "Assigned", must: 0, urgent: 1, h: 1.2, s: "fac", who: "QLD on-call",
+      msg: "Main switchboard tripping every hour, freezer room temperatures rising. Need someone today.", ai: "Repeated main switchboard trips at a cold store. Stock at risk.", urg: "Now" },
+    { id: 3, ref: "ME-24179", name: "Hannah Lowe", c: "Western Logistics Park", email: "hannah@wlp.example.com", ph: "0491 570 158", kind: "Quote", st: "NSW", status: "Quoted", h: 26, s: "fac", who: "Estimating NSW",
+      msg: "Quote for LV reticulation and lighting to three new warehouse pads, roughly 18,000 m2 in total." },
+    { id: 4, ref: "ME-24178", name: "Marco Ricci", c: "", email: "marco.ricci@example.com", ph: "0491 570 159", kind: "General", st: "VIC", status: "New", h: 30, s: "fac", msg: "Do you install EV chargers for a small business car park (6 bays)?" },
+    { id: 5, ref: "ME-24177", name: "Sarah Okafor", c: "Harbourside Port Services", email: "sarah@harbourside.example.com", ph: "0491 570 110", kind: "Quote", st: "QLD", status: "Won", must: 1, h: 72, s: "hv", who: "QLD project manager",
+      msg: "Crane drive upgrade on two ship-to-shore cranes during the April shutdown." },
+    { id: 6, ref: "ME-24176", name: "Liam Chen", c: "", email: "liam.chen@example.com", ph: "0491 570 313", kind: "Careers", st: "NSW", status: "Closed", h: 96, s: "hv", msg: "Third-year apprentice looking to move into HV work. CV attached." },
+    { id: 7, ref: "ME-24175", name: "Grace Tan", c: "Northgate Council", email: "grace.tan@northgate.example.com", ph: "0491 570 737", kind: "Quote", st: "QLD", status: "New", h: 3, s: "cou",
+      msg: "Sports field lighting, four fields, 200 lux. Budget pricing wanted for next year's capital plan.", ai: "Sports field lighting for four fields. Budget price only, not urgent.", urg: "This week" },
+    { id: 8, ref: "ME-24174", name: "SEO Expert", c: "", email: "rank1@example.com", ph: "", kind: "General", st: "", status: "Held as spam", h: 5, s: "fac", msg: "We can get your website to page 1 of Google guaranteed!!! Reply for prices." }
+  ];
+  var PEOPLE = [
+    { n: "A. Rahimi", r: "Project manager", st: "QLD", at: "J-2611", hrs: 46, t: [["HV switching", 210], ["First aid and LVR", 44]] },
+    { n: "B. Tanaka", r: "HV cable jointer", st: "QLD", at: "J-2572", hrs: 52, t: [["Cable jointer 132 kV", 380], ["Confined space", 12], ["Working at heights", 160]] },
+    { n: "C. O'Dwyer", r: "Leading hand", st: "QLD", at: "J-2608", hrs: 61, t: [["Mining induction", 25], ["HV switching", 95], ["First aid and LVR", -6]] },
+    { n: "D. Marsh", r: "Project manager", st: "QLD", at: "J-2575", hrs: 44, t: [["First aid and LVR", 130]] },
+    { n: "E. Papadakis", r: "Electrician", st: "NSW", at: "J-2593", hrs: 48, t: [["Rail industry worker card", 18], ["Working at heights", 240], ["EWP", 300]] },
+    { n: "F. Nguyen", r: "Fibre splicer", st: "NSW", at: "J-2596", hrs: 40, t: [["Fibre splicing", 500], ["Confined space", 77]] },
+    { n: "G. Haddad", r: "Electrician", st: "NSW", at: "J-2578", hrs: 55, t: [["Working at heights", 9], ["First aid and LVR", 200]] },
+    { n: "H. Kowalski", r: "Commissioning tech", st: "VIC", at: "J-2569", hrs: 58, t: [["HV switching", 150], ["Test and tag", 60]] },
+    { n: "I. Mahlangu", r: "Supervisor, expat", st: "INT", at: "J-2566", hrs: 66, t: [["Passport and visa", 140], ["Medical clearance", 21], ["HV switching", 310]] },
+    { n: "J. Petrakis", r: "Project manager", st: "QLD", at: "J-2604", hrs: 45, t: [["First aid and LVR", 88]] },
+    { n: "K. Singh", r: "Apprentice, year 3", st: "QLD", at: "J-2590", hrs: 38, t: [["White card", 900], ["EWP", 35]] },
+    { n: "L. Brennan", r: "Electrician", st: "VIC", at: "", hrs: 0, t: [["Working at heights", 400], ["First aid and LVR", 120]], leave: 1 }
+  ];
+  var PLANT = [
+    ["10 t self-loading cable trailer 1", "Cable handling", "J-2572", 34, "In use"], ["10 t self-loading cable trailer 2", "Cable handling", "J-2596", 8, "In use"],
+    ["6 t cable winder", "Cable handling", "J-2611", 61, "In use"], ["VLF test set 60 kV", "Test gear", "J-2572", -4, "Calibration overdue"],
+    ["Insulation tester 10 kV", "Test gear", "Murarrie store", 120, "Available"], ["Fibre OTDR", "Test gear", "J-2596", 45, "In use"],
+    ["Thermal camera", "Test gear", "Yatala store", 15, "Available"], ["500 kVA generator", "Power", "J-2569", 22, "In use"],
+    ["Scissor lift 8 m", "Access", "J-2584", 70, "In use"], ["Service ute 14", "Vehicle", "QLD on-call", 6, "Rego due"]
+  ];
+  var PERMITS = [
+    { id: "P-0931", job: "J-2572", t: "HV access permit", who: "B. Tanaka", s: "Issued", ex: 0.4, iso: "Feeder 2 earthed, 3 locks" },
+    { id: "P-0930", job: "J-2593", t: "Rail possession", who: "E. Papadakis", s: "Awaiting sign-off", ex: 1.2, iso: "Track 2, 22:00 to 04:00" },
+    { id: "P-0929", job: "J-2599", t: "Confined space", who: "H. Kowalski", s: "Issued", ex: 0.2, iso: "Wet well 3, gas test passed" },
+    { id: "P-0928", job: "J-2608", t: "Mine isolation", who: "C. O'Dwyer", s: "Awaiting sign-off", ex: 0.8, iso: "Substation 7, 5 locks" },
+    { id: "P-0927", job: "J-2569", t: "Hospital shutdown notice", who: "H. Kowalski", s: "Issued", ex: 2, iso: "Essential board B, theatres on generator" },
+    { id: "P-0926", job: "J-2557", t: "Hot work", who: "J. Petrakis", s: "Closed", ex: -1, iso: "Furnace bay" },
+    { id: "P-0925", job: "J-2590", t: "Traffic control", who: "D. Marsh", s: "Issued", ex: 3, iso: "Zone 5, night works" }
+  ];
+  var FAULTS = [
+    { ref: "F-1187", c: "Becker Cold Stores", site: "Yatala, QLD", st: "QLD", issue: "Main switchboard tripping hourly", h: 1.2, step: 2, tech: "QLD on-call", sla: 60, resp: 38 },
+    { ref: "F-1186", c: "Northgate Water", site: "Pump station 9, QLD", st: "QLD", issue: "VSD fault, pump 2 offline", h: 3.5, step: 3, tech: "QLD backup", sla: 120, resp: 71 },
+    { ref: "F-1185", c: "Ironbark Quarries", site: "Marulan, NSW", st: "NSW", issue: "Crusher feeder earth fault", h: 0.3, step: 1, tech: "NSW on-call", sla: 60, resp: null },
+    { ref: "F-1184", c: "Eastfield Private Hospital", site: "Fairfield, VIC", st: "VIC", issue: "Generator failed weekly test", h: 9, step: 4, tech: "VIC on-call", sla: 30, resp: 22 }
+  ];
+  var FSTEP = ["Logged", "Dispatched", "On site", "Power restored"];
+  var ROSTER = [["QLD on-call", "0491 571 266", "QLD", 1], ["QLD backup", "0491 571 491", "QLD", 2], ["NSW on-call", "0491 571 804", "NSW", 1], ["VIC on-call", "0491 572 549", "VIC", 1], ["Overseas duty manager", "0491 572 665", "INT", 1]];
+  var ASSETS = [
+    ["Northgate Water", "Pump station 4", "11 kV ring main unit", 310, 55, "Pass"], ["Northgate Water", "Pump station 9", "VSD 250 kW", 40, -3, "Fault open"],
+    ["Eastfield Private Hospital", "Plant room", "1 MVA transformer, oil test", 350, 15, "Pass"], ["Eastfield Private Hospital", "Generator hall", "1.2 MVA generator", 7, 0, "Failed test"],
+    ["Wattle Park Racing Club", "Main track", "Lighting towers 1 to 8", 170, 195, "Pass"], ["Coral Coast Sugar", "Mill house", "3.3 kV motor control", 200, 165, "Pass"],
+    ["Kooramba Coal", "Substation 7", "Protection relays", 280, 85, "Pass"], ["Hashline Data", "Hall 1", "22 kV switchboard, thermal scan", 80, 10, "2 hot joints"],
+    ["Meridian Food Works", "Line 4", "Main switchboard", 360, 5, "Pass"], ["Bluegum Renewables", "Block 1 to 3", "Inverter stations", 95, 88, "Pass"]
+  ];
+  var DOCS = [
+    ["Licences", "Electrical contractor licence, QLD", 240], ["Licences", "Electrical contractor licence, NSW", 96], ["Licences", "Registered electrical contractor, VIC", 27],
+    ["Insurance", "Public and products liability", 180], ["Insurance", "Professional indemnity", 180], ["Insurance", "Workers compensation, QLD", 62], ["Insurance", "Workers compensation, NSW", 62], ["Insurance", "Workers compensation, VIC", 14],
+    ["Certification", "Safety management system audit", 300], ["Certification", "Quality management system audit", 300], ["Certification", "Environmental management system audit", -9],
+    ["Prequalification", "Rail contractor portal", 120], ["Prequalification", "Mining contractor portal", 33], ["Prequalification", "Water utility panel", 410], ["Prequalification", "Council supplier panel", 75]
+  ];
+  var HAZ = [
+    ["Near miss", "Unmarked service found while trenching, works stopped and located", "J-2596", 1, "Open"], ["Hazard", "Damaged lead on site generator, tagged out", "J-2569", 2, "Closed"],
+    ["Observation", "Good catch: exclusion zone moved before the crane lift", "J-2593", 3, "Closed"], ["Hazard", "Dust on switchroom filters at mill", "J-2581", 4, "Open"],
+    ["Near miss", "Dropped spanner from scissor lift, drop zone was clear", "J-2584", 6, "Action due"], ["Hazard", "Heat stress risk, shade and water plan updated", "J-2578", 7, "Closed"]
+  ];
+  var CREWS = [
+    ["HV Crew 1", "B. Tanaka, 4 people", ["J-2572", "J-2572", "J-2572", "J-2572", "J-2572", "", ""]],
+    ["HV Crew 2", "C. O'Dwyer, 5 people", ["J-2608", "J-2608", "!J-2608", "!J-2608", "J-2611", "", ""]],
+    ["Tunnel Crew", "A. Rahimi, 8 people", ["J-2611", "J-2611", "J-2611", "J-2611", "J-2611", "J-2611", ""]],
+    ["Rail Crew", "E. Papadakis, 6 people", ["J-2593", "!J-2593", "!J-2593", "", "J-2593", "!J-2593", ""]],
+    ["Fibre Crew", "F. Nguyen, 4 people", ["J-2596", "J-2596", "J-2596", "J-2596", "J-2596", "", ""]],
+    ["Solar Crew", "G. Haddad, 9 people", ["J-2578", "J-2578", "J-2578", "J-2578", "J-2578", "J-2578", ""]],
+    ["VIC Crew", "H. Kowalski, 5 people", ["J-2569", "!J-2569", "J-2599", "J-2599", "J-2560", "", ""]],
+    ["Service Crew", "K. Singh, 3 people", ["J-2590", "J-2590", "J-2604", "J-2604", "J-2590", "", ""]],
+    ["Overseas rotation", "I. Mahlangu, 16 people", ["J-2566", "J-2566", "J-2566", "J-2566", "J-2566", "J-2566", "J-2566"]]
+  ];
+  var LOG = [[0.2, "System", "Fault F-1185 logged, NSW on-call texted"], [0.4, "Website", "Enquiry ME-24181 received, Tier 1 client matched"], [0.41, "System", "AI summary added to ME-24181"],
+    [1.0, "Dispatch", "F-1187 assigned to QLD on-call"], [2.5, "B. Tanaka", "HV access permit P-0931 issued"], [4, "Estimating NSW", "Tender 11 marked Won"],
+    [5, "System", "ME-24174 held as spam"], [8, "H. Kowalski", "F-1184 closed, power restored"], [22, "Safety", "Near miss logged on J-2596"], [26, "Estimating NSW", "ME-24179 quoted"]];
+  var ROUTES = [["Quotes", "quotes@example.com"], ["Faults", "dispatch@example.com, on-call for the state"], ["Careers", "careers@example.com"], ["Accounts", "accounts@example.com"], ["Trade partners", "procurement@example.com"], ["Everything else", "info@example.com"]];
+  var STAFF = [["Operations manager", "Administrator", "All"], ["QLD project manager", "Manager", "QLD"], ["NSW estimator", "Estimator", "NSW"], ["VIC supervisor", "Manager", "VIC"], ["Safety advisor", "Safety", "All"], ["Reception", "View only", "All"], ["Overseas duty manager", "Manager", "Overseas"]];
+  var OPTS = [["Email delivery (Amazon SES Sydney, Postmark or Resend)", 1], ["Staff sign-in with Microsoft 365", 1], ["Teams alerts for urgent and Tier 1 enquiries", 1], ["AI summary and draft reply", 1], ["Text messages to the 24/7 on-call", 0], ["Send won jobs to the job system", 0]];
+  var WEB = [["Home page views", 412], ["Queensland page views", 188], ["New South Wales page views", 97], ["Quote form opened", 64], ["Call button tapped", 41], ["Capability statement views", 33], ["Victoria page views", 29], ["App downloads", 12]];
+
+  var S = { view: "dash", region: "all", q: "", enq: null, enqF: "Open", sec: "all", set: "routes", theme: "light", role: "admin" };
+  var ROLES = { admin: ["Administrator", "Sees and changes everything, including who has access."], manager: ["Branch manager", "Runs jobs, people, safety and tenders. Cannot change access."],
+    estimator: ["Estimator", "Enquiries, tenders, clients and company documents."], supervisor: ["Site supervisor", "Jobs, crews, breakdowns, permits and safety. No money or tenders."],
+    safety: ["Safety advisor", "Safety, permits, tickets and plant."], accounts: ["Accounts", "Clients, job values and reports only."], viewer: ["View only", "Dashboard, jobs and the crew schedule. Cannot change anything."] };
+  var ACCESS = { admin: "*", manager: "dash enq pipe clients jobs sched faults assets people plant safety permits docs reports web", estimator: "dash enq pipe clients jobs docs reports",
+    supervisor: "dash jobs sched faults assets people plant safety permits", safety: "dash safety permits people plant docs", accounts: "dash clients jobs reports", viewer: "dash jobs sched" };
+  var PREVIEW = ["review", "golive", "extras", "health", "search"];
+  function canRole(r, v) { return ACCESS[r] === "*" || (" " + ACCESS[r] + " ").indexOf(" " + v + " ") > -1; }
+  function can(v) { return PREVIEW.indexOf(v) > -1 || canRole(S.role, v); }
+  var RV = {}; try { RV = JSON.parse(localStorage.getItem("mega-console-review") || "{}"); } catch (e) {}
+  function saveRV() { try { localStorage.setItem("mega-console-review", JSON.stringify(RV)); } catch (e) {} }
+  function inR(st) { return S.region === "all" || st === S.region; }
+  function job(id) { return JOBS.filter(function (j) { return j.id === id; })[0]; }
+  function jobs() { return JOBS.filter(function (j) { return inR(j.st) && (S.sec === "all" || j.s === S.sec); }); }
+  function openEnq() { return ENQ.filter(function (e) { return (e.status === "New" || e.status === "Assigned") && inR(e.st || S.region); }); }
+  function toast(t) { var el = $("#toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function () { el.classList.remove("show"); }, 2200); }
+  function logIt(t) { LOG.unshift([0, "Demo manager", t]); }
+
+  function barsH(rows, fmt) {
+    rows = rows.filter(function (r) { return r[1] > 0; }).sort(function (a, b) { return b[1] - a[1]; });
+    var max = rows.length ? rows[0][1] : 1, h = 26, lw = 122, W = 420, bw = W - lw - 62, o = '<svg class="ch" viewBox="0 0 ' + W + " " + rows.length * h + '" role="img" aria-label="' + esc(rows.map(function (r) { return r[0] + " " + (fmt ? fmt(r[1]) : r[1]); }).join(", ")) + '">';
+    rows.forEach(function (r, i) { var y = i * h, w = Math.max(4, Math.round(bw * r[1] / max));
+      o += '<text x="0" y="' + (y + 17) + '">' + esc(r[0]) + '</text><rect class="trk" x="' + lw + '" y="' + (y + 6) + '" width="' + bw + '" height="14" rx="7"/><rect class="bar' + (i ? "" : " top1") + '" x="' + lw + '" y="' + (y + 6) + '" width="' + w + '" height="14" rx="7"/><text x="' + (lw + w + 6) + '" y="' + (y + 17) + '" style="font-weight:700">' + (fmt ? fmt(r[1]) : r[1]) + "</text>"; });
+    return o + "</svg>";
   }
-  async function detail(id, held) {
-    var d = await api("enquiries/" + id), e = d.enquiry, det = document.getElementById("det");
-    var st = ["new", "assigned", "quoted", "won", "lost", "closed"];
-    det.innerHTML = '<div class="card"><div class="meta">' + esc(e.ref) + " · " + when(e.created_at) + "</div><h2>" + esc(e.name) + "</h2><p>" + esc(e.company || "") + "</p>" +
-      (e.client ? '<p><span class="tag">' + esc(e.tier) + "</span>" + esc(e.client) + " (matched by email domain)</p>" : "") +
-      "<p><b>Phone:</b> " + esc(e.phone || "-") + " · <b>Email:</b> " + esc(e.email || "-") + "<br><b>Type:</b> " + esc(e.kind) + " · <b>Branch:</b> " + esc(e.state || "-") +
-      " · <b>Sent from:</b> " + esc(e.page || "-") + (e.site ? "<br><b>Site:</b> " + esc(e.site) : "") + "</p><p style=\"white-space:pre-wrap\">" + esc(e.message) + "</p>" +
-      (e.ai_summary ? '<div style="border-left:3px solid #fa842d;padding:8px 12px;margin:10px 0;background:#fff7ec;border-radius:8px"><b>AI summary</b> (check before acting): ' + esc(e.ai_summary) + "<br><b>Urgency:</b> " + esc(e.ai_urgency || "-") + " · <b>Work:</b> " + esc(e.ai_type || "-") + (e.ai_reply ? '<br><b>Draft reply:</b> <span style="white-space:pre-wrap">' + esc(e.ai_reply) + "</span>" : "") + "</div>" : "") +
-      (held ? '<p><button type="button" class="btn main" id="notspam">Not spam, send it to the team</button></p>' : "") +
-      '<p><b>Status</b></p><div class="btns">' + st.map(function (s) { return '<button type="button" data-s="' + s + '" class="' + (e.status === s ? "on" : "") + '">' + s + "</button>"; }).join("") + "</div>" +
-      '<p><label for="asg"><b>Assign to</b> (staff email)</label><input id="asg" value="' + esc(e.assignee || "") + '"></p><p><button type="button" class="btn" id="asgSave">Save assignee</button></p>' +
-      '<p><label for="note"><b>Add a note</b></label><textarea id="note"></textarea></p><p><button type="button" class="btn main" id="noteSave">Save note</button> <span class="err" id="err"></span></p>' +
-      "<p><b>History</b></p><table>" + d.events.map(function (x) { return "<tr><td class=\"meta\">" + when(x.at) + "</td><td>" + esc(x.who) + "</td><td>" + esc(x.action) + (x.detail ? ": " + esc(x.detail) : "") + "</td></tr>"; }).join("") + "</table></div>";
-    function act(body) { api("enquiries/" + id, body).then(function () { show(); }, function (er) { document.getElementById("err").textContent = er.message; }); }
-    det.querySelectorAll("[data-s]").forEach(function (b) { b.onclick = function () { act({ status: b.dataset.s }); }; });
-    document.getElementById("asgSave").onclick = function () { act({ assignee: document.getElementById("asg").value.trim() }); };
-    document.getElementById("noteSave").onclick = function () { var n = document.getElementById("note").value.trim(); if (n) act({ note: n }); };
-    var ns = document.getElementById("notspam"); if (ns) ns.onclick = function () { act({ notSpam: true }); };
+  function cols(vals, labels, unit) {
+    var W = 420, H = 150, max = Math.max.apply(null, vals) || 1, bw = W / vals.length, o = '<svg class="ch" viewBox="0 0 ' + W + " " + (H + 22) + '" role="img" aria-label="' + esc(labels.map(function (l, i) { return l + " " + vals[i]; }).join(", ")) + '"><line class="ax" x1="0" x2="' + W + '" y1="' + H + '" y2="' + H + '"/>';
+    vals.forEach(function (v, i) { var h = Math.round((H - 22) * v / max), x = i * bw + bw * 0.2;
+      o += '<rect class="bar' + (i === vals.length - 1 ? " top1" : "") + '" x="' + x + '" y="' + (H - h) + '" width="' + bw * 0.6 + '" height="' + h + '" rx="5"/><text x="' + (x + bw * 0.3) + '" y="' + (H - h - 5) + '" text-anchor="middle" style="font-weight:700">' + v + (unit || "") + '</text><text class="mu" x="' + (x + bw * 0.3) + '" y="' + (H + 15) + '" text-anchor="middle">' + esc(labels[i]) + "</text>"; });
+    return o + "</svg>";
   }
-  async function log() {
-    var rows = await api("log");
-    main.innerHTML = '<h2>Activity log</h2><p class="meta">Every action, newest first. Entries can never be edited or deleted.</p><div class="card wide"><table><tr><th>When</th><th>Who</th><th>What</th><th>Enquiry</th></tr>' +
-      rows.map(function (r) { return "<tr><td>" + when(r.at) + "</td><td>" + esc(r.who) + "</td><td>" + esc(r.action) + (r.detail ? ": " + esc(r.detail) : "") + "</td><td>" + esc(r.ref || "") + "</td></tr>"; }).join("") + "</table></div>";
+  function donut(parts) {
+    var tot = sum(parts, function (p) { return p[1]; }) || 1, R = 52, C = 2 * Math.PI * R, off = 0, colr = ["#fa842d", "#2e4476", "#6f8fd8", "#9fb0d6"], o = '<svg class="ch" viewBox="0 0 300 140" role="img" aria-label="' + esc(parts.map(function (p) { return p[0] + " " + p[1]; }).join(", ")) + '"><g transform="translate(70,70) rotate(-90)">';
+    parts.forEach(function (p, i) { var len = C * p[1] / tot; o += '<circle r="' + R + '" fill="none" stroke="' + colr[i % 4] + '" stroke-width="20" stroke-dasharray="' + len + " " + (C - len) + '" stroke-dashoffset="' + (-off) + '"/>'; off += len; });
+    o += '</g><text x="70" y="76" text-anchor="middle" style="font:700 22px Sora,sans-serif">' + tot + "</text>";
+    parts.forEach(function (p, i) { o += '<rect x="150" y="' + (22 + i * 26) + '" width="12" height="12" rx="3" fill="' + colr[i % 4] + '"/><text x="170" y="' + (33 + i * 26) + '">' + esc(p[0]) + ' <tspan style="font-weight:700">' + p[1] + "</tspan></text>"; });
+    return o + "</svg>";
   }
-  var EDIT = {
-    routes: { title: "Where emails go", note: "Each type of enquiry and who gets it. Separate several emails with commas. 'general' is the backup for anything that fails.", cols: ["key", "emails"], pk: "key" },
-    clients: { title: "Important clients", note: "Matched by the sender's email domain (e.g. cpbcon.com.au) or company name. Tier 1 = must look at, never held as spam, escalated after 15 minutes.", cols: ["name", "domain", "tier"], pk: "id" },
-    roster: { title: "24/7 on-call", note: "Lowest order is called first. Area: QLD, NSW, VIC or blank for all. Active 1 = on, 0 = off.", cols: ["name", "phone", "area", "order", "active"], pk: "id" },
-    staff: { title: "Staff and roles", note: "Who can sign in. Roles: viewer (read only), estimator (change enquiries), manager (also clients and roster), admin (everything). State limits them to one branch.", cols: ["email", "name", "role", "state"], pk: "email" }
+  function table(heads, rows) { return '<div class="tw"><table><tr>' + heads.map(function (h) { return "<th>" + h + "</th>"; }).join("") + "</tr>" + (rows.join("") || '<tr><td colspan="' + heads.length + '" class="sm">Nothing for this region.</td></tr>') + "</table></div>"; }
+  function attention() {
+    var a = [];
+    JOBS.forEach(function (j) { if (inR(j.st) && (j.h === "late" || j.h === "risk")) a.push([j.h === "late" ? "bad" : "warn", j.n, HEALTH[j.h][0] + ": " + j.ms + (j.due < 0 ? " was due " + day(j.due) : " due " + day(j.due)), "job:" + j.id]); });
+    FAULTS.forEach(function (f) { if (inR(f.st) && f.step < 4) a.push([f.step < 2 ? "bad" : "warn", "Breakdown at " + f.c, f.issue + " (" + FSTEP[f.step - 1] + ")", "go:faults"]); });
+    PERMITS.forEach(function (p) { if (p.s === "Awaiting sign-off") a.push(["warn", p.t + " " + p.id, "Waiting for sign-off, " + p.iso, "go:permits"]); });
+    PEOPLE.forEach(function (p) { p.t.forEach(function (t) { if (t[1] <= 14 && inR(p.st)) a.push([t[1] < 0 ? "bad" : "warn", p.n + ": " + t[0], t[1] < 0 ? "Expired " + (-t[1]) + " days ago" : "Expires in " + t[1] + " days", "go:people"]); }); });
+    PLANT.forEach(function (p) { if (p[3] <= 7) a.push([p[3] < 0 ? "bad" : "warn", p[0], p[4] + (p[3] < 0 ? ", " + (-p[3]) + " days over" : ", due in " + p[3] + " days"), "go:plant"]); });
+    DOCS.forEach(function (d) { if (d[2] <= 14) a.push([d[2] < 0 ? "bad" : "warn", d[1], d[2] < 0 ? "Expired " + (-d[2]) + " days ago" : "Expires in " + d[2] + " days", "go:docs"]); });
+    return a.sort(function (x, y) { return (x[0] === "bad" ? 0 : 1) - (y[0] === "bad" ? 0 : 1); });
+  }
+
+  var V = {};
+  V.dash = function () {
+    var js = JOBS.filter(function (j) { return inR(j.st); }), pp = PIPE.filter(function (p) { return inR(p.st) && p.g < 4; }), oe = openEnq(), att = attention();
+    var bySec = {}; js.forEach(function (j) { bySec[SEC[j.s]] = (bySec[SEC[j.s]] || 0) + j.v; });
+    var byR = [["QLD", 0], ["NSW", 0], ["VIC", 0], ["Overseas", 0]]; JOBS.forEach(function (j) { byR[{ QLD: 0, NSW: 1, VIC: 2, INT: 3 }[j.st]][1]++; });
+    var k = function (go, label, big, sub, hot) { return '<button class="card kpi' + (hot ? " hot" : "") + '" data-act="go:' + go + '"><small>' + label + "</small><b>" + big + "</b><span>" + sub + "</span></button>"; };
+    return '<div class="g g6">' +
+      k("enq", "Open enquiries", oe.length, oe.filter(function (e) { return e.must; }).length + " must look at", 1) +
+      k("pipe", "Tenders in play", money(sum(pp, function (p) { return p.v; })), money(sum(pp, function (p) { return p.v * p.pr / 100; })) + " weighted") +
+      k("jobs", "Work in hand", money(sum(js, function (j) { return j.v; })), js.length + " jobs, " + js.filter(function (j) { return j.h === "risk" || j.h === "late"; }).length + " need attention") +
+      k("sched", "People on site today", sum(js, function (j) { return j.crew; }), CREWS.length + " crews rostered") +
+      k("safety", "Days since a lost-time injury", "412", "6 reports this fortnight") +
+      k("faults", "Live breakdowns", FAULTS.filter(function (f) { return inR(f.st) && f.step < 4; }).length, "24/7 line, all states") + "</div>" +
+      '<div class="g g3" style="margin-top:14px"><div class="card"><h2>Work in hand by sector<small>contract value</small></h2>' + barsH(Object.keys(bySec).map(function (s) { return [s, bySec[s]]; }).slice(0, 18), money) + "</div>" +
+      '<div class="card"><h2>Needs attention<small>' + att.length + ' items</small></h2><div class="list">' + att.slice(0, 7).map(function (a) { return '<button class="li" data-act="' + a[3] + '"><span class="dot ' + a[0] + '"></span><div><b>' + esc(a[1]) + '</b><span class="sm">' + esc(a[2]) + "</span></div></button>"; }).join("") + "</div></div>" +
+      '<div class="g" style="align-content:start"><div class="card"><h2>Enquiries per week<small>last 8 weeks</small></h2>' + cols([9, 12, 8, 14, 11, 16, 13, 18], ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "Now"]) + "</div>" +
+      '<div class="card"><h2>Jobs by region</h2>' + donut(byR) + "</div></div></div>" +
+      '<div class="g g21" style="margin-top:14px"><div class="card"><h2>Biggest jobs<button class="bt" data-act="go:jobs">All jobs</button></h2>' + jobTable(js.slice().sort(function (a, b) { return b.v - a.v; }).slice(0, 6)) + "</div>" +
+      '<div class="card"><h2>Live activity</h2><ul class="feed">' + LOG.slice(0, 8).map(function (l) { return "<li><time>" + (l[0] ? ago(l[0]).replace(" ago", "") : "now") + "</time><span><b>" + esc(l[1]) + "</b> " + esc(l[2]) + "</span></li>"; }).join("") + "</ul></div></div>";
   };
-  async function edit(name) {
-    var c = EDIT[name], rows = await api(name);
-    main.innerHTML = "<h2>" + c.title + '</h2><p class="meta">' + c.note + '</p><div class="card wide"><table><tr>' + c.cols.map(function (x) { return "<th>" + x + "</th>"; }).join("") + "<th></th></tr>" +
-      rows.map(function (r) { return "<tr>" + c.cols.map(function (x) { return '<td><input data-k="' + x + '" value="' + esc(r[x]) + '" aria-label="' + x + '"></td>'; }).join("") +
-        '<td class="btns"><button type="button" data-save="' + esc(r[c.pk]) + '">Save</button><button type="button" data-del="' + esc(r[c.pk]) + '">Remove</button></td></tr>'; }).join("") +
-      "<tr>" + c.cols.map(function (x) { return '<td><input data-k="' + x + '" aria-label="new ' + x + '" placeholder="' + x + '"></td>'; }).join("") + '<td><button type="button" class="btn main" data-save="">Add</button></td></tr></table><p class="err" id="err"></p></div>';
-    main.querySelectorAll("[data-save]").forEach(function (b) {
-      b.onclick = function () {
-        var body = {}; b.closest("tr").querySelectorAll("input").forEach(function (i) { body[i.dataset.k] = i.value.trim(); });
-        if (b.dataset.save && c.pk === "id") body.id = Number(b.dataset.save);
-        api(name, body).then(show, function (er) { document.getElementById("err").textContent = er.message; });
-      };
-    });
-    main.querySelectorAll("[data-del]").forEach(function (b) {
-      b.onclick = function () { var body = { "delete": true }; body[c.pk] = c.pk === "id" ? Number(b.dataset.del) : b.dataset.del; api(name, body).then(show, function (er) { document.getElementById("err").textContent = er.message; }); };
-    });
+  function jobTable(js) {
+    return table(["Job", "Sector", "Region", "Progress", "Budget used", "Status", "Next milestone"], js.map(function (j) {
+      return '<tr class="cl" data-act="job:' + j.id + '"><td><b>' + esc(j.n) + "</b><br><small>" + j.id + " · " + esc(j.c) + " · " + j.kv + "</small></td><td>" + pill(SEC[j.s], "info") + "</td><td>" + (j.st === "INT" ? "Overseas" : j.st) + "</td><td>" + pb(j.p) + "<small>" + j.p + "%</small></td><td>" + pb(j.b, j.b > j.p + 5 ? "bad" : "or") + "<small>" + j.b + "% of " + money(j.v) + "</small></td><td>" + pill(HEALTH[j.h][0], HEALTH[j.h][1]) + "</td><td>" + esc(j.ms) + "<br><small>" + day(j.due) + "</small></td></tr>"; }));
   }
-  async function stats() {
-    var rows = await api("stats?days=7"), max = Math.max.apply(null, rows.map(function (r) { return r.n; }).concat([1]));
-    main.innerHTML = '<h2>What people look at (last 7 days)</h2><p class="meta">Counted without cookies or personal details.</p><div class="card"><table>' +
-      rows.map(function (r) { return "<tr><td>" + esc(r.path) + '</td><td class="meta">' + esc(r.event) + '</td><td style="width:45%"><div style="height:10px;border-radius:6px;background:var(--blue);width:' + Math.round(100 * r.n / max) + '%"></div></td><td>' + r.n + "</td></tr>"; }).join("") + "</table></div>";
+  V.jobs = function () {
+    var used = {}; JOBS.forEach(function (j) { used[j.s] = 1; });
+    return '<div class="chips"><button class="bt' + (S.sec === "all" ? " on" : "") + '" data-act="sec:all">All sectors</button>' + Object.keys(SEC).filter(function (s) { return used[s]; }).map(function (s) { return '<button class="bt' + (S.sec === s ? " on" : "") + '" data-act="sec:' + s + '">' + SEC[s] + "</button>"; }).join("") + "</div>" +
+      '<div class="card"><h2>' + jobs().length + " jobs<small>" + money(sum(jobs(), function (j) { return j.v; })) + " contract value</small></h2>" + jobTable(jobs()) + '<p class="note">Tap a job for milestones, crew, permits, variations and documents.</p></div>';
+  };
+  V.enq = function () {
+    var F = ["Open", "Must look at", "Quoted", "Won", "Closed", "Held as spam", "All"], rows = ENQ.filter(function (e) {
+      var f = S.enqF; return (e.st ? inR(e.st) : true) && (f === "All" ? e.status !== "Held as spam" : f === "Open" ? e.status === "New" || e.status === "Assigned" : f === "Must look at" ? e.must && (e.status === "New" || e.status === "Assigned") : e.status === f); });
+    var e = ENQ.filter(function (x) { return x.id === S.enq; })[0], det = "";
+    if (e) det = '<div class="card"><span class="sm">' + e.ref + " · " + ago(e.h) + " · " + e.kind + " · " + (e.st || "No state") + "</span><h2 style=\"font-size:20px;margin:6px 0\">" + esc(e.name) + "</h2><p style=\"margin:0 0 8px\">" + esc(e.c || "Private enquiry") + (e.must ? " " + pill("Tier 1 client", "or") : "") + "</p>" +
+      '<p class="sm">' + esc(e.ph || "No phone") + " · " + esc(e.email) + "</p><p>" + esc(e.msg) + "</p>" +
+      (e.ai ? '<div style="border-left:3px solid var(--orange);background:var(--warnbg);border-radius:10px;padding:10px 12px"><b>AI summary</b> (check before acting): ' + esc(e.ai) + "<br><b>Suggested urgency:</b> " + e.urg + "</div>" : "") +
+      '<h3 class="grp" style="margin:16px 0 8px;color:var(--muted)">Status</h3><div class="chips">' + ["New", "Assigned", "Quoted", "Won", "Lost", "Closed"].map(function (s) { return '<button class="bt' + (e.status === s ? " on" : "") + '" data-act="est:' + s + '">' + s + "</button>"; }).join("") + "</div>" +
+      '<div class="chips"><button class="bt pr" data-act="eas:me">Assign to me</button><button class="bt" data-act="etn:x">Turn into a tender</button><button class="bt" data-act="say:Reply drafted (demo, nothing sent)">Draft reply</button>' + (e.status === "Held as spam" ? '<button class="bt" data-act="est:New">Not spam</button>' : "") + "</div>" +
+      '<p class="sm">Assigned to: <b>' + esc(e.who || "Nobody yet") + "</b></p><textarea aria-label=\"Note\" placeholder=\"Add a note for the team\"></textarea><p><button class=\"bt\" data-act=\"say:Note saved (demo)\">Save note</button></p></div>";
+    return '<div class="chips">' + F.map(function (f) { return '<button class="bt' + (S.enqF === f ? " on" : "") + '" data-act="ef:' + f + '">' + f + "</button>"; }).join("") + '</div><div class="split"><div class="list">' +
+      (rows.map(function (r) { return '<button class="li' + (S.enq === r.id ? " sel" : "") + '" data-act="eo:' + r.id + '"><span class="dot ' + (r.must ? "bad" : r.urgent ? "warn" : "") + '"></span><div><b>' + esc(r.c || r.name) + " " + (r.must ? pill("Must look at", "or") : r.urgent ? pill("Urgent", "warn") : "") + '</b><span class="sm">' + r.ref + " · " + r.kind + " · " + (r.st || "-") + " · " + ago(r.h) + " · " + esc(r.who || "Not assigned") + "</span></div>" + pill(r.status, r.status === "Won" ? "ok" : r.status === "New" ? "info" : "") + "</button>"; }).join("") || '<p class="card sm">Nothing here.</p>') +
+      "</div>" + (det || '<div class="card sm">Pick an enquiry to read it, assign it or change its status. Tier 1 clients are flagged automatically and can never be held as spam.</div>') + "</div>";
+  };
+  V.pipe = function () {
+    var pp = PIPE.filter(function (p) { return inR(p.st); });
+    return '<div class="g g3" style="margin-bottom:14px"><div class="card kpi"><small>Open tenders</small><b>' + pp.filter(function (p) { return p.g < 4; }).length + "</b><span>" + money(sum(pp.filter(function (p) { return p.g < 4; }), function (p) { return p.v; })) + ' total</span></div><div class="card kpi"><small>Due in 14 days</small><b>' + pp.filter(function (p) { return p.g < 3 && p.due <= 14; }).length + '</b><span>still being priced</span></div><div class="card kpi"><small>Won this quarter</small><b>' + money(sum(pp.filter(function (p) { return p.g === 4; }), function (p) { return p.v; })) + "</b><span>win rate 38% (sample)</span></div></div>" +
+      '<div class="kan">' + STAGES.map(function (st, i) { var cs = pp.filter(function (p) { return p.g === i; });
+        return '<div class="col"><h3>' + st + "<span>" + cs.length + " · " + money(sum(cs, function (p) { return p.v; }) || 0) + "</span></h3>" + cs.map(function (p) {
+          return '<div class="tk"><b>' + esc(p.n) + '</b><span class="sm">' + esc(p.c) + '</span><div class="r">' + pill(SEC[p.s], "info") + "<b>" + money(p.v) + '</b></div><div class="r"><span class="sm">' + (p.g < 4 ? "Due " + day(p.due) + " · " + p.pr + "% chance" : "Awarded") + '</span><span class="mv">' + (p.g > 0 ? '<button data-act="pm:' + p.id + ':-1" aria-label="Move back">&lsaquo;</button>' : "") + (p.g < 4 ? '<button data-act="pm:' + p.id + ':1" aria-label="Move forward">&rsaquo;</button>' : "") + "</span></div></div>"; }).join("") + "</div>"; }).join("") + '</div><p class="note">Use the arrows to move a tender along. A won tender becomes a job, and its details go to the job system.</p>';
+  };
+  V.clients = function () {
+    var m = {}; JOBS.forEach(function (j) { var c = m[j.c] = m[j.c] || { s: j.s, st: j.st, jobs: 0, v: 0, pv: 0 }; c.jobs++; c.v += j.v; });
+    PIPE.forEach(function (p) { var c = m[p.c] = m[p.c] || { s: p.s, st: p.st, jobs: 0, v: 0, pv: 0 }; if (p.g < 4) c.pv += p.v; });
+    var rows = Object.keys(m).filter(function (n) { return inR(m[n].st); }).sort(function (a, b) { return m[b].v + m[b].pv - m[a].v - m[a].pv; });
+    return '<div class="card"><h2>' + rows.length + " clients<small>Tier 1 clients are flagged on every enquiry and escalated after 15 minutes</small></h2>" + table(["Client", "Sector", "Tier", "Open jobs", "Work in hand", "Tenders in play", ""], rows.map(function (n) { var c = m[n], t1 = c.v + c.pv > 6e6;
+      return "<tr><td><b>" + esc(n) + "</b></td><td>" + pill(SEC[c.s], "info") + "</td><td>" + (t1 ? pill("Tier 1", "or") : pill("Tier 2")) + "</td><td>" + c.jobs + "</td><td>" + (c.v ? money(c.v) : "-") + "</td><td>" + (c.pv ? money(c.pv) : "-") + '</td><td><button class="bt" data-act="say:Client record opens here">Open</button></td></tr>'; })) + "</div>";
+  };
+  V.sched = function () {
+    var d0 = new Date(now), mon = (d0.getDay() + 6) % 7, heads = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    return '<div class="card"><h2>This week<small>night shifts in amber, tap a shift to open the job</small></h2><div class="tw"><div class="sch"><div class="hd">Crew</div>' + heads.map(function (h, i) { return '<div class="hd"' + (i === mon ? ' style="color:var(--orange)"' : "") + ">" + h + " " + new Date(now + (i - mon) * DAY).getDate() + "</div>"; }).join("") +
+      CREWS.map(function (c) { return '<div class="cr">' + c[0] + "<small>" + esc(c[1]) + "</small></div>" + c[2].map(function (x) { if (!x) return '<div class="off">Off</div>'; var ng = x[0] === "!", j = job(ng ? x.slice(1) : x);
+        return '<div class="' + (ng ? "ng" : "jb") + '" data-act="job:' + j.id + '">' + j.id + "<br><span style=\"font-weight:400\">" + esc(j.c.split(",")[0].split(" ").slice(0, 2).join(" ")) + (ng ? " (night)" : "") + "</span></div>"; }).join(""); }).join("") + "</div></div>" +
+      '<p class="note">The real version warns before a shift breaks fatigue rules, clashes with leave, or puts someone on site with an expired ticket.</p></div>';
+  };
+  V.faults = function () {
+    var fs = FAULTS.filter(function (f) { return inR(f.st); });
+    return '<div class="g g2">' + fs.map(function (f, i) { var open = f.step < 4, left = Math.round(f.sla - f.h * 60);
+      return '<div class="card"><h2>' + esc(f.c) + (open ? pill(f.resp == null ? (left > 0 ? left + " min to respond" : "Response overdue") : "Responded in " + f.resp + " min", f.resp == null ? (left > 15 ? "warn" : "bad") : "ok") : pill("Restored", "ok")) + '</h2><p style="margin:0"><b>' + esc(f.issue) + '</b></p><p class="sm" style="margin:2px 0 0">' + f.ref + " · " + esc(f.site) + " · logged " + ago(f.h) + " · " + esc(f.tech) + '</p><div class="steps">' + FSTEP.map(function (s, k) { return '<i class="' + (k < f.step ? "d" : "") + '" title="' + s + '"></i>'; }).join("") + '</div><div class="chips" style="margin:0"><span class="sm" style="flex:1">' + FSTEP[f.step - 1] + "</span>" + (open ? '<button class="bt pr" data-act="fs:' + FAULTS.indexOf(f) + '">Mark: ' + FSTEP[f.step] + "</button>" : "") + '<button class="bt" data-act="say:Calling the technician (demo)">Call tech</button></div></div>'; }).join("") + "</div>" +
+      '<div class="card" style="margin-top:14px"><h2>24/7 on-call roster<small>first in the list is called first</small></h2>' + table(["Who", "Phone", "Area", "Order"], ROSTER.filter(function (r) { return inR(r[2]); }).map(function (r) { return "<tr><td><b>" + r[0] + "</b></td><td>" + r[1] + "</td><td>" + (r[2] === "INT" ? "Overseas" : r[2]) + "</td><td>" + r[3] + "</td></tr>"; })) + "</div>";
+  };
+  V.assets = function () {
+    return '<div class="card"><h2>Client equipment under maintenance<small>test and inspection dates</small></h2>' + table(["Client", "Site", "Equipment", "Last tested", "Next due", "Result", ""], ASSETS.map(function (a) {
+      return "<tr><td><b>" + esc(a[0]) + "</b></td><td>" + esc(a[1]) + "</td><td>" + esc(a[2]) + "</td><td>" + day(-a[3]) + "</td><td>" + exp(a[4]) + "</td><td>" + pill(a[5], a[5] === "Pass" ? "ok" : "bad") + '</td><td><button class="bt" data-act="say:Test booked (demo)">Book test</button></td></tr>'; })) + '<p class="note">Clients on a maintenance contract can be given their own view of this list.</p></div>';
+  };
+  V.people = function () {
+    return '<div class="card"><h2>Workforce and tickets<small>amber = expires within 30 days, red = expired</small></h2>' + table(["Person", "Branch", "Today", "Hours this week", "Tickets and licences"], PEOPLE.filter(function (p) { return inR(p.st); }).map(function (p) {
+      return "<tr><td><b>" + esc(p.n) + "</b><br><small>" + esc(p.r) + "</small></td><td>" + (p.st === "INT" ? "Overseas" : p.st) + "</td><td>" + (p.leave ? pill("On leave") : pill(p.at, "info")) + "</td><td>" + pb(Math.round(p.hrs / 0.7), p.hrs > 60 ? "bad" : "") + "<small>" + p.hrs + " h" + (p.hrs > 60 ? ", fatigue check" : "") + "</small></td><td>" + p.t.map(function (t) { return '<span style="display:inline-block;margin:2px 6px 2px 0">' + esc(t[0]) + " " + exp(t[1]) + "</span>"; }).join("") + "</td></tr>"; })) + "</div>";
+  };
+  V.plant = function () {
+    return '<div class="card"><h2>Plant, vehicles and test gear<small>service, registration and calibration</small></h2>' + table(["Item", "Type", "Where", "Next service or calibration", "Status"], PLANT.map(function (p) {
+      return "<tr><td><b>" + esc(p[0]) + "</b></td><td>" + p[1] + "</td><td>" + esc(p[2]) + "</td><td>" + exp(p[3]) + "</td><td>" + pill(p[4], p[4] === "In use" ? "info" : p[4] === "Available" ? "ok" : "bad") + "</td></tr>"; })) + '<p class="note">Test gear with an overdue calibration is blocked from being booked to a job.</p></div>';
+  };
+  V.safety = function () {
+    var k = function (l, b, s) { return '<div class="card kpi"><small>' + l + "</small><b>" + b + "</b><span>" + s + "</span></div>"; };
+    return '<div class="g g6">' + k("Days since lost-time injury", "412", "sample figure") + k("Open hazards", HAZ.filter(function (h) { return h[4] !== "Closed"; }).length, "across all sites") + k("Work method statements", "96%", "current and signed") + k("Toolbox talks", "23", "this week") + k("Site inspections", "11", "this fortnight") + k("Reports this year", "148", "near misses and hazards") + "</div>" +
+      '<div class="g g21" style="margin-top:14px"><div class="card"><h2>Recent reports</h2>' + table(["Type", "What happened", "Job", "When", "Status"], HAZ.map(function (h) { return "<tr><td>" + pill(h[0], h[0] === "Near miss" ? "warn" : h[0] === "Hazard" ? "info" : "ok") + "</td><td>" + esc(h[1]) + "</td><td>" + h[2] + "</td><td>" + day(-h[3]) + "</td><td>" + pill(h[4], h[4] === "Closed" ? "ok" : "warn") + "</td></tr>"; })) + "</div>" +
+      '<div class="card"><h2>Reports per month<small>more reporting is a good sign</small></h2>' + cols([9, 11, 10, 14, 12, 15], ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"]) + '<p class="note">Crews log a hazard or near miss from the phone app in under a minute, with a photo.</p></div></div>';
+  };
+  V.permits = function () {
+    return '<div class="card"><h2>Permits and isolations<small>live register across every site</small></h2>' + table(["Permit", "Type", "Job", "Isolation or limits", "Holder", "Expires", "Status", ""], PERMITS.map(function (p, i) {
+      return "<tr><td><b>" + p.id + "</b></td><td>" + esc(p.t) + "</td><td>" + p.job + "</td><td>" + esc(p.iso) + "</td><td>" + esc(p.who) + "</td><td>" + (p.ex < 0 ? "-" : p.ex < 1 ? Math.round(p.ex * 24) + " h" : day(p.ex)) + "</td><td>" + pill(p.s, p.s === "Issued" ? "ok" : p.s === "Closed" ? "" : "warn") + "</td><td>" + (p.s === "Awaiting sign-off" ? '<button class="bt pr" data-act="ps:' + i + '">Sign off</button>' : p.s === "Issued" ? '<button class="bt" data-act="pc:' + i + '">Close out</button>' : "") + "</td></tr>"; })) +
+      '<p class="note">High-voltage access, mine isolations, rail possessions, confined space, hot work and hospital shutdown notices in one place. Nobody can close a permit while locks are still on.</p></div>';
+  };
+  V.docs = function () {
+    var groups = {}; DOCS.forEach(function (d) { (groups[d[0]] = groups[d[0]] || []).push(d); });
+    return '<div class="g g2">' + Object.keys(groups).map(function (g) { return '<div class="card"><h2>' + g + "</h2>" + table(["Document", "Expires", ""], groups[g].map(function (d) { return "<tr><td><b>" + esc(d[1]) + "</b></td><td>" + exp(d[2]) + '</td><td><button class="bt" data-act="say:Certificate sent to the client (demo)">Send</button></td></tr>'; })) + "</div>"; }).join("") + '</div><p class="note">One tap sends the current certificate to a client or a prequalification portal. Reminders go out 60, 30 and 7 days before anything expires.</p>';
+  };
+  V.reports = function () {
+    var bySec = {}; JOBS.forEach(function (j) { bySec[SEC[j.s]] = (bySec[SEC[j.s]] || 0) + j.v * j.p / 100; });
+    return '<div class="g g2"><div class="card"><h2>Work completed by sector<small>this financial year, sample</small></h2>' + barsH(Object.keys(bySec).map(function (s) { return [s, bySec[s]]; }), money) + "</div>" +
+      '<div class="g" style="align-content:start"><div class="card"><h2>Tenders, last 12 months</h2>' + donut([["Won", 19], ["Lost", 24], ["Withdrawn", 7]]) + '</div><div class="card"><h2>Minutes to first response<small>enquiries, by month</small></h2>' + cols([64, 51, 47, 38, 29, 22], ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"]) + "</div></div></div>" +
+      '<div class="chips" style="margin-top:14px"><button class="bt pr" data-act="say:Board report exported (demo)">Export board report</button><button class="bt" data-act="say:Spreadsheet exported (demo)">Export to spreadsheet</button></div>';
+  };
+  V.web = function () {
+    return '<div class="g g2"><div class="card"><h2>What people look at<small>last 7 days, no cookies</small></h2>' + barsH(WEB) + '</div><div class="card"><h2>Where enquiries come from</h2>' + donut([["Website form", 31], ["App", 12], ["Phone logged by staff", 9]]) + '<p class="note">Counted without cookies or personal details.</p></div></div>';
+  };
+  V.settings = function () {
+    var T = [["routes", "Where emails go"], ["staff", "Staff and roles"], ["access", "Who can see what"], ["opts", "Options"], ["log", "Activity log"]], body;
+    if (S.set === "routes") body = table(["Type of enquiry", "Goes to"], ROUTES.map(function (r) { return "<tr><td><b>" + r[0] + "</b></td><td>" + esc(r[1]) + "</td></tr>"; }));
+    else if (S.set === "staff") body = table(["Who", "Role", "Can see"], STAFF.map(function (r) { return "<tr><td><b>" + r[0] + "</b></td><td>" + pill(r[1], r[1] === "Administrator" ? "or" : "info") + "</td><td>" + r[2] + "</td></tr>"; })) + '<p class="note">Staff sign in with their Microsoft 365 work account. Roles limit what each person can see and change.</p>';
+    else if (S.set === "access") body = '<div class="mx">' + table(["Screen"].concat(Object.keys(ROLES).map(function (r) { return ROLES[r][0]; })), screens().map(function (n) { return "<tr><td><b>" + n[1] + "</b></td>" + Object.keys(ROLES).map(function (r) { return "<td>" + (canRole(r, n[0]) ? '<span style="color:var(--ok);font-weight:700">Yes</span>' : '<span class="sm">-</span>') + "</td>"; }).join("") + "</tr>"; })) + '</div><p class="note">Only an Administrator can change this table. Mega decides who gets each role.</p>';
+    else if (S.set === "opts") body = table(["Option", "Status"], OPTS.map(function (o) { return "<tr><td><b>" + o[0] + "</b></td><td>" + pill(o[1] ? "On" : "Off", o[1] ? "ok" : "") + "</td></tr>"; }));
+    else body = table(["When", "Who", "What"], LOG.map(function (l) { return "<tr><td>" + (l[0] ? ago(l[0]) : "Just now") + "</td><td><b>" + esc(l[1]) + "</b></td><td>" + esc(l[2]) + "</td></tr>"; })) + '<p class="note">Every action is recorded. Entries can never be edited or deleted.</p>';
+    return '<div class="chips">' + T.map(function (t) { return '<button class="bt' + (S.set === t[0] ? " on" : "") + '" data-act="set:' + t[0] + '">' + t[1] + "</button>"; }).join("") + '</div><div class="card">' + body + "</div>";
+  };
+  V.search = function () {
+    var q = S.q.toLowerCase(), hit = function (o) { return JSON.stringify(o).toLowerCase().indexOf(q) > -1; }, out = [];
+    JOBS.filter(hit).forEach(function (j) { out.push(["Job", j.n, j.id + " · " + j.c, "job:" + j.id]); });
+    PIPE.filter(hit).forEach(function (p) { out.push(["Tender", p.n, p.c + " · " + money(p.v), "go:pipe"]); });
+    ENQ.filter(hit).forEach(function (e) { out.push(["Enquiry", e.c || e.name, e.ref + " · " + e.kind, "eo:" + e.id]); });
+    PEOPLE.filter(hit).forEach(function (p) { out.push(["Person", p.n, p.r, "go:people"]); });
+    return '<div class="card"><h2>' + out.length + ' results for "' + esc(S.q) + '"</h2><div class="list">' + (out.map(function (o) { return '<button class="li" data-act="' + o[3] + '"><div><b>' + esc(o[1]) + '</b><span class="sm">' + esc(o[2]) + "</span></div>" + pill(o[0], "info") + "</button>"; }).join("") || '<p class="sm">Nothing found.</p>') + "</div></div>";
+  };
+
+
+  var GQ = [["G1", "Overall, is this the kind of back end Mega wants?", ["Yes", "Mostly", "No, see my comment"]], ["G2", "Which screens matter most at launch?", null], ["G3", "Is anything missing?", null],
+    ["G4", "Who at Mega should be an Administrator?", null], ["G5", "Who else needs access, and to which screens?", null], ["G6", "What should we change about the website or app?", null]];
+  var CHOICE = ["Keep as shown", "Keep, but change it", "Must have at launch", "Not needed"];
+  var EXTRAS = [["portal", "Client portal", "Clients sign in to see their own jobs, test reports and maintenance dates.", "Bigger build"], ["iphone", "iPhone app", "The same app for iPhones, on the App Store.", "Medium"],
+    ["qr", "QR tags on equipment", "Scan a tag on a switchboard to see its history or report a fault.", "Medium"], ["swms", "Digital sign-on", "Crews sign the work method statement and site induction on their phone.", "Medium"],
+    ["time", "Timesheets", "Hours entered on the phone, approved by the supervisor, sent to payroll.", "Bigger build"], ["drone", "Progress photo galleries", "Drone and site photos per job, shared with the client by link.", "Quick"],
+    ["tender", "Tender library", "Past tenders, capability statements and CVs in one searchable place.", "Medium"], ["aitender", "AI tender helper", "Drafts tender answers from past submissions for a person to check.", "Medium"],
+    ["subbie", "Subcontractor portal", "Subcontractors upload insurance and tickets, and get reminders before they expire.", "Medium"], ["stock", "Cable and stock register", "Cable drums, lengths left and where each one is.", "Medium"],
+    ["po", "Purchase orders", "Raise and approve orders against a job, with spending limits by role.", "Bigger build"], ["acct", "Accounting link", "Send won jobs and invoices to the accounting system Mega already uses.", "Medium"],
+    ["jobsys", "Job system link", "Pass won work to a job system such as simPRO or Ascora.", "Quick"], ["livesafety", "Live safety figures on the website", "Show approved safety numbers on the public site, updated from the back end.", "Quick"],
+    ["careers", "Job applicant tracker", "Applications from the careers page tracked from first contact to start date.", "Medium"], ["travel", "Overseas crew tracker", "Flights, visas, medicals and rotations for crews working overseas.", "Medium"],
+    ["energy", "Client energy dashboards", "Live power use for solar farms, data halls and plants Mega maintains.", "Bigger build"], ["thermal", "Thermal scan reports", "Thermal photos and findings sent to the client as a tidy report.", "Quick"],
+    ["sms", "Text message alerts", "Text the on-call person and the client when a breakdown is logged.", "Quick"], ["lang", "Other languages", "Key pages in other languages for overseas clients.", "Quick"],
+    ["train", "Apprentice tracker", "Each apprentice's hours, skills signed off and college dates.", "Medium"]];
+  var NEEDS = [["Cloudflare account in Mega's name", "Runs the back end. Mega owns it, with Mega's card."], ["Two email records added to megaelectrics.com.au", "Mega's IT person does this, so emails don't land in spam."],
+    ["Microsoft 365 admin approval", "Lets staff sign in with their work account."], ["List of staff and their roles", "Who is an Administrator, manager, estimator and so on."],
+    ["Who gets which emails", "Quotes, faults, careers, accounts and trade partners."], ["24/7 on-call roster", "Names and mobile numbers for each state."],
+    ["Important client list", "Clients that must always be seen first."], ["Facts for the website", "Licence numbers, insurance, safety figures and office hours."],
+    ["Original photos and video", "Camera and drone files, not copies from WhatsApp."], ["Google Play account", "To publish the Android app under Mega's name."], ["Sign-off on the design", "Answers from the Review and feedback screen."]];
+  var COSTS = [["Back end hosting (Cloudflare)", "about A$7 a month"], ["Staff sign-in, up to 50 people", "free"], ["Sending emails (Amazon, Sydney)", "about A$1.50 a month"], ["Teams alerts", "free with Microsoft 365"],
+    ["AI summary of each enquiry (optional)", "about 2 cents an enquiry"], ["Text messages to on-call (optional)", "about 7 cents a text"], ["Website hosting", "free at this size"]];
+  var ONCE = [["Google Play developer account", "about A$36, once"], ["Apple developer account, only for an iPhone app", "A$149 a year"], ["Extra screens marked Design preview", "quoted once Mega picks them"]];
+  function screens() { var o = []; NAV.forEach(function (g) { g[1].forEach(function (n) { if (n[2] < 2) o.push(n); }); }); return o; }
+  function rvText() {
+    var L = ["MEGA BACK END REVIEW", ""];
+    GQ.forEach(function (q) { L.push("[" + q[0] + "] " + q[1] + " " + (RV[q[0]] || (q[2] ? q[2][0] : "(no answer)"))); });
+    L.push(""); screens().forEach(function (n) { L.push("[BE-" + n[0] + "] " + n[1] + ": " + (RV["BE-" + n[0]] || CHOICE[0]) + (RV["BC-" + n[0]] ? " | " + RV["BC-" + n[0]] : "")); });
+    var ex = EXTRAS.filter(function (e) { return RV["EX-" + e[0]]; }); L.push(""); L.push("[EXTRAS] " + (ex.map(function (e) { return e[1]; }).join(", ") || "none ticked"));
+    L.push("[READY] " + (NEEDS.map(function (n, i) { return RV["GL-" + i] ? n[0] : null; }).filter(Boolean).join(", ") || "nothing ticked yet"));
+    return L.join("\n");
   }
-  async function options() {
-    var rows = await api("options");
-    main.innerHTML = '<h2>Options</h2><p class="meta">What is switched on. Each option is turned on by an administrator adding its setting; nothing here changes by itself.</p><div class="card"><table>' +
-      rows.map(function (r) { return "<tr><td>" + esc(r.label) + "</td><td><b style=\"color:" + (r.on ? "#1d7a3c" : "#8a6d00") + "\">" + (r.on ? "On" : "Off") + '</b></td><td class="meta">' + (r.on ? "" : "Needs: " + esc(r.needs)) + "</td></tr>"; }).join("") + "</table></div>";
+  function sendText(text, okMsg) {
+    try { if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function () {}); } catch (e) {}
+    var wa = function () { var u = "https://wa.me/?text=" + encodeURIComponent(text.slice(0, 6000)); if (window.App && App.open) App.open(u); else window.open(u, "_blank"); toast("Copied. Pick Ryan in WhatsApp and send."); };
+    if (navigator.share) navigator.share({ title: "Mega back end", text: text }).then(function () { toast(okMsg); }, function (er) { if (!er || er.name !== "AbortError") wa(); }); else wa();
   }
-  async function show() {
-    tabs();
-    try {
-      if (S.tab === "inbox") await inbox(false); else if (S.tab === "held") await inbox(true); else if (S.tab === "log") await log();
-      else if (S.tab === "stats") await stats(); else if (S.tab === "options") await options(); else await edit(S.tab);
-    } catch (er) { main.innerHTML = '<p class="card err">' + esc(er.message) + "</p>"; }
+  function copyText(text) { var done = function () { toast("Copied. Paste it into a message to Ryan."); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { var t = $("#rvout") || $("#hcout"); if (t) { t.focus(); t.select(); } toast("Select all and copy"); });
+    else { var t = $("#rvout") || $("#hcout"); if (t) { t.focus(); t.select(); } toast("Select all and copy"); } }
+  V.review = function () {
+    return '<div class="card rv"><h2>Overall</h2>' + GQ.map(function (q) { return '<p style="margin:0 0 10px"><label><b>' + q[1] + "</b><br>" + (q[2] ? '<select data-rv="' + q[0] + '">' + q[2].map(function (o) { return "<option" + (RV[q[0]] === o ? " selected" : "") + ">" + o + "</option>"; }).join("") + "</select>" : '<input type="text" data-rv="' + q[0] + '" value="' + esc(RV[q[0]] || "") + '" placeholder="Type here">') + "</label></p>"; }).join("") + "</div>" +
+      '<div class="card rv" style="margin-top:14px"><h2>Screen by screen<small>already filled in as "Keep as shown", change only what you want</small></h2>' + table(["Screen", "Your call", "Comment"], screens().map(function (n) {
+        return "<tr><td><b>" + n[1] + '</b><br><button class="bt" data-act="go:' + n[0] + '" style="margin-top:4px">Open</button></td><td><select aria-label="' + n[1] + '" data-rv="BE-' + n[0] + '">' + CHOICE.map(function (c) { return "<option" + (RV["BE-" + n[0]] === c ? " selected" : "") + ">" + c + "</option>"; }).join("") + '</select></td><td><input type="text" aria-label="Comment on ' + n[1] + '" data-rv="BC-' + n[0] + '" value="' + esc(RV["BC-" + n[0]] || "") + '" placeholder="What to change"></td></tr>'; })) + "</div>" +
+      '<div class="card" style="margin-top:14px"><h2>Send it back<small>includes the extras and checklist you ticked</small></h2><textarea id="rvout" readonly aria-label="Your answers">' + esc(rvText()) + '</textarea><div class="chips" style="margin:10px 0 0"><button class="bt pr" data-act="rvsend:x">Send to Ryan</button><button class="bt" data-act="rvcopy:x">Copy everything</button><button class="bt" data-act="rvclear:x">Start again</button></div><p class="note">Your answers stay saved on this device until you send them. Nothing is sent until you press Send.</p></div>';
+  };
+  V.extras = function () {
+    return '<div class="card"><h2>Tick anything Mega would like<small>ticked items go into the Review and feedback message</small></h2><div class="ex">' + EXTRAS.map(function (e) { return '<label class="card" style="box-shadow:none"><input type="checkbox" data-rv="EX-' + e[0] + '"' + (RV["EX-" + e[0]] ? " checked" : "") + "><span><b>" + e[1] + "</b>" + '<span class="sm">' + e[2] + "</span><br>" + pill(e[3], e[3] === "Quick" ? "ok" : e[3] === "Medium" ? "info" : "warn") + "</span></label>"; }).join("") + '</div><p class="note">Quick = days. Medium = a few weeks. Bigger build = planned and quoted first. Have another idea? Type it under "Is anything missing?" on the Review screen.</p></div>';
+  };
+  V.golive = function () {
+    return '<div class="g g2"><div class="card"><h2>What we need from Mega<small>tick what is ready</small></h2>' + NEEDS.map(function (n, i) { return '<label class="ck"><input type="checkbox" data-rv="GL-' + i + '"' + (RV["GL-" + i] ? " checked" : "") + "><span><b>" + n[0] + '</b><span class="sm">' + n[1] + "</span></span></label>"; }).join("") + "</div>" +
+      '<div class="g" style="align-content:start"><div class="card"><h2>What it costs to run<small>paid by Mega, to the provider</small></h2>' + table(["Item", "Cost"], COSTS.map(function (c) { return "<tr><td><b>" + c[0] + "</b></td><td>" + c[1] + "</td></tr>"; })) + '<p style="margin:12px 0 0"><b>Typical total: about A$10 to A$15 a month</b> for the parts already built.</p></div>' +
+      '<div class="card"><h2>One-off and optional</h2>' + table(["Item", "Cost"], ONCE.map(function (c) { return "<tr><td><b>" + c[0] + "</b></td><td>" + c[1] + "</td></tr>"; })) + '<p class="note">Estimates in Australian dollars, before GST, at 1 US dollar = A$1.45. Providers can change their prices.</p></div></div></div>';
+  };
+  var CHECKS = [["Website pages and links", "ok", "8 pages and 206 files loaded"], ["Quote and fault forms", "ok", "Test message delivered"], ["Email delivery", "fix", "1 stuck email found and sent again"],
+    ["Staff sign-in service", "ok", "Responding"], ["24/7 roster cover", "ok", "Every state has someone on call"], ["Saved copies on phones", "fix", "Old copies cleared so everyone gets the new version"],
+    ["Database backup", "ok", "Last backup 3 hours ago"], ["Tier 1 enquiries waiting too long", "ok", "None over 15 minutes"], ["Phone numbers and email addresses", "ok", "All match the approved list"],
+    ["Licences and insurance", "man", "Workers compensation, VIC expires in 14 days. A person needs to renew it."]];
+  var HC = { at: -1, running: false };
+  function hcReport() { return ["MEGA SYSTEM CHECK", new Date().toLocaleString("en-AU")].concat(CHECKS.map(function (c) { return (c[1] === "ok" ? "OK    " : c[1] === "fix" ? "FIXED " : "NEEDS A PERSON ") + c[0] + ": " + c[2]; })).join("\n"); }
+  V.health = function () {
+    var done = HC.at >= CHECKS.length, sym = { ok: "\u2713", fix: "\u2713", man: "!" };
+    return '<div class="g g21"><div class="card"><h2>Check everything and fix what it can<button class="bt pr" data-act="hc:run"' + (HC.running ? " disabled" : "") + ">" + (done ? "Run again" : HC.running ? "Checking..." : "Run check and fix") + "</button></h2>" +
+      CHECKS.map(function (c, i) { var st = i < HC.at ? c[1] : i === HC.at ? "run" : ""; return '<div class="hc ' + st + '"><span class="st">' + (i < HC.at ? sym[c[1]] : "") + "</span><div><b>" + c[0] + '</b><span class="sm">' + (i < HC.at ? c[2] : i === HC.at ? "Checking..." : "Waiting") + "</span></div>" + (i < HC.at ? pill(c[1] === "ok" ? "OK" : c[1] === "fix" ? "Fixed" : "Needs a person", c[1] === "ok" ? "ok" : c[1] === "fix" ? "or" : "bad") : "") + "</div>"; }).join("") +
+      (done ? '<p style="margin:14px 0 8px"><b>7 fine, 2 fixed automatically, 1 needs a person.</b></p><textarea id="hcout" readonly aria-label="Check report" style="min-height:120px;font:12.5px/1.5 ui-monospace,Consolas,monospace">' + esc(hcReport()) + '</textarea><div class="chips" style="margin:10px 0 0"><button class="bt pr" data-act="hcsend:x">Send this report to Ryan</button><button class="bt" data-act="hccopy:x">Copy report</button></div>' : "") + "</div>" +
+      '<div class="g" style="align-content:start"><div class="card"><h2>How this works</h2><p style="margin:0 0 8px">Anyone on staff can press the button. It runs through every part of the website and back end, fixes the common faults by itself, and says plainly what a person still has to do.</p><p style="margin:0 0 8px">The same check also runs by itself every morning and every night.</p><p class="sm" style="margin:0">This run uses sample results. The live website already has a real one: open <a href="help.html">Help and fix</a>.</p></div>' +
+      '<div class="card"><h2>Reset this preview</h2><p class="sm" style="margin:0 0 10px">Puts every sample job, tender and permit back the way it started. Your review answers are kept.</p><button class="bt" data-act="reset:x">Reset the preview</button></div></div></div>';
+  };
+  function hcRun() { HC.running = true; HC.at = 0; show(); var t = setInterval(function () { HC.at++; if (HC.at >= CHECKS.length) { clearInterval(t); HC.running = false; logIt("System check run: 2 fixed, 1 needs a person"); } if (S.view === "health") show(); }, 420); }
+  function gate(n) {
+    var g = $("#gate"), bars = '<div class="gsteps">' + [1, 2, 3].map(function (i) { return '<i class="' + (i <= n ? "d" : "") + '"></i>'; }).join("") + "</div>", body;
+    if (n === 1) body = "<h1>Sign in with your work account</h1><p>Staff use the Microsoft 365 account they already use for email. There is no extra password to remember, and when someone leaves Mega their access stops by itself.</p>" + '<button class="gbig" data-act="gate:2">Sign in with Microsoft (preview)</button>';
+    else if (n === 2) body = "<h1>Approve it on your phone</h1><p>A second check on the person's own phone, so a stolen password is not enough. Enter this number in the authenticator app:</p>" + '<div class="gcode">47</div><button class="gbig" data-act="gate:3">I approved it (preview)</button>';
+    else body = "<h1>Your role decides what you see</h1><p>Each person only gets the screens their job needs. Pick a role to look around as. You can switch at any time from the top bar.</p>" + Object.keys(ROLES).map(function (r) { return '<button class="grole" data-act="role:' + r + '"><b>' + ROLES[r][0] + "</b><span>" + ROLES[r][1] + "</span></button>"; }).join("");
+    g.innerHTML = '<div class="gbox"><img src="brand/logo-mark.png" alt="Mega Electrics">' + bars + body + '<button class="gskip" data-act="role:admin">Skip, show me everything</button><p class="gfine">This preview has no password. In the live system: sign-in by Microsoft 365, a second check on the phone, automatic sign-out when idle, a fresh check before sensitive changes, and every action recorded in a log nobody can edit.</p></div>';
+    g.classList.remove("hide");
   }
-  main.addEventListener("click", function (e) {
-    var it = e.target.closest(".item"); if (it) { S.sel = Number(it.dataset.id); show(); return; }
-    var f = e.target.dataset.f; if (f) { S.filter = f; show(); }
+
+  var IC = { dash: "M4 13h6V4H4zM14 20h6V11h-6zM4 20h6v-4H4zM14 8h6V4h-6z", enq: "M4 6h16v12H4zM4 7l8 6 8-6", pipe: "M4 5h4v14H4zM10 5h4v9h-4zM16 5h4v6h-4z", clients: "M4 20V8l8-4 8 4v12M9 20v-6h6v6",
+    jobs: "M4 8h16v11H4zM9 8V5h6v3", sched: "M5 6h14v14H5zM5 10h14M9 4v4M15 4v4", faults: "M13 3 5 13h6l-1 8 8-11h-6z", assets: "M12 3v4M5 7h14v6a7 7 0 0 1-14 0zM12 20v1",
+    people: "M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M17 11a3 3 0 1 0 0-6M17 14c2.5.3 4 2.4 4 6", plant: "M3 17h13V8H3zM16 11h3l2 3v3h-5M7 19.5a1.5 1.5 0 1 0 0-3M18 19.5a1.5 1.5 0 1 0 0-3",
+    safety: "M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6zM9 12l2 2 4-4", permits: "M7 11V8a5 5 0 0 1 10 0v3M5 11h14v9H5zM12 15v2", docs: "M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5",
+    reports: "M4 20h16M7 16v-5M12 16V6M17 16v-8", web: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18", settings: "M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2",
+    review: "M4 5h16v11H10l-5 4v-4H4z", golive: "M5 5h14v14H5zM8 12l3 3 5-6", extras: "M12 5v14M5 12h14", health: "M3 12h4l2-5 4 10 2-5h6" };
+  var NAV = [["Overview", [["dash", "Dashboard", 0]]], ["Win work", [["enq", "Enquiries", 1], ["pipe", "Tenders and pipeline", 0], ["clients", "Clients", 0]]],
+    ["Deliver", [["jobs", "Jobs", 0], ["sched", "Crew schedule", 0], ["faults", "Breakdowns and on-call", 0], ["assets", "Maintenance", 0]]],
+    ["People and plant", [["people", "Workforce and tickets", 0], ["plant", "Plant and test gear", 0]]], ["Safety and compliance", [["safety", "Safety", 0], ["permits", "Permits and isolations", 0], ["docs", "Licences and insurance", 0]]],
+    ["Insights", [["reports", "Reports", 0], ["web", "Website and app", 1]]], ["Admin", [["settings", "Settings and access", 1]]],
+    ["For this preview", [["review", "Review and feedback", 2], ["golive", "What we need and costs", 2], ["extras", "Extra options", 2], ["health", "System check", 2]]]];
+  var INFO = { dash: "Everything that matters this morning, on one screen.", enq: "Every website and app enquiry, sorted so the important ones are seen first.", pipe: "Every tender from first contact to award.", clients: "Who Mega works for. The priority flag for important clients is already built.",
+    jobs: "Every live job across tunnels, mines, rail, water, solar, hospitals and more.", sched: "Which crew is on which job, day and night.", faults: "Live breakdowns from the 24/7 line, with response times. The on-call roster and fault routing are already built.", assets: "Client equipment Mega maintains, and when each test is due.",
+    people: "Who is where, hours worked, and every ticket and licence with its expiry date.", plant: "Cable trailers, winders, vehicles and test gear.", safety: "Hazards, near misses, inspections and toolbox talks.", permits: "High-voltage access permits, isolations, rail possessions and more.",
+    docs: "Company licences, insurance and prequalification, with expiry reminders.", reports: "Board-level numbers, ready to export.", web: "What visitors do on the website and app.", settings: "Email routing, staff roles, switchable options and the full activity log.", search: "Search across jobs, tenders, enquiries and people.", review: "Tell us what to keep, change or drop. It is already filled in, so only change what you disagree with.",
+    golive: "What Mega needs to supply, and what it costs to run.", extras: "More things we can add. Tick what you like.", health: "One button that checks the whole system and fixes what it can." };
+  function title(v) { var t = "Search"; NAV.forEach(function (g) { g[1].forEach(function (n) { if (n[0] === v) t = n[1]; }); }); return t; }
+  function built(v) { var b = 0; NAV.forEach(function (g) { g[1].forEach(function (n) { if (n[0] === v) b = n[2]; }); }); return b; }
+  function nav() {
+    var counts = { enq: openEnq().length, faults: FAULTS.filter(function (f) { return f.step < 4; }).length, permits: PERMITS.filter(function (p) { return p.s === "Awaiting sign-off"; }).length };
+    $("#nav").innerHTML = NAV.map(function (g) { var items = g[1].filter(function (n) { return can(n[0]); }); if (!items.length) return ""; return '<div class="grp">' + g[0] + "</div>" + items.map(function (n) { return '<button class="nv' + (S.view === n[0] ? " on" : "") + '" data-act="go:' + n[0] + '"' + (S.view === n[0] ? ' aria-current="page"' : "") + '><svg viewBox="0 0 24 24"><path d="' + IC[n[0]] + '"/></svg>' + n[1] + (counts[n[0]] ? '<span class="ct">' + counts[n[0]] + "</span>" : "") + (n[2] === 2 ? "" : '<i class="' + (n[2] ? "b" : "") + '" title="' + (n[2] ? "Built and tested" : "Design preview") + '"' + (counts[n[0]] ? "" : ' style="margin-left:auto"') + "></i>") + "</button>"; }).join(""); }).join("");
+    $("#bellN").textContent = attention().length;
+  }
+  function show() {
+    nav();
+    $("#view").innerHTML = '<div class="vh"><h1>' + title(S.view) + "</h1><p>" + INFO[S.view] + "</p>" + (S.view === "search" || built(S.view) === 2 ? "" : '<span class="stage' + (built(S.view) ? " b" : "") + '">' + (built(S.view) ? "Built and tested" : "Design preview") + "</span>") + "</div>" + V[S.view]();
+  }
+  function drawer(id) {
+    var j = job(id), per = PERMITS.filter(function (p) { return p.job === id; }), ppl = PEOPLE.filter(function (p) { return p.at === id; }), d = $("#drawer");
+    d.innerHTML = '<button class="bt" data-act="close:x" style="float:right">Close</button><span class="sm">' + j.id + " · " + SEC[j.s] + "</span><h2>" + esc(j.n) + "</h2><p style=\"margin:0 0 10px\">" + pill(HEALTH[j.h][0], HEALTH[j.h][1]) + " " + pill(j.kv, "info") + "</p>" +
+      '<dl class="kv"><dt>Client</dt><dd>' + esc(j.c) + "</dd><dt>Region</dt><dd>" + (j.st === "INT" ? "Overseas" : j.st) + "</dd><dt>Project manager</dt><dd>" + esc(j.pm) + "</dd><dt>Contract value</dt><dd>" + money(j.v) + "</dd><dt>On site today</dt><dd>" + j.crew + " people</dd></dl>" +
+      "<h3>Progress and money</h3><p class=\"sm\" style=\"margin:0 0 4px\">Work done " + j.p + "%</p>" + pb(j.p) + '<p class="sm" style="margin:8px 0 4px">Budget used ' + j.b + "%" + (j.b > j.p + 5 ? " (running ahead of progress)" : "") + "</p>" + pb(j.b, j.b > j.p + 5 ? "bad" : "or") +
+      "<h3>Milestones</h3>" + table(["Milestone", "Date", ""], [["Site establishment", -60, 1], ["Main cable pull", -18, 1], [j.ms, j.due, 0], ["Testing and commissioning", j.due + 30, 0], ["Handover", j.due + 55, 0]].map(function (m) { return "<tr><td>" + esc(m[0]) + "</td><td>" + day(m[1]) + "</td><td>" + (m[2] ? pill("Done", "ok") : m[1] < 0 ? pill("Late", "bad") : pill("Coming up")) + "</td></tr>"; })) +
+      "<h3>People assigned</h3>" + (ppl.map(function (p) { return "<p style=\"margin:4px 0\"><b>" + esc(p.n) + '</b> <span class="sm">' + esc(p.r) + "</span></p>"; }).join("") || '<p class="sm">Crew list opens here.</p>') +
+      "<h3>Permits</h3>" + (per.map(function (p) { return "<p style=\"margin:4px 0\"><b>" + p.id + "</b> " + esc(p.t) + " " + pill(p.s, p.s === "Issued" ? "ok" : "warn") + "</p>"; }).join("") || '<p class="sm">No open permits.</p>') +
+      '<h3>Also on this screen</h3><p class="sm">Variations and claims, drawings and test sheets, site diary with photos, purchase orders, and the client handover pack.</p>';
+    d.classList.add("open"); $("#scrim").classList.add("open");
+  }
+  function closeAll() { $("#drawer").classList.remove("open"); $("#scrim").classList.remove("open"); $("#side").classList.remove("open"); }
+
+  document.addEventListener("click", function (ev) {
+    var el = ev.target.closest("[data-act]"); if (!el) return;
+    var a = el.dataset.act.split(":"), k = a[0], x = a[1], e = ENQ.filter(function (q) { return q.id === S.enq; })[0];
+    if (k === "go") { if (!can(x)) { toast(ROLES[S.role][0] + " cannot open that screen"); return; } S.view = x; closeAll(); show(); window.scrollTo(0, 0); }
+    else if (k === "gate") gate(Number(x));
+    else if (k === "role") { S.role = x; $("#role").value = x; $("#gate").classList.add("hide"); if (!can(S.view)) S.view = "dash"; show(); toast("Viewing as " + ROLES[x][0]); }
+    else if (k === "rvsend") sendText(rvText(), "Sent. Thank you.");
+    else if (k === "rvcopy") copyText(rvText());
+    else if (k === "rvclear") { RV = {}; saveRV(); show(); toast("Cleared"); }
+    else if (k === "hc") { if (!HC.running) hcRun(); }
+    else if (k === "hcsend") sendText(hcReport(), "Report sent.");
+    else if (k === "hccopy") copyText(hcReport());
+    else if (k === "reset") location.reload();
+    else if (k === "job") drawer(x);
+    else if (k === "close") closeAll();
+    else if (k === "sec") { S.sec = x; show(); }
+    else if (k === "ef") { S.enqF = a.slice(1).join(":"); S.enq = null; show(); }
+    else if (k === "eo") { S.enq = Number(x); S.view = "enq"; if (S.enqF !== "All" && S.enqF !== "Held as spam") S.enqF = "All"; if (ENQ[S.enq - 1].status === "Held as spam") S.enqF = "Held as spam"; show(); }
+    else if (k === "est" && e) { logIt(e.ref + " status changed to " + x); e.status = x; show(); toast("Status changed (demo, not saved)"); }
+    else if (k === "eas" && e) { e.who = "Demo manager"; if (e.status === "New") e.status = "Assigned"; logIt(e.ref + " assigned to Demo manager"); show(); toast("Assigned to you (demo)"); }
+    else if (k === "etn" && e) { PIPE.push({ id: PIPE.length + 1, n: "From enquiry " + e.ref, c: e.c || e.name, s: e.s, st: e.st || "QLD", v: 5e5, pr: 30, g: 0, due: 30, o: "Demo manager" }); logIt(e.ref + " turned into a tender"); S.view = "pipe"; show(); toast("Added to the pipeline as a lead (demo)"); }
+    else if (k === "pm") { var p = PIPE.filter(function (t) { return t.id === Number(x); })[0]; p.g += Number(a[2]); logIt("Tender moved to " + STAGES[p.g] + ": " + p.n); show(); if (p.g === 4) toast("Won. A job would now be created (demo)"); }
+    else if (k === "fs") { var f = FAULTS[Number(x)]; f.step++; if (f.resp == null) f.resp = Math.round(f.h * 60); logIt(f.ref + " marked " + FSTEP[f.step - 1]); show(); toast(FSTEP[f.step - 1] + " (demo)"); }
+    else if (k === "ps") { PERMITS[Number(x)].s = "Issued"; logIt(PERMITS[Number(x)].id + " signed off"); show(); toast("Permit signed off (demo)"); }
+    else if (k === "pc") { PERMITS[Number(x)].s = "Closed"; PERMITS[Number(x)].ex = -1; logIt(PERMITS[Number(x)].id + " closed out"); show(); toast("Permit closed, locks confirmed off (demo)"); }
+    else if (k === "set") { S.set = x; show(); }
+    else if (k === "say") toast(a.slice(1).join(":"));
   });
-  api("me").then(function (m) { S.me = m; document.getElementById("me").textContent = (m.name || m.email) + " · " + m.role + (m.state ? " · " + m.state : ""); S.filter = "must"; show(); },
-    function (er) { document.getElementById("me").textContent = ""; main.innerHTML = '<p class="card err">' + esc(er.message) + "</p>"; });
+  $("#scrim").addEventListener("click", closeAll);
+  $("#menu").addEventListener("click", function () { $("#side").classList.toggle("open"); $("#scrim").classList.toggle("open"); });
+  $("#region").addEventListener("change", function (e) { S.region = e.target.value; show(); });
+  $("#bell").addEventListener("click", function () { S.view = "dash"; show(); toast(attention().length + " items need attention"); });
+  $("#theme").addEventListener("click", function () { S.theme = S.theme === "dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", S.theme); });
+  $("#q").addEventListener("input", function (e) { S.q = e.target.value.trim(); if (S.q.length > 1) { S.view = "search"; show(); } else if (S.view === "search") { S.view = "dash"; show(); } });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll(); });
+  $("#role").innerHTML = Object.keys(ROLES).map(function (r) { return '<option value="' + r + '">View as: ' + ROLES[r][0] + "</option>"; }).join("");
+  $("#role").addEventListener("change", function (e) { S.role = e.target.value; if (!can(S.view)) S.view = "dash"; show(); toast("Viewing as " + ROLES[S.role][0]); });
+  function rvChange(e) { var k = e.target.dataset && e.target.dataset.rv; if (!k) return; RV[k] = e.target.type === "checkbox" ? (e.target.checked ? 1 : 0) : e.target.value; saveRV(); var o = $("#rvout"); if (o) o.value = rvText(); }
+  document.addEventListener("change", rvChange); document.addEventListener("input", rvChange);
+  show(); gate(1);
 })();
 </script></body></html>

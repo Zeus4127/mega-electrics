@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><title>Help and Fix | Mega Electrics</title>
+<meta name="description" content="Check the Mega Electrics website on this device, fix common problems and report anything that is still wrong.">
+<link rel="icon" href="brand/logo-mark.png">
+<style>
+@font-face{font-family:"Sora";src:url(fonts/sora.woff2) format("woff2");font-weight:100 800;font-display:swap}
+@font-face{font-family:"Inter";src:url(fonts/inter.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--navy:#18284c;--navy2:#2e4476;--orange:#fa842d;--ink:#2d2929;--muted:#5d6475;--line:#dde2ec;--bg:#f3f5f9;--card:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+.wrap{max-width:44rem;margin:0 auto;padding:0 16px}
+.hero{background:radial-gradient(120% 90% at 80% 0%,#2e4476 0%,var(--navy) 65%);color:#fff;padding:22px 0 28px;border-bottom:4px solid var(--orange)}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand img{height:34px}.brand a{color:#fff;font-size:14px}
+.hero h1{font:700 clamp(26px,6vw,36px)/1.15 Sora,sans-serif;margin:18px 0 8px}.hero p{color:#dfe5f3;margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0}
+h2{font:700 20px/1.2 Sora,sans-serif;color:var(--navy);margin:0 0 10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:999px;border:0;background:var(--orange);color:#1a1206;font:700 16px/1 Inter,sans-serif;text-decoration:none;cursor:pointer}
+.btn.line{background:transparent;color:var(--navy2);border:2px solid var(--navy2)}.btn[disabled]{opacity:.6}.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.hc{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.hc:last-child{border:0}.hc div{flex:1;min-width:0}.hc b{display:block}.hc span.d{color:var(--muted);font-size:14px}
+.st{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:13px;font-weight:700}
+.run .st{border-color:var(--orange);border-top-color:transparent;animation:sp .7s linear infinite}.ok .st{background:#2fa35b;border-color:#2fa35b;color:#fff}
+.fix .st{background:var(--orange);border-color:var(--orange);color:#1a1206}.bad .st{background:#d9483b;border-color:#d9483b;color:#fff}
+@keyframes sp{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.run .st{animation:none}}
+#sum{font-weight:600;margin:12px 0 0}textarea{width:100%;min-height:90px;font:inherit;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+#rep{min-height:150px;font:13px/1.5 ui-monospace,Consolas,monospace;margin-top:10px}label b{display:block;margin-bottom:6px}
+.muted{color:var(--muted);font-size:14px}:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+footer{color:var(--muted);font-size:13px;padding:8px 0 40px;text-align:center}
+</style></head><body>
+<header class="hero"><div class="wrap"><div class="brand"><img src="brand/logo-mark.png" alt="Mega Electrics"><a href="index.html">&larr; Back to the website</a></div>
+<h1>Something not working?</h1><p>Press the button. It checks the website on this device and fixes the common problems by itself.</p></div></header>
+<main class="wrap">
+<section class="card"><h2>Check and fix</h2><div id="list"></div><p id="sum" role="status"></p>
+<div class="row"><button class="btn" id="go" type="button">Check and fix now</button><a class="btn line" id="fresh" href="index.html" hidden>Open the fresh website</a></div>
+<p class="muted">It clears old saved copies of the site and resets saved settings on this device only. Feedback you have typed is kept.</p></section>
+<section class="card"><h2>Still not right? Tell us</h2><label><b>What went wrong?</b><textarea id="what" placeholder="For example: the quote form would not send, or a photo is missing on the Queensland page"></textarea></label>
+<textarea id="rep" readonly aria-label="Problem report"></textarea>
+<div class="row"><button class="btn" id="send" type="button">Send the report</button><button class="btn line" id="mail" type="button">Send by email</button><button class="btn line" id="copy" type="button">Copy the report</button></div>
+<p class="muted" id="msg" role="status">The report includes the check results and what kind of device this is, so the problem can be fixed quickly. It does not include your name or location.</p></section>
+<section class="card"><h2>Urgent electrical fault?</h2><p style="margin:0">This page is only for website and app problems. For a power fault call the 24/7 line: <a href="tel:1300090797"><b>1300 090 797</b></a>.</p></section>
+</main><footer>Mega Electrics &middot; Help and fix</footer>
+<script>
+(function () {
+  var FILES = ["index.html", "qld.html", "nsw.html", "vic.html", "data/items.js", "capability.html"], KEEP = ["mega-handover-v2", "mega-console-review"], res = [], ver = "";
+  var $ = function (i) { return document.getElementById(i); }, inApp = !!window.App || location.protocol === "file:";
+  function get(u) { return fetch(u + (u.indexOf("?") < 0 ? "?" : "&") + "check=" + Date.now(), { cache: "no-store" }); }
+  var STEPS = [
+    ["Internet connection", async function () { if (navigator.onLine === false) throw "This device is offline. Check the Wi-Fi or mobile data, then try again."; return ["ok", "Connected"]; }],
+    ["Website pages", async function () { if (inApp) return ["ok", "Pages are stored inside the app"]; var bad = [];
+      for (var i = 0; i < FILES.length; i++) { try { var r = await get(FILES[i]); if (!r.ok) bad.push(FILES[i]); } catch (e) { bad.push(FILES[i]); } }
+      if (bad.length) throw "Could not load: " + bad.join(", "); return ["ok", FILES.length + " key pages loaded"]; }],
+    ["Old saved copies", async function () { var n = 0; if (window.caches) { var ks = await caches.keys(); for (var i = 0; i < ks.length; i++) { await caches.delete(ks[i]); n++; } }
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) { var rs = await navigator.serviceWorker.getRegistrations(); for (var j = 0; j < rs.length; j++) { try { await rs[j].update(); } catch (e) {} } }
+      return n ? ["fix", "Cleared " + n + " old saved " + (n > 1 ? "copies" : "copy")] : ["ok", "Nothing old was saved"]; }],
+    ["Saved settings", async function () { var n = 0; try { for (var i = localStorage.length - 1; i >= 0; i--) { var k = localStorage.key(i); if (KEEP.indexOf(k) < 0) { localStorage.removeItem(k); n++; } } n += sessionStorage.length; sessionStorage.clear(); } catch (e) { return ["ok", "This browser does not save settings"]; }
+      return n ? ["fix", "Reset " + n + " saved " + (n > 1 ? "settings" : "setting")] : ["ok", "Nothing needed resetting"]; }],
+    ["Latest version", async function () { if (inApp) return ["ok", "Update the app from the Get the app page if it looks old"]; var r = await get("sw.js"); if (!r.ok) throw "Could not read the version."; var m = (await r.text()).match(/mega-electrics-v(\d+)/); ver = m ? m[1] : ""; return ["ok", ver ? "Version " + ver + " is live" : "Version file found"]; }]
+  ];
+  function draw(at) {
+    $("list").innerHTML = STEPS.map(function (s, i) { var r = res[i], c = r ? r[0] : i === at ? "run" : "";
+      return '<div class="hc ' + c + '"><span class="st">' + (r ? (r[0] === "bad" ? "!" : "✓") : "") + "</span><div><b>" + s[0] + '</b><span class="d">' + (r ? r[1] : i === at ? "Checking..." : "Not checked yet") + "</span></div></div>"; }).join("");
+    report();
+  }
+  function report() {
+    var L = ["MEGA WEBSITE PROBLEM REPORT", "What went wrong: " + ($("what").value.trim() || "(not described)"), ""];
+    STEPS.forEach(function (s, i) { L.push((res[i] ? (res[i][0] === "ok" ? "OK    " : res[i][0] === "fix" ? "FIXED " : "FAULT ") : "NOT RUN ") + s[0] + (res[i] ? ": " + res[i][1] : "")); });
+    L.push("", "Came from: " + (document.referrer || "opened directly"), "Where: " + (inApp ? "Android app" : "website") + (ver ? ", version " + ver : ""), "Screen: " + innerWidth + " x " + innerHeight, "Device: " + navigator.userAgent, "Time: " + new Date().toLocaleString("en-AU"));
+    $("rep").value = L.join("\n"); return $("rep").value;
+  }
+  async function run() {
+    $("go").disabled = true; res = []; $("sum").textContent = ""; $("fresh").hidden = true;
+    for (var i = 0; i < STEPS.length; i++) { draw(i); try { res[i] = await STEPS[i][1](); } catch (e) { res[i] = ["bad", typeof e === "string" ? e : "This check could not finish."]; } await new Promise(function (r) { setTimeout(r, 350); }); }
+    draw(-1); var bad = res.filter(function (r) { return r[0] === "bad"; }).length, fixed = res.filter(function (r) { return r[0] === "fix"; }).length;
+    $("sum").textContent = bad ? bad + " problem" + (bad > 1 ? "s" : "") + " could not be fixed from here. Send the report below." : fixed ? "Fixed " + fixed + " thing" + (fixed > 1 ? "s" : "") + ". Open the fresh website and try again." : "Everything checks out on this device. If something still looks wrong, send the report below.";
+    $("fresh").hidden = false; $("fresh").href = "index.html?fresh=" + Date.now(); $("go").disabled = false; $("go").textContent = "Check again";
+  }
+  function open(u) { if (window.App && App.open) App.open(u); else location.href = u; }
+  function copy(then) { var t = report(); if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(then, then); else { $("rep").focus(); $("rep").select(); then(); } }
+  $("go").addEventListener("click", run); $("what").addEventListener("input", report);
+  $("send").addEventListener("click", function () { var t = report(), wa = function () { copy(function () { $("msg").textContent = "Copied. WhatsApp is opening: pick the person who looks after the website and send."; open("https://wa.me/?text=" + encodeURIComponent(t.slice(0, 6000))); }); };
+    if (navigator.share) navigator.share({ title: "Mega website problem", text: t }).then(function () { $("msg").textContent = "Sent. Thank you."; }, function (e) { if (!e || e.name !== "AbortError") wa(); }); else wa(); });
+  $("mail").addEventListener("click", function () { copy(function () { $("msg").textContent = "Your email app is opening with the report filled in. Add the address of the person who looks after the website."; open("mailto:?subject=" + encodeURIComponent("Mega website problem") + "&body=" + encodeURIComponent(report().slice(0, 1800))); }); });
+  $("copy").addEventListener("click", function () { copy(function () { $("msg").textContent = "Copied. Paste it into a message."; }); });
+  draw(-1);
+})();
+</script></body></html>

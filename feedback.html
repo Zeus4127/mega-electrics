@@ -208,7 +208,7 @@ textarea { min-height: 76px; resize: vertical }
     ]},
     { id: "C", t: "Contacts and who sees what", d: "Who gets which enquiries, who is on call, and which clients get flagged as 'must look at'.", q: [
       { id: "C1", t: "24/7 on-call crew in the app's Report a fault screen", type: "radio", o: [O("Show only the 1300 line", "One number for everything; whoever answers passes it on."), O("List on-call people (below)", "The app shows each on-call person with Call and Text buttons. Their numbers are visible to anyone with the app.")], note: true, ph: "Name | phone | area (QLD, NSW, VIC), one per line." },
-      { id: "C2", t: "Email address for each type of enquiry", d: "Leave blank to use info@megaelectrics.com.au.", type: "fields", f: ["Quotes, QLD", "Quotes, NSW", "Quotes, VIC", "Electrical faults", "Accounts / invoices", "Careers", "Trade partners / suppliers", "Website or app problems (Ryan)"] },
+      { id: "C2", t: "Email address for each type of enquiry", d: "Leave blank to use info@megaelectrics.com.", type: "fields", f: ["Quotes, QLD", "Quotes, NSW", "Quotes, VIC", "Electrical faults", "Accounts / invoices", "Careers", "Trade partners / suppliers", "Website or app problems (Ryan)"] },
       { id: "C3", t: "Tier 1 and key clients to flag 'must look at'", d: "One per line: Company | email domain | Tier 1 or Key. Example: CPB Contractors | cpbcon.com.au | Tier 1. Their enquiries jump to the top, never go to spam, and a manager is alerted if nobody opens one in 15 minutes.", type: "textarea" },
       { id: "C4", t: "Which job system does Mega use?", d: "So enquiries go straight into it instead of being typed in again.", type: "radio", o: ["simPRO", "AroFlo", "ServiceM8", "Ascora", "Other (below)", "None"], note: true },
       { id: "C5", t: "Who needs a login to the back end?", d: "One per line: Name | role | branch. Roles: viewer (read only), estimator (handles enquiries), manager (also clients and roster), admin (everything).", type: "textarea" },
@@ -347,7 +347,7 @@ textarea { min-height: 76px; resize: vertical }
           q.f.forEach(function (f) {
             var fd = el("div", { "class": "field" }), id = q.id + "_" + slug(f);
             fd.appendChild(el("label", { "for": id }, esc(f)));
-            fd.appendChild(el(q.f.length > 2 ? "input" : "textarea", q.f.length > 2 ? { type: "text", id: id, placeholder: "info@megaelectrics.com.au" } : { id: id }));
+            fd.appendChild(el(q.f.length > 2 ? "input" : "textarea", q.f.length > 2 ? { type: "text", id: id, placeholder: "info@megaelectrics.com" } : { id: id }));
             box.appendChild(fd);
           });
         } else if (q.type === "matrix") {
