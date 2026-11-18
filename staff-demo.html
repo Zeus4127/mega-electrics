@@ -71,7 +71,7 @@ svg.ch .trk{fill:var(--soft)}svg.ch .bar{fill:var(--navy2)}html[data-theme=dark]
 .sch .hd{font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:14px;min-height:0}.sch .cr{background:var(--soft);font-weight:600}.sch .cr small{display:block;font-weight:400}
 .sch .jb{background:var(--infobg);color:var(--info);border-left:4px solid var(--navy2);cursor:pointer;font-weight:600}.sch .off{background:repeating-linear-gradient(135deg,var(--soft),var(--soft) 6px,transparent 6px,transparent 12px);color:var(--muted)}
 .sch .ng{background:var(--warnbg);color:var(--warn);border-left:4px solid #e0a020;font-weight:600;cursor:pointer}
-.steps{display:flex;gap:4px;margin:8px 0}.steps i{flex:1;height:6px;border-radius:4px;background:var(--soft)}.steps i.d{background:var(--orange)}
+.stg{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:12px 0 6px}.stg span{min-width:0;overflow-wrap:anywhere;font-size:14px;line-height:1.25;color:var(--muted);padding-top:7px;border-top:5px solid var(--soft)}.stg span b{display:block;font-size:19.5px;color:inherit}.stg .d{border-top-color:var(--navy2)}.stg .n{border-top-color:var(--orange);font-weight:700;color:inherit}html[data-theme=dark] .stg .d{border-top-color:#6f8fd8}@media(max-width:560px){.stg{grid-template-columns:repeat(3,1fr);row-gap:10px}}.steps{display:flex;gap:4px;margin:8px 0}.steps i{flex:1;height:6px;border-radius:4px;background:var(--soft)}.steps i.d{background:var(--orange)}
 .drawer{position:fixed;inset:0 0 0 auto;width:min(560px,100%);background:var(--card);border-left:1px solid var(--line);box-shadow:-30px 0 60px -30px rgba(0,0,0,.5);z-index:60;overflow-y:auto;padding:18px 20px 40px;transform:translateX(105%);transition:transform .22s}
 .drawer.open{transform:none}.scrim{position:fixed;inset:0;background:rgba(10,16,34,.45);z-index:55;display:none}.scrim.open{display:block}
 .drawer h2{font:700 21.5px/1.2 Sora,sans-serif;color:var(--navy);margin:6px 0 4px}.drawer h3{font:700 14px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
@@ -167,6 +167,9 @@ body.guiding main{padding-bottom:230px}body.guiding .toast{bottom:auto;top:16px;
     { id: "J-2560", n: "Production line 4, switchboards and robots", c: "Meridian Food Works", s: "fac", st: "VIC", kv: "415 V", pm: "D. Marsh", v: 3.0e6, p: 52, b: 50, h: "ok", crew: 7, ms: "Board install", due: 9 },
     { id: "J-2557", n: "Pipe mill furnace supply and controls", c: "Steelflow Pipe Works", s: "pip", st: "QLD", kv: "11 kV", pm: "J. Petrakis", v: 2.5e6, p: 22, b: 20, h: "mob", crew: 5, ms: "Cable pull 1", due: 15 }
   ];
+  var JSTG = ["Awarded", "Mobilising", "Construction", "Testing and commissioning", "Practical completion", "Handover"];
+  function stageOf(j) { return j.h === "mob" ? 1 : j.h === "pc" ? 4 : j.p >= 70 ? 3 : 2; }
+  function stageStrip(n, counts) { return '<div class="stg" role="list">' + JSTG.map(function (t, i) { return '<span role="listitem" class="' + (counts ? (counts[i] ? "d" : "") : i < n ? "d" : i === n ? "n" : "") + '">' + (counts ? "<b>" + counts[i] + "</b>" : "") + t + (!counts && i === n ? " (now)" : "") + "</span>"; }).join("") + "</div>"; }
   var STAGES = ["Lead", "Qualifying", "Pricing", "Submitted", "Won"];
   var PIPE = [
     { id: 1, n: "Cross-river tunnel, fit-out power", c: "Riverside Tunnel Alliance", s: "tun", st: "QLD", v: 18e6, pr: 45, g: 3, due: 12, o: "Estimating QLD" },
@@ -350,11 +353,12 @@ body.guiding main{padding-bottom:230px}body.guiding .toast{bottom:auto;top:16px;
   };
   function jobTable(js) {
     return table(["Job", "Sector", "Region", "Progress", "Budget used", "Status", "Next milestone"], js.map(function (j) {
-      return '<tr class="cl" data-act="job:' + j.id + '"><td><b>' + esc(j.n) + "</b><br><small>" + j.id + " · " + esc(j.c) + " · " + j.kv + "</small></td><td>" + pill(SEC[j.s], "info") + "</td><td>" + (j.st === "INT" ? "Overseas" : j.st) + "</td><td>" + pb(j.p) + "<small>" + j.p + "%</small></td><td>" + pb(j.b, j.b > j.p + 5 ? "bad" : "or") + "<small>" + j.b + "% of " + money(j.v) + "</small></td><td>" + pill(HEALTH[j.h][0], HEALTH[j.h][1]) + "</td><td>" + esc(j.ms) + "<br><small>" + day(j.due) + "</small></td></tr>"; }));
+      return '<tr class="cl" data-act="job:' + j.id + '"><td><b>' + esc(j.n) + "</b><br><small>" + j.id + " · " + esc(j.c) + " · " + j.kv + "</small></td><td>" + pill(SEC[j.s], "info") + "</td><td>" + (j.st === "INT" ? "Overseas" : j.st) + "</td><td>" + pb(j.p) + "<small>" + j.p + "%</small></td><td>" + pb(j.b, j.b > j.p + 5 ? "bad" : "or") + "<small>" + j.b + "% of " + money(j.v) + "</small></td><td>" + pill(HEALTH[j.h][0], HEALTH[j.h][1]) + "<br><small>" + JSTG[stageOf(j)] + "</small></td><td>" + esc(j.ms) + "<br><small>" + day(j.due) + "</small></td></tr>"; }));
   }
   V.jobs = function () {
     var used = {}; JOBS.forEach(function (j) { used[j.s] = 1; });
     return '<div class="chips"><button class="bt' + (S.sec === "all" ? " on" : "") + '" data-act="sec:all">All sectors</button>' + Object.keys(SEC).filter(function (s) { return used[s]; }).map(function (s) { return '<button class="bt' + (S.sec === s ? " on" : "") + '" data-act="sec:' + s + '">' + SEC[s] + "</button>"; }).join("") + "</div>" +
+      '<div class="card" style="margin-bottom:14px"><h2>Jobs at each stage<small>award to handover</small></h2>' + stageStrip(0, JSTG.map(function (t, i) { return jobs().filter(function (j) { return stageOf(j) === i; }).length; })) + "</div>" +
       '<div class="card"><h2>' + jobs().length + " jobs<small>" + money(sum(jobs(), function (j) { return j.v; })) + " contract value</small></h2>" + jobTable(jobs()) + '<p class="note">Tap a job for milestones, crew, permits, variations and documents.</p></div>';
   };
   V.enq = function () {
@@ -387,10 +391,17 @@ body.guiding main{padding-bottom:230px}body.guiding .toast{bottom:auto;top:16px;
   };
   V.sched = function () {
     var d0 = new Date(now), mon = (d0.getDay() + 6) % 7, heads = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    return '<div class="card"><h2>This week<small>night shifts in amber, tap a shift to open the job</small></h2><div class="tw"><div class="sch"><div class="hd">Crew</div>' + heads.map(function (h, i) { return '<div class="hd"' + (i === mon ? ' style="color:var(--orange)"' : "") + ">" + h + " " + new Date(now + (i - mon) * DAY).getDate() + "</div>"; }).join("") +
+    var onToday = CREWS.filter(function (c) { return c[2][mon]; }), ppl = sum(onToday, function (c) { return parseInt(c[1].split(", ")[1], 10) || 0; }),
+      nights = sum(CREWS, function (c) { return c[2].filter(function (x) { return x[0] === "!"; }).length; }), rost = {};
+    CREWS.forEach(function (c) { c[2].forEach(function (x) { if (x) rost[x.replace("!", "")] = 1; }); });
+    var none = JOBS.filter(function (j) { return !rost[j.id]; });
+    var kp = function (a, b, c) { return '<div class="card kpi" style="cursor:default"><small>' + a + "</small><b>" + b + "</b><span>" + c + "</span></div>"; };
+    return '<div class="g g3" style="margin-bottom:14px">' + kp("On site today", ppl + " people", onToday.length + " of " + CREWS.length + " crews rostered") + kp("Night shifts this week", nights, "shown in amber on the board") + kp("Jobs with no crew this week", none.length, "listed under the board") + "</div>" +
+      '<div class="card"><h2>This week<small>night shifts in amber, tap a shift to open the job</small></h2><div class="tw"><div class="sch"><div class="hd">Crew</div>' + heads.map(function (h, i) { return '<div class="hd"' + (i === mon ? ' style="color:var(--orange)"' : "") + ">" + h + " " + new Date(now + (i - mon) * DAY).getDate() + "</div>"; }).join("") +
       CREWS.map(function (c) { return '<div class="cr">' + c[0] + "<small>" + esc(c[1]) + "</small></div>" + c[2].map(function (x) { if (!x) return '<div class="off">Off</div>'; var ng = x[0] === "!", j = job(ng ? x.slice(1) : x);
         return '<div class="' + (ng ? "ng" : "jb") + '" data-act="job:' + j.id + '">' + j.id + "<br><span style=\"font-weight:400\">" + esc(j.c.split(",")[0].split(" ").slice(0, 2).join(" ")) + (ng ? " (night)" : "") + "</span></div>"; }).join(""); }).join("") + "</div></div>" +
-      '<p class="note">The real version warns before a shift breaks fatigue rules, clashes with leave, or puts someone on site with an expired ticket.</p></div>';
+      '<p class="note">The real version warns before a shift breaks fatigue rules, clashes with leave, or puts someone on site with an expired ticket.</p></div>' +
+      '<div class="card" style="margin-top:14px"><h2>Jobs with no crew this week<small>' + none.length + ' jobs</small></h2><div class="list">' + (none.map(function (j) { return '<button class="li" data-act="job:' + j.id + '"><span class="dot ' + (j.h === "late" ? "bad" : j.h === "risk" ? "warn" : "") + '"></span><div><b>' + esc(j.n) + '</b><span class="sm">' + j.id + " · " + JSTG[stageOf(j)] + " · next: " + esc(j.ms) + ", " + day(j.due) + "</span></div></button>"; }).join("") || '<p class="sm" style="margin:4px">Every job has a crew this week.</p>') + "</div></div>";
   };
   V.faults = function () {
     var fs = FAULTS.filter(function (f) { return inR(f.st); });
@@ -602,7 +613,7 @@ body.guiding main{padding-bottom:230px}body.guiding .toast{bottom:auto;top:16px;
   }
   function drawer(id) {
     var j = job(id), per = PERMITS.filter(function (p) { return p.job === id; }), ppl = PEOPLE.filter(function (p) { return p.at === id; }), d = $("#drawer");
-    d.innerHTML = '<button class="bt" data-act="close:x" style="float:right">Close</button><span class="sm">' + j.id + " · " + SEC[j.s] + "</span><h2>" + esc(j.n) + "</h2><p style=\"margin:0 0 10px\">" + pill(HEALTH[j.h][0], HEALTH[j.h][1]) + " " + pill(j.kv, "info") + "</p>" +
+    d.innerHTML = '<button class="bt" data-act="close:x" style="float:right">Close</button><span class="sm">' + j.id + " · " + SEC[j.s] + "</span><h2>" + esc(j.n) + "</h2><p style=\"margin:0 0 10px\">" + pill(HEALTH[j.h][0], HEALTH[j.h][1]) + " " + pill(j.kv, "info") + "</p>" + stageStrip(stageOf(j)) +
       '<dl class="kv"><dt>Client</dt><dd>' + esc(j.c) + "</dd><dt>Region</dt><dd>" + (j.st === "INT" ? "Overseas" : j.st) + "</dd><dt>Project manager</dt><dd>" + esc(j.pm) + "</dd><dt>Contract value</dt><dd>" + money(j.v) + "</dd><dt>On site today</dt><dd>" + j.crew + " people</dd></dl>" +
       "<h3>Progress and money</h3><p class=\"sm\" style=\"margin:0 0 4px\">Work done " + j.p + "%</p>" + pb(j.p) + '<p class="sm" style="margin:8px 0 4px">Budget used ' + j.b + "%" + (j.b > j.p + 5 ? " (running ahead of progress)" : "") + "</p>" + pb(j.b, j.b > j.p + 5 ? "bad" : "or") +
       "<h3>Milestones</h3>" + table(["Milestone", "Date", ""], [["Site establishment", -60, 1], ["Main cable pull", -18, 1], [j.ms, j.due, 0], ["Testing and commissioning", j.due + 30, 0], ["Handover", j.due + 55, 0]].map(function (m) { return "<tr><td>" + esc(m[0]) + "</td><td>" + day(m[1]) + "</td><td>" + (m[2] ? pill("Done", "ok") : m[1] < 0 ? pill("Late", "bad") : pill("Coming up")) + "</td></tr>"; })) +
